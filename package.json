@@ -1,0 +1,14 @@
+{
+  "name": "harness-slides-24-styles-preview",
+  "version": "1.0.0",
+  "description": "Interactive local preview workbench for Frontend Harness Slides 24 styles",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "author": "Patrick Fu <paaatrickfu@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "playwright": "^1.61.1"
+  }
+}
