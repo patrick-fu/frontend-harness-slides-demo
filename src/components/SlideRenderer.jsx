@@ -17,7 +17,20 @@ const sectionLabels = {
   closing: "Closing",
 };
 
-const CJK_FONT_STACK = '"Noto Sans SC", "Source Han Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", Inter, system-ui, sans-serif';
+const getFontClass = (fontName) => {
+  switch (fontName) {
+    case "Playfair Display":
+    case "Cormorant Garamond":
+      return "font-serif";
+    case "Caveat":
+      return "font-handwriting";
+    case "Fira Code":
+    case "VT323":
+      return "font-mono";
+    default:
+      return "font-sans";
+  }
+};
 
 export function SlideRenderer({ style, scene, beat, isThumbnail = false, language = "en" }) {
   const currentScene = style.scenes.find((s) => s.id === scene) || style.scenes[0];
@@ -25,18 +38,9 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
   const layout = currentScene.layout || "split";
   const isCjk = language === "zh";
 
-  // Map font styles
-  const headerFont = isCjk ? "font-sans font-black" :
-                     style.id === "02" || style.id === "06" ? "font-['Caveat']" :
-                     style.id === "07" ? "font-['VT323']" :
-                     style.id === "17" ? "font-['Cormorant_Garamond']" :
-                     style.id === "01" || style.id === "08" || style.id === "21" ? "font-['Playfair_Display']" : "font-sans font-black";
-
-  const bodyFont = isCjk ? "font-sans" :
-                    style.id === "03" || style.id === "04" || style.id === "09" || style.id === "10" ||
-                    style.id === "11" || style.id === "12" || style.id === "13" || style.id === "14" || 
-                    style.id === "15" || style.id === "16" || style.id === "18" || style.id === "19" || 
-                    style.id === "20" || style.id === "22" || style.id === "23" || style.id === "24" ? "font-['Fira_Code']" : "font-sans";
+  // Map font styles dynamically matching Design DNA
+  const headerFont = getFontClass(style.typography.header);
+  const bodyFont = getFontClass(style.typography.body);
   const stageMeta = isCjk ? `场景 ${scene} / 5 • 节拍 ${beat + 1} / 3` : `Scene ${scene} of 5 • Beat ${beat + 1} of 3`;
 
   // Arrange grid columns based on layout metadata
@@ -153,10 +157,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
   return (
     <div 
       lang={isCjk ? "zh-Hans" : "en"}
-      className={`w-full h-full relative p-[5cqw] flex flex-col justify-between overflow-hidden select-none transition-all duration-500 ${style.colors.bg} ${style.colors.ink}`}
-      style={{
-        fontFamily: isCjk ? CJK_FONT_STACK : style.typography.body === "Fira Code" ? "Fira Code, monospace" : "Inter, sans-serif"
-      }}
+      className={`w-full h-full relative p-[5cqw] flex flex-col justify-between overflow-hidden select-none transition-all duration-500 ${style.colors.bg} ${style.colors.ink} ${bodyFont}`}
     >
       {/* Background decorations based on style */}
       {style.id === "01" && (
