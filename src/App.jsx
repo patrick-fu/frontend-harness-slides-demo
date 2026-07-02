@@ -12,7 +12,7 @@ const BASE_HEIGHT = 1080;
 
 function getRouteState() {
   const params = new URLSearchParams(window.location.search);
-  const view = params.get("view") || "lab"; // 'lab' | 'grid' | 'board'
+  const view = params.get("view") || "grid"; // Default is GRID view now!
   const styleId = params.get("style") || "01";
   const scene = parseInt(params.get("scene") || "1", 10);
   const beat = parseInt(params.get("beat") || "0", 10);
@@ -23,7 +23,7 @@ function getRouteState() {
   return {
     view,
     styleId: style.id,
-    scene: scene === 1 || scene === 2 ? scene : 1,
+    scene: scene >= 1 && scene <= 5 ? scene : 1, // Supports 5 scenes now
     beat: safeBeat
   };
 }
@@ -85,6 +85,7 @@ export function App() {
 
   // Update scale factor of the 16:9 stage to fit its container container
   useLayoutEffect(() => {
+    if (view !== "lab") return;
     const updateScale = () => {
       if (!stageWrapperRef.current) return;
       const containerWidth = stageWrapperRef.current.clientWidth;
@@ -127,20 +128,20 @@ export function App() {
     }
   };
 
-  // Automated beat transition helpers
+  // Automated beat transition helpers (supports 5 scenes)
   const handleNextBeat = () => {
     if (beat < 2) {
       navigate(view, selectedStyleId, scene, beat + 1);
-    } else if (scene === 1) {
-      navigate(view, selectedStyleId, 2, 0);
+    } else if (scene < 5) {
+      navigate(view, selectedStyleId, scene + 1, 0);
     }
   };
 
   const handlePrevBeat = () => {
     if (beat > 0) {
       navigate(view, selectedStyleId, scene, beat - 1);
-    } else if (scene === 2) {
-      navigate(view, selectedStyleId, 1, 2);
+    } else if (scene > 1) {
+      navigate(view, selectedStyleId, scene - 1, 2);
     }
   };
 
@@ -258,9 +259,6 @@ export function App() {
                   const isActive = styleItem.id === selectedStyleId;
                   const isLow = styleItem.density === "low";
                   const isMed = styleItem.density === "med";
-                  const badgeColor = isLow ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" :
-                                     isMed ? "bg-amber-500/10 text-amber-400 border-amber-500/20" : 
-                                     "bg-blue-500/10 text-blue-400 border-blue-500/20";
                   const densityDot = isLow ? "bg-emerald-400" : isMed ? "bg-amber-400" : "bg-blue-400";
                   
                   return (
@@ -298,35 +296,30 @@ export function App() {
 
             {/* Stage Canvas Workspace Area */}
             <main className="flex-1 flex flex-col bg-zinc-950 p-4 md:p-8 overflow-hidden justify-between">
-              {/* Slide Scene Selector controls */}
+              {/* Slide Scene Selector controls (Supports 5 scenes now) */}
               <div className="flex justify-between items-center gap-4 border-b border-zinc-900 pb-4">
-                <div className="flex items-center gap-2">
-                  <span className="text-zinc-500 font-mono text-xs hidden sm:inline">SCENE CONTROL:</span>
-                  <div className="flex bg-zinc-900 p-0.5 rounded-lg border border-zinc-800">
-                    <button
-                      onClick={() => navigate("lab", selectedStyleId, 1, 0)}
-                      className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
-                        scene === 1 ? "bg-zinc-800 text-white shadow" : "text-zinc-400 hover:text-white"
-                      }`}
-                    >
-                      Scene 1: Principles
-                    </button>
-                    <button
-                      onClick={() => navigate("lab", selectedStyleId, 2, 0)}
-                      className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
-                        scene === 2 ? "bg-zinc-800 text-white shadow" : "text-zinc-400 hover:text-white"
-                      }`}
-                    >
-                      Scene 2: Execution
-                    </button>
+                <div className="flex items-center gap-2 overflow-x-auto">
+                  <span className="text-zinc-500 font-mono text-xs hidden lg:inline whitespace-nowrap">SCENES:</span>
+                  <div className="flex bg-zinc-900 p-0.5 rounded-lg border border-zinc-800 gap-0.5 whitespace-nowrap">
+                    {[1, 2, 3, 4, 5].map((sNum) => (
+                      <button
+                        key={sNum}
+                        onClick={() => navigate("lab", selectedStyleId, sNum, 0)}
+                        className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
+                          scene === sNum ? "bg-cyan-500 text-black shadow" : "text-zinc-400 hover:text-white"
+                        }`}
+                      >
+                        Sc {sNum} ({sNum === 1 ? "Premise" : sNum === 2 ? "Dual" : sNum === 3 ? "Process" : sNum === 4 ? "Matrix" : "Ledger"})
+                      </button>
+                    ))}
                   </div>
                 </div>
 
                 {/* Local Action simulation label */}
-                <div className="bg-zinc-900/60 border border-zinc-800/80 px-3 py-1.5 rounded-lg flex items-center gap-2 max-w-xs truncate">
+                <div className="bg-zinc-900/60 border border-zinc-800/80 px-3 py-1.5 rounded-lg flex items-center gap-2 max-w-xs truncate shrink-0">
                   <Sparkles className="w-3.5 h-3.5 text-yellow-400 animate-pulse" />
                   <span className="text-xs font-mono text-zinc-300 truncate">
-                    Control action: <strong className="text-white">{currentStyle.scenes[scene-1].beats[beat].action}</strong>
+                    Control: <strong className="text-white">{currentStyle.scenes[scene-1].beats[beat].action}</strong>
                   </span>
                 </div>
               </div>
@@ -396,7 +389,7 @@ export function App() {
 
                 <button
                   onClick={handleNextBeat}
-                  disabled={scene === 2 && beat === 2}
+                  disabled={scene === 5 && beat === 2}
                   className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-xl text-black bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 disabled:pointer-events-none transition-all shadow-[0_0_15px_rgba(6,182,212,0.3)]"
                 >
                   <span>Next Step</span>
@@ -407,60 +400,66 @@ export function App() {
           </>
         )}
 
-        {/* 24-STYLE GRID VIEW CATALOG */}
+        {/* 24-STYLE GRID VIEW CATALOG (Maximized edge-to-edge layout) */}
         {view === "grid" && (
-          <main className="flex-1 overflow-y-auto p-4 md:p-8 bg-zinc-950">
+          <main className="flex-1 overflow-y-auto p-4 bg-zinc-950">
             <div className="mb-6">
-              <h2 className="text-xl md:text-2xl font-black text-white">Grid View matrix</h2>
+              <h2 className="text-xl md:text-2xl font-black text-white">Grid View Matrix</h2>
               <p className="text-xs md:text-sm text-zinc-400 mt-1">
                 A real-time rendered grid catalog presenting all 24 presentation styles in scalable 16:9 thumbnails.
               </p>
             </div>
-
-            {/* Real-time grids columns */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {/* Real-time grids columns - Borderless maximized layout */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {STYLES.map((styleItem) => (
                 <div 
                   key={styleItem.id}
                   onClick={() => navigate("lab", styleItem.id, 1, 0)}
-                  className="group relative bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden hover:border-cyan-500/50 hover:shadow-2xl transition-all cursor-pointer flex flex-col justify-between"
+                  className="group relative bg-zinc-900 rounded-xl overflow-hidden hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] transition-all duration-500 cursor-pointer flex flex-col justify-between"
                   style={{ minWidth: "480px" }} // Explicit min-width card constraint
                 >
-                  <div className="absolute top-3 left-3 z-20 flex gap-2">
-                    <span className="bg-black/80 backdrop-blur text-[10px] font-mono text-white px-2 py-0.5 rounded font-black border border-zinc-800">
-                      STYLE {styleItem.id}
+                  {/* Floating minimal badges */}
+                  <div className="absolute top-2 left-2 z-20 flex gap-1.5">
+                    <span className="bg-black/90 text-[10px] font-mono text-zinc-100 px-2 py-0.5 rounded font-black">
+                      ST {styleItem.id}
                     </span>
-                    <span className="bg-cyan-500 text-[10px] font-mono text-black px-2 py-0.5 rounded font-black shadow">
+                    <span className="bg-cyan-500/90 text-[10px] font-mono text-black px-2 py-0.5 rounded font-black shadow">
                       {styleItem.densityLabel}
                     </span>
                   </div>
                   
-                  {/* Outer thumbnail wrapper wrapper containing scale-down stage */}
-                  <div className="w-full aspect-video bg-zinc-950 overflow-hidden relative border-b border-zinc-800/80 flex items-center justify-center">
-                    {/* Render standard stage in 0.25 (scale) factor */}
+                  {/* Edge-to-edge aspect ratio frame preview */}
+                  <div className="w-full aspect-video bg-zinc-950 overflow-hidden relative flex items-center justify-center">
+                    {/* Render standard stage in scaled factors with NO border padding gaps */}
                     <div 
-                      className="absolute origin-center transition-transform duration-300"
+                      className="absolute origin-center transition-transform duration-500"
                       style={{
                         width: BASE_WIDTH,
                         height: BASE_HEIGHT,
-                        transform: "scale(0.185)", // Scale factor to fit catalog perfectly
+                        transform: "scale(0.25)", // Perfectly fills 480px columns edge-to-edge
                       }}
                     >
-                      <SlideRenderer style={styleItem} scene={1} beat={2} isThumbnail={true} />
+                      {/* Show density graduation: Scene 1 for Keynote (Low), Scene 3 for Hybrid, Scene 5 for Bento Report (High) */}
+                      <SlideRenderer 
+                        style={styleItem} 
+                        scene={styleItem.density === "low" ? 1 : styleItem.density === "med" ? 3 : 5} 
+                        beat={2} 
+                        isThumbnail={true} 
+                      />
                     </div>
                   </div>
 
-                  {/* Thumbnail Information */}
-                  <div className="p-4 bg-zinc-900 flex justify-between items-center">
+                  {/* Thumbnail Information strip */}
+                  <div className="px-4 py-3 bg-zinc-900 border-t border-zinc-800 flex justify-between items-center z-10 shrink-0">
                     <div className="min-w-0">
-                      <p className="text-sm font-black text-white group-hover:text-cyan-400 transition-colors leading-tight">
+                      <p className="text-xs font-black text-zinc-100 group-hover:text-cyan-400 transition-colors leading-none truncate">
                         {styleItem.name}
                       </p>
-                      <span className="text-xs text-zinc-400 block truncate mt-1">
-                        {styleItem.theme}
+                      <span className="text-[10px] text-zinc-500 truncate block mt-1">
+                        {styleItem.theme} • Sc {styleItem.density === "low" ? "1" : styleItem.density === "med" ? "3" : "5"}
                       </span>
                     </div>
-                    <ExternalLink className="w-4 h-4 text-zinc-500 group-hover:text-cyan-400 shrink-0 ml-4" />
+                    <ExternalLink className="w-3.5 h-3.5 text-zinc-600 group-hover:text-cyan-400 transition-colors shrink-0 ml-4" />
                   </div>
                 </div>
               ))}
@@ -470,21 +469,20 @@ export function App() {
 
         {/* BOARD VIEW KANBAN */}
         {view === "board" && (
-          <main className="flex-1 flex flex-col bg-zinc-950 overflow-hidden p-4 md:p-8">
+          <main className="flex-1 flex flex-col bg-zinc-950 overflow-hidden p-4 md:p-6">
             <div className="mb-6 shrink-0">
               <h2 className="text-xl md:text-2xl font-black text-white">Board View Matrix</h2>
               <p className="text-xs md:text-sm text-zinc-400 mt-1">
                 Kanban structural bands organizing styles strictly by speaker-to-audience density levels.
               </p>
             </div>
-
             {/* Horizontal Kanban board overflow system */}
             <div className="flex-1 flex gap-6 overflow-x-auto pb-4 items-stretch select-none">
               {/* LOW DENSITY COLUMN */}
-              <div className="flex-1 min-w-[500px] bg-zinc-900/40 border border-zinc-800 rounded-2xl p-4 flex flex-col h-full overflow-hidden">
-                <div className="flex items-center justify-between border-b border-zinc-800 pb-3 mb-4 shrink-0">
+              <div className="flex-1 min-w-[500px] bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-4 flex flex-col h-full overflow-hidden">
+                <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3 mb-4 shrink-0">
                   <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-emerald-500" />
+                    <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
                     <span className="font-bold text-sm text-white">🟢 KEYNOTE / SPEAKER-LED</span>
                   </div>
                   <span className="bg-zinc-800 text-[10px] font-mono text-zinc-400 px-2 py-0.5 rounded font-black">
@@ -499,10 +497,10 @@ export function App() {
               </div>
 
               {/* MED DENSITY COLUMN */}
-              <div className="flex-1 min-w-[500px] bg-zinc-900/40 border border-zinc-800 rounded-2xl p-4 flex flex-col h-full overflow-hidden">
-                <div className="flex items-center justify-between border-b border-zinc-800 pb-3 mb-4 shrink-0">
+              <div className="flex-1 min-w-[500px] bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-4 flex flex-col h-full overflow-hidden">
+                <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3 mb-4 shrink-0">
                   <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-amber-500" />
+                    <span className="w-3 h-3 rounded-full bg-amber-500 animate-pulse" />
                     <span className="font-bold text-sm text-white">🟡 HYBRID / TIMELINE FLOW</span>
                   </div>
                   <span className="bg-zinc-800 text-[10px] font-mono text-zinc-400 px-2 py-0.5 rounded font-black">
@@ -511,16 +509,16 @@ export function App() {
                 </div>
                 <div className="flex-1 overflow-y-auto flex flex-col gap-4 pr-1">
                   {STYLES.filter((s) => s.density === "med").map((styleItem) => (
-                    <BoardCard key={styleItem.id} styleItem={styleItem} onSelect={() => navigate("lab", styleItem.id, 1, 0)} />
+                    <BoardCard key={styleItem.id} styleItem={styleItem} onSelect={() => navigate("lab", styleItem.id, 3, 0)} />
                   ))}
                 </div>
               </div>
 
               {/* HIGH DENSITY COLUMN */}
-              <div className="flex-1 min-w-[500px] bg-zinc-900/40 border border-zinc-800 rounded-2xl p-4 flex flex-col h-full overflow-hidden">
-                <div className="flex items-center justify-between border-b border-zinc-800 pb-3 mb-4 shrink-0">
+              <div className="flex-1 min-w-[500px] bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-4 flex flex-col h-full overflow-hidden">
+                <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3 mb-4 shrink-0">
                   <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-blue-500" />
+                    <span className="w-3 h-3 rounded-full bg-blue-500 animate-pulse" />
                     <span className="font-bold text-sm text-white">🔵 TEXT REPORT / BENTO</span>
                   </div>
                   <span className="bg-zinc-800 text-[10px] font-mono text-zinc-400 px-2 py-0.5 rounded font-black">
@@ -529,7 +527,7 @@ export function App() {
                 </div>
                 <div className="flex-1 overflow-y-auto flex flex-col gap-4 pr-1">
                   {STYLES.filter((s) => s.density === "high").map((styleItem) => (
-                    <BoardCard key={styleItem.id} styleItem={styleItem} onSelect={() => navigate("lab", styleItem.id, 1, 0)} />
+                    <BoardCard key={styleItem.id} styleItem={styleItem} onSelect={() => navigate("lab", styleItem.id, 5, 0)} />
                   ))}
                 </div>
               </div>
@@ -546,7 +544,7 @@ function BoardCard({ styleItem, onSelect }) {
   return (
     <div 
       onClick={onSelect}
-      className="group bg-zinc-900 rounded-xl border border-zinc-800/80 p-3 hover:border-cyan-500/50 hover:shadow-lg transition-all cursor-pointer flex gap-4 items-center"
+      className="group bg-zinc-900 rounded-xl border border-zinc-800/60 p-3 hover:border-cyan-500/50 hover:shadow-lg transition-all cursor-pointer flex gap-4 items-center"
       style={{ minWidth: "480px" }} // Explicit min-width card constraint
     >
       <div className="w-[120px] aspect-video bg-zinc-950 overflow-hidden relative rounded-lg border border-zinc-850 flex items-center justify-center shrink-0">
@@ -558,7 +556,12 @@ function BoardCard({ styleItem, onSelect }) {
             transform: "scale(0.063)", // Ultra scale down for Kanban thumbs
           }}
         >
-          <SlideRenderer style={styleItem} scene={1} beat={2} isThumbnail={true} />
+          <SlideRenderer 
+            style={styleItem} 
+            scene={styleItem.density === "low" ? 1 : styleItem.density === "med" ? 3 : 5} 
+            beat={2} 
+            isThumbnail={true} 
+          />
         </div>
       </div>
       

@@ -15,7 +15,7 @@ test.describe("Frontend Harness Slides Design System", () => {
     for (const styleId of stylesToTest) {
       const style = STYLES.find((s) => s.id === styleId);
       
-      for (const scene of [1, 2]) {
+      for (const scene of [1, 3, 5]) { // Test graduated scene densities (1, 3, 5)
         for (const beat of [0, 1, 2]) {
           await page.goto(`/?view=lab&style=${styleId}&scene=${scene}&beat=${beat}`);
           
@@ -71,7 +71,7 @@ test.describe("Frontend Harness Slides Design System", () => {
     await page.keyboard.press("ArrowRight");
     await page.waitForURL(/\?.*beat=2/);
 
-    // Cross scene boundary
+    // Cross scene boundary (supports 5 scenes now)
     await page.keyboard.press("ArrowRight");
     await page.waitForURL(/\?.*scene=2/);
     await page.waitForURL(/\?.*beat=0/);
