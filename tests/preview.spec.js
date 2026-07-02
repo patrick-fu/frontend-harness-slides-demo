@@ -60,6 +60,58 @@ test.describe("Frontend Harness Slides Design System", () => {
     await expect(page.locator("span:has-text('17 - 24 (High)')")).toBeVisible();
   });
 
+  test("Grid view thumbnails fill their 16:9 frames at large viewport sizes", async ({ page }) => {
+    await page.setViewportSize({ width: 2048, height: 900 });
+    await page.goto("/?view=grid");
+
+    const frame = page.locator('[data-testid="grid-thumbnail-frame"]').first();
+    const stage = page.locator('[data-testid="grid-thumbnail-stage"]').first();
+
+    await frame.waitFor({ state: "visible" });
+    const frameBox = await frame.boundingBox();
+    const stageBox = await stage.boundingBox();
+
+    expect(stageBox.width).toBeCloseTo(frameBox.width, 0);
+    expect(stageBox.height).toBeCloseTo(frameBox.height, 0);
+  });
+
+  test("Grid view badges do not overlap the rendered slide stage", async ({ page }) => {
+    await page.setViewportSize({ width: 2048, height: 900 });
+    await page.goto("/?view=grid");
+
+    const frame = page.locator('[data-testid="grid-thumbnail-frame"]').first();
+    const badges = page.locator('[data-testid="grid-thumbnail-badges"]').first();
+
+    await frame.waitFor({ state: "visible" });
+    const frameBox = await frame.boundingBox();
+    const badgesBox = await badges.boundingBox();
+
+    expect(badgesBox.y).toBeGreaterThanOrEqual(frameBox.y + frameBox.height - 1);
+  });
+
+  test("language switcher localizes app chrome and slide content", async ({ page }) => {
+    await page.goto("/?view=grid");
+
+    await page.locator('[data-testid="language-switcher"] button[title="中文"]').click();
+
+    await expect(page.locator("h2")).toContainText("网格视图矩阵");
+    await expect(page.locator("body")).toContainText("主动错误抑制");
+    await expect(page.locator("body")).toContainText("量子编译器架构");
+  });
+
+  test("theme switcher defaults to auto and supports light and dark modes", async ({ page }) => {
+    await page.goto("/?view=grid");
+
+    const root = page.locator("#root > div").first();
+    await expect(page.locator('[data-testid="theme-switcher"] button[title="Auto"]')).toHaveAttribute("aria-pressed", "true");
+
+    await page.locator('[data-testid="theme-switcher"] button[title="Light"]').click();
+    await expect(root).toHaveClass(/bg-slate-100/);
+
+    await page.locator('[data-testid="theme-switcher"] button[title="Dark"]').click();
+    await expect(root).toHaveClass(/bg-zinc-950/);
+  });
+
   test("Interactive Lab keyboard stepping controls", async ({ page }) => {
     await page.goto("/?view=lab&style=01&scene=1&beat=0");
     await page.locator("#slide-stage").waitFor({ state: "visible" });

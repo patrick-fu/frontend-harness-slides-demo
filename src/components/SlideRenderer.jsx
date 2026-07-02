@@ -17,21 +17,27 @@ const sectionLabels = {
   closing: "Closing",
 };
 
-export function SlideRenderer({ style, scene, beat, isThumbnail = false }) {
+const CJK_FONT_STACK = '"Noto Sans SC", "Source Han Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", Inter, system-ui, sans-serif';
+
+export function SlideRenderer({ style, scene, beat, isThumbnail = false, language = "en" }) {
   const currentScene = style.scenes.find((s) => s.id === scene) || style.scenes[0];
   const beatData = currentScene.beats[beat] || currentScene.beats[0];
   const layout = currentScene.layout || "split";
+  const isCjk = language === "zh";
 
   // Map font styles
-  const headerFont = style.id === "02" || style.id === "06" ? "font-['Caveat']" :
+  const headerFont = isCjk ? "font-sans font-black" :
+                     style.id === "02" || style.id === "06" ? "font-['Caveat']" :
                      style.id === "07" ? "font-['VT323']" :
                      style.id === "17" ? "font-['Cormorant_Garamond']" :
                      style.id === "01" || style.id === "08" || style.id === "21" ? "font-['Playfair_Display']" : "font-sans font-black";
 
-  const bodyFont = style.id === "03" || style.id === "04" || style.id === "09" || style.id === "10" || 
+  const bodyFont = isCjk ? "font-sans" :
+                    style.id === "03" || style.id === "04" || style.id === "09" || style.id === "10" ||
                     style.id === "11" || style.id === "12" || style.id === "13" || style.id === "14" || 
                     style.id === "15" || style.id === "16" || style.id === "18" || style.id === "19" || 
                     style.id === "20" || style.id === "22" || style.id === "23" || style.id === "24" ? "font-['Fira_Code']" : "font-sans";
+  const stageMeta = isCjk ? `场景 ${scene} / 5 • 节拍 ${beat + 1} / 3` : `Scene ${scene} of 5 • Beat ${beat + 1} of 3`;
 
   // Arrange grid columns based on layout metadata
   let mainContent;
@@ -146,9 +152,10 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false }) {
 
   return (
     <div 
+      lang={isCjk ? "zh-Hans" : "en"}
       className={`w-full h-full relative p-[5cqw] flex flex-col justify-between overflow-hidden select-none transition-all duration-500 ${style.colors.bg} ${style.colors.ink}`}
       style={{
-        fontFamily: style.typography.body === "Fira Code" ? "Fira Code, monospace" : "Inter, sans-serif"
+        fontFamily: isCjk ? CJK_FONT_STACK : style.typography.body === "Fira Code" ? "Fira Code, monospace" : "Inter, sans-serif"
       }}
     >
       {/* Background decorations based on style */}
@@ -204,7 +211,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false }) {
           {beatData.beatLine}
         </p>
         <span className="text-[1.1cqw] opacity-40 font-mono">
-          Scene {scene} of 5 • Beat {beat + 1} of 3
+          {stageMeta}
         </span>
       </footer>
     </div>
