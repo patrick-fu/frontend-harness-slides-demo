@@ -20,6 +20,7 @@ const sectionLabels = {
 export function SlideRenderer({ style, scene, beat, isThumbnail = false }) {
   const currentScene = style.scenes.find((s) => s.id === scene) || style.scenes[0];
   const beatData = currentScene.beats[beat] || currentScene.beats[0];
+  const layout = currentScene.layout || "split";
 
   // Map font styles
   const headerFont = style.id === "02" || style.id === "06" ? "font-['Caveat']" :
@@ -31,6 +32,117 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false }) {
                     style.id === "11" || style.id === "12" || style.id === "13" || style.id === "14" || 
                     style.id === "15" || style.id === "16" || style.id === "18" || style.id === "19" || 
                     style.id === "20" || style.id === "22" || style.id === "23" || style.id === "24" ? "font-['Fira_Code']" : "font-sans";
+
+  // Arrange grid columns based on layout metadata
+  let mainContent;
+  if (layout === "reverse") {
+    mainContent = (
+      <>
+        {/* Right Side Copy, Left Side Visual */}
+        <div className="col-span-6 h-full flex items-center justify-center relative min-h-[45cqh] order-first">
+          <VisualMetaphorEngine style={style} scene={scene} beat={beat} isThumbnail={isThumbnail} />
+        </div>
+        <div className="col-span-6 flex flex-col justify-center h-full">
+          <div className="flex flex-col gap-[1.5cqh]">
+            <span className={`text-[1.5cqw] font-bold tracking-widest uppercase opacity-75 select-none ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
+              {beatData.caption}
+            </span>
+            <h1 className={`text-[4cqw] leading-[1.1] font-black tracking-tight ${headerFont}`}>
+              {beatData.title}
+            </h1>
+            <p className={`text-[1.6cqw] leading-[1.4] opacity-80 ${bodyFont}`}>
+              {beatData.body}
+            </p>
+          </div>
+        </div>
+      </>
+    );
+  } else if (layout === "topboard" || layout === "fullboard" || layout === "stickywall") {
+    mainContent = (
+      <div className="col-span-12 flex flex-col gap-[3cqh] h-full justify-between w-full">
+        <div className="grid grid-cols-12 gap-[3cqw] items-end w-full">
+          <div className="col-span-7 flex flex-col gap-[1cqh]">
+            <span className={`text-[1.5cqw] font-bold tracking-widest uppercase opacity-75 ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
+              {beatData.caption}
+            </span>
+            <h1 className={`text-[3.5cqw] leading-[1.1] font-black tracking-tight ${headerFont}`}>
+              {beatData.title}
+            </h1>
+          </div>
+          <div className="col-span-5">
+            <p className={`text-[1.5cqw] leading-[1.4] opacity-80 ${bodyFont}`}>
+              {beatData.body}
+            </p>
+          </div>
+        </div>
+        <div className="w-full flex items-center justify-center min-h-[30cqh] relative">
+          <VisualMetaphorEngine style={style} scene={scene} beat={beat} isThumbnail={isThumbnail} />
+        </div>
+      </div>
+    );
+  } else if (layout === "poster") {
+    mainContent = (
+      <div className="col-span-12 grid grid-cols-12 gap-[4cqw] items-center relative w-full">
+        <div className="col-span-7 flex flex-col gap-[1.5cqh]">
+          <span className={`text-[1.5cqw] font-bold tracking-widest uppercase opacity-75 ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
+            {beatData.caption}
+          </span>
+          <h1 className={`text-[4.5cqw] leading-[1.05] font-black tracking-tight ${headerFont}`}>
+            {beatData.title}
+          </h1>
+          <p className={`text-[1.8cqw] leading-[1.4] opacity-85 italic ${bodyFont}`}>
+            {beatData.body}
+          </p>
+        </div>
+        <div className="col-span-5 h-full flex items-center justify-center relative min-h-[35cqh]">
+          <VisualMetaphorEngine style={style} scene={scene} beat={beat} isThumbnail={isThumbnail} />
+        </div>
+      </div>
+    );
+  } else if (layout === "center") {
+    mainContent = (
+      <div className="col-span-12 flex flex-col items-center text-center gap-[3cqh] justify-center h-full w-full">
+        <div className="max-w-[50cqw] flex flex-col gap-[1cqh] items-center">
+          <span className={`text-[1.4cqw] font-bold tracking-widest uppercase opacity-75 ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
+            {beatData.caption}
+          </span>
+          <h1 className={`text-[3.8cqw] leading-[1.1] font-black tracking-tight ${headerFont}`}>
+            {beatData.title}
+          </h1>
+          <p className={`text-[1.5cqw] leading-[1.4] opacity-80 ${bodyFont}`}>
+            {beatData.body}
+          </p>
+        </div>
+        <div className="w-full flex items-center justify-center min-h-[30cqh]">
+          <VisualMetaphorEngine style={style} scene={scene} beat={beat} isThumbnail={isThumbnail} />
+        </div>
+      </div>
+    );
+  } else {
+    // Default "split"
+    mainContent = (
+      <>
+        {/* Left Side: Copy */}
+        <div className="col-span-6 flex flex-col justify-center h-full">
+          <div className="flex flex-col gap-[1.5cqh]">
+            <span className={`text-[1.5cqw] font-bold tracking-widest uppercase opacity-75 select-none ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
+              {beatData.caption}
+            </span>
+            <h1 className={`text-[4cqw] leading-[1.1] font-black tracking-tight ${headerFont}`}>
+              {beatData.title}
+            </h1>
+            <p className={`text-[1.6cqw] leading-[1.4] opacity-80 ${bodyFont}`}>
+              {beatData.body}
+            </p>
+          </div>
+        </div>
+        {/* Right Side: Visual Metaphor Canvas */}
+        <div className="col-span-6 h-full flex items-center justify-center relative min-h-[45cqh]">
+          <VisualMetaphorEngine style={style} scene={scene} beat={beat} isThumbnail={isThumbnail} />
+        </div>
+      </>
+    );
+  }
 
   return (
     <div 
@@ -81,29 +193,8 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false }) {
       </header>
 
       {/* Main Slide Layout */}
-      <div className="grid grid-cols-12 gap-[4cqw] items-center my-auto z-10 min-h-[55cqh]">
-        {/* Left Side: Copy */}
-        <div className="col-span-6 flex flex-col justify-center h-full">
-          <div className="flex flex-col gap-[1.5cqh]">
-            {/* Beat Subtitle / Eyebrow */}
-            <span className={`text-[1.5cqw] font-bold tracking-widest uppercase opacity-75 select-none ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
-              {beatData.caption}
-            </span>
-            {/* Beat Headline */}
-            <h1 className={`text-[4cqw] leading-[1.1] font-black tracking-tight ${headerFont}`}>
-              {beatData.title}
-            </h1>
-            {/* Beat Body Paragraph */}
-            <p className={`text-[1.6cqw] leading-[1.4] opacity-80 ${bodyFont}`}>
-              {beatData.body}
-            </p>
-          </div>
-        </div>
-
-        {/* Right Side: Visual Metaphor Canvas */}
-        <div className="col-span-6 h-full flex items-center justify-center relative min-h-[45cqh]">
-          <VisualMetaphorEngine style={style} scene={scene} beat={beat} isThumbnail={isThumbnail} />
-        </div>
+      <div className="grid grid-cols-12 gap-[4cqw] items-center my-auto z-10 min-h-[55cqh] w-full">
+        {mainContent}
       </div>
 
       {/* Footer Punchline Area */}
