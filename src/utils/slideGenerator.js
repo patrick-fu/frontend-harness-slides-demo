@@ -348,3 +348,93 @@ export function getSlideHTML(style, mode = 'story', density = 'low', scene = 1, 
     </div>
   `;
 }
+
+export function getSlideData(style, mode = 'story', density = 'low', scene = 1, beat = 1) {
+  if (mode === 'specs') {
+    return {
+      isSpecs: true,
+      html: getSlideHTML(style, mode, density, scene, beat)
+    };
+  }
+
+  let fontClass = 'font-sans';
+  const fontLower = style.specs.font.toLowerCase();
+  if (fontLower.includes('caveat') || fontLower.includes('sketch') || fontLower.includes('handwriting')) fontClass = 'font-sketch';
+  else if (fontLower.includes('fira') || fontLower.includes('mono')) fontClass = 'font-mono';
+  else if (fontLower.includes('playfair') || fontLower.includes('serif')) fontClass = 'font-serif';
+  else if (fontLower.includes('vt323') || fontLower.includes('arcade') || fontLower.includes('retro')) fontClass = 'font-arcade';
+  else if (fontLower.includes('cormorant') || fontLower.includes('garamond')) fontClass = 'font-cormorant';
+
+  const canvasBg = style.specs.palette[0];
+  const inkColor = style.specs.palette[1];
+  const accentColor = style.specs.palette[2] || '#3b82f6';
+  const mutedColor = style.specs.palette[3] || style.specs.palette[1] + '80';
+
+  const sceneContent = getSceneContent(style.id, scene);
+  const beatKey = getBeatKey(beat);
+  const densityMeta = getDensityMeta(density, scene);
+  const headerAnim = getAnimClass(style.id, 2);
+  const footerAnim = getAnimClass(style.id, 3);
+
+  const sceneTitle = sceneContent?.title || style.topic;
+  const sceneSubtitle = sceneContent?.subtitle || style.desc.split('.')[0] + '.';
+
+  const beatBadge = `
+    <div class="flex items-center justify-center gap-[0.8cqw] text-[0.9cqw] font-mono uppercase tracking-wider" style="color: ${mutedColor}">
+      <span class="px-[1cqw] py-[0.2cqw] rounded-full border" style="border-color: ${accentColor}40; color: ${accentColor}">Beat ${beat}/3</span>
+      <span>·</span>
+      <span>${densityMeta.layout}</span>
+    </div>
+  `;
+
+  return {
+    isSpecs: false,
+    fontClass,
+    canvasBg,
+    inkColor,
+    accentColor,
+    mutedColor,
+    sceneContent,
+    beatKey,
+    densityMeta,
+    headerAnim,
+    footerAnim,
+    sceneTitle,
+    sceneSubtitle,
+    beatBadge,
+    density
+  };
+}
+
+export function stripPastAnimations(html, currentBeat, styleId) {
+  if (!html) return html;
+  let result = html;
+
+  if (currentBeat > 1) {
+    if (styleId >= 17) {
+      if (currentBeat >= 2) {
+        result = result.replace(/\banimate-subtle-1\b/g, '');
+      }
+      if (currentBeat >= 3) {
+        result = result.replace(/\banimate-subtle-2\b/g, '');
+      }
+    } else if (styleId >= 9) {
+      if (currentBeat >= 2) {
+        result = result.replace(/\banimate-match-1\b/g, '');
+      }
+      if (currentBeat >= 3) {
+        result = result.replace(/\banimate-match-2\b/g, '');
+      }
+    } else {
+      if (currentBeat >= 2) {
+        result = result.replace(/\banimate-fade-up\b/g, '');
+      }
+      if (currentBeat >= 3) {
+        result = result.replace(/\banimate-fade-up-delay-1\b/g, '');
+      }
+    }
+  }
+
+  return result;
+}
+

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { stylesData, getNativeDensity } from './data/stylesData.js';
-import { getSlideHTML } from './utils/slideGenerator.js';
+import { getSlideHTML, getSlideData, enrichHTML, getAnimClass, stripPastAnimations } from './utils/slideGenerator.js';
 
 export default function App() {
   // Parse URL Parameters for automation / initial state
@@ -140,13 +140,216 @@ export default function App() {
 
   // Render Slide Stage Component
   const SlideStage = ({ style, mode, density, scene, beat, onClick }) => {
-    const slideHtml = getSlideHTML(style, mode, density, scene, beat);
+    const slideData = getSlideData(style, mode, density, scene, beat);
+    
+    if (slideData.isSpecs) {
+      return (
+        <div 
+          className="w-full h-full animate-fade-up"
+          onClick={onClick}
+          dangerouslySetInnerHTML={{ __html: slideData.html }}
+        />
+      );
+    }
+
+    const {
+      fontClass,
+      canvasBg,
+      inkColor,
+      accentColor,
+      mutedColor,
+      sceneContent,
+      densityMeta,
+      headerAnim,
+      footerAnim,
+      sceneTitle,
+      sceneSubtitle,
+      beatBadge
+    } = slideData;
+
+    // React-stable Key for Header and Footer to prevent re-triggering animations on beat change
+    // This key only changes when style or scene changes, keeping DOM node stable during beat changes!
+    const stableKey = `${style.id}-${scene}`;
+
+    // Render Content Area based on Density
+    let contentElement = null;
+
+    if (density === 'low') {
+      const b1 = sceneContent?.low?.beat1;
+      const b2 = sceneContent?.low?.beat2;
+      const b3 = sceneContent?.low?.beat3;
+
+      // Render b1 card
+      let b1HtmlElement = null;
+      if (b1) {
+        const vHtml1 = enrichHTML(style.id, b1.visualHtml || '', beat, 1);
+        const subdescHtml1 = b1.subdesc ? `<p class="text-[0.9cqw] font-light mt-[0.3cqw]" style="color: ${mutedColor}">${b1.subdesc}</p>` : '';
+        const punchlineHtml1 = b1.punchline ? `<p class="text-[1cqw] font-semibold mt-[0.6cqw] px-[1cqw] py-[0.4cqw] rounded-lg text-center" style="color: ${inkColor}; background-color: ${accentColor}22; border: 1px solid ${accentColor}44">${b1.punchline}</p>` : '';
+        
+        const dimClass = (beat === 1) ? 'opacity-100 scale-100' : 'opacity-45 scale-95 filter-grayscale-[30%] blur-[0.3px]';
+        const itemAnim = getAnimClass(style.id, 1);
+
+        b1HtmlElement = (
+          <div 
+            key="beat-card-1"
+            className={`flex-1 flex flex-col items-center text-center p-[1.5cqw] rounded-xl border border-transparent transition-all duration-700 ${dimClass} ${itemAnim}`}
+          >
+            <div className="h-[8cqw] flex items-center justify-center mb-[1cqw] w-full" dangerouslySetInnerHTML={{ __html: vHtml1 }} />
+            <h3 className="text-[1.4cqw] font-bold tracking-tight mb-[0.4cqw]" style={{ color: inkColor }}>{b1.title}</h3>
+            <p className="text-[1cqw] font-light max-w-[25cqw] leading-relaxed" style={{ color: mutedColor }}>{b1.desc}</p>
+            {b1.subdesc && <div dangerouslySetInnerHTML={{ __html: subdescHtml1 }} />}
+            {b1.punchline && <div dangerouslySetInnerHTML={{ __html: punchlineHtml1 }} />}
+          </div>
+        );
+      }
+
+      // Render b2 card
+      let b2HtmlElement = null;
+      let arrow1Element = null;
+      if (b2) {
+        const vHtml2 = enrichHTML(style.id, b2.visualHtml || '', beat, 2);
+        const subdescHtml2 = b2.subdesc ? `<p class="text-[0.9cqw] font-light mt-[0.3cqw]" style="color: ${mutedColor}">${b2.subdesc}</p>` : '';
+        const punchlineHtml2 = b2.punchline ? `<p class="text-[1cqw] font-semibold mt-[0.6cqw] px-[1cqw] py-[0.4cqw] rounded-lg text-center" style="color: ${inkColor}; background-color: ${accentColor}22; border: 1px solid ${accentColor}44">${b2.punchline}</p>` : '';
+        
+        let stateClass = '';
+        if (beat === 1) {
+          stateClass = 'opacity-0 scale-75 w-0 h-0 overflow-hidden pointer-events-none border-0 m-0 p-0';
+        } else if (beat === 2) {
+          stateClass = 'opacity-100 scale-100';
+        } else {
+          stateClass = 'opacity-45 scale-95 filter-grayscale-[30%] blur-[0.3px]';
+        }
+        const itemAnim = getAnimClass(style.id, 2);
+
+        b2HtmlElement = (
+          <div 
+            key="beat-card-2"
+            className={`flex-1 flex flex-col items-center text-center p-[1.5cqw] rounded-xl border border-transparent transition-all duration-700 ${stateClass} ${itemAnim}`}
+          >
+            <div className="h-[8cqw] flex items-center justify-center mb-[1cqw] w-full" dangerouslySetInnerHTML={{ __html: vHtml2 }} />
+            <h3 className="text-[1.4cqw] font-bold tracking-tight mb-[0.4cqw]" style={{ color: inkColor }}>{b2.title}</h3>
+            <p className="text-[1cqw] font-light max-w-[25cqw] leading-relaxed" style={{ color: mutedColor }}>{b2.desc}</p>
+            {b2.subdesc && <div dangerouslySetInnerHTML={{ __html: subdescHtml2 }} />}
+            {b2.punchline && <div dangerouslySetInnerHTML={{ __html: punchlineHtml2 }} />}
+          </div>
+        );
+
+        const arrowState = (beat >= 2) ? 'opacity-30 scale-100 w-auto px-[1cqw]' : 'opacity-0 scale-50 w-0 h-0 overflow-hidden m-0 p-0';
+        arrow1Element = (
+          <div 
+            key="arrow-1"
+            className={`text-[2cqw] text-current shrink-0 self-center animate-match-1 transition-all duration-700 ${arrowState}`}
+          >
+            →
+          </div>
+        );
+      }
+
+      // Render b3 card
+      let b3HtmlElement = null;
+      let arrow2Element = null;
+      if (b3) {
+        const vHtml3 = enrichHTML(style.id, b3.visualHtml || '', beat, 3);
+        const subdescHtml3 = b3.subdesc ? `<p class="text-[0.9cqw] font-light mt-[0.3cqw]" style="color: ${mutedColor}">${b3.subdesc}</p>` : '';
+        const punchlineHtml3 = b3.punchline ? `<p class="text-[1cqw] font-semibold mt-[0.6cqw] px-[1cqw] py-[0.4cqw] rounded-lg text-center" style="color: ${inkColor}; background-color: ${accentColor}22; border: 1px solid ${accentColor}44">${b3.punchline}</p>` : '';
+        
+        let stateClass = '';
+        if (beat < 3) {
+          stateClass = 'opacity-0 scale-75 w-0 h-0 overflow-hidden pointer-events-none border-0 m-0 p-0';
+        } else {
+          stateClass = 'opacity-100 scale-100';
+        }
+        const itemAnim = getAnimClass(style.id, 3);
+
+        b3HtmlElement = (
+          <div 
+            key="beat-card-3"
+            className={`flex-1 flex flex-col items-center text-center p-[1.5cqw] rounded-xl border border-transparent transition-all duration-700 ${stateClass} ${itemAnim}`}
+          >
+            <div className="h-[8cqw] flex items-center justify-center mb-[1cqw] w-full" dangerouslySetInnerHTML={{ __html: vHtml3 }} />
+            <h3 className="text-[1.4cqw] font-bold tracking-tight mb-[0.4cqw]" style={{ color: inkColor }}>{b3.title}</h3>
+            <p className="text-[1cqw] font-light max-w-[25cqw] leading-relaxed" style={{ color: mutedColor }}>{b3.desc}</p>
+            {b3.subdesc && <div dangerouslySetInnerHTML={{ __html: subdescHtml3 }} />}
+            {b3.punchline && <div dangerouslySetInnerHTML={{ __html: punchlineHtml3 }} />}
+          </div>
+        );
+
+        const arrowState = (beat >= 3) ? 'opacity-30 scale-100 w-auto px-[1cqw]' : 'opacity-0 scale-50 w-0 h-0 overflow-hidden m-0 p-0';
+        arrow2Element = (
+          <div 
+            key="arrow-2"
+            className={`text-[2cqw] text-current shrink-0 self-center animate-match-2 transition-all duration-700 ${arrowState}`}
+          >
+            →
+          </div>
+        );
+      }
+
+      contentElement = (
+        <div className="flex items-stretch justify-center gap-[1cqw] max-w-[62cqw] mx-auto w-full transition-all duration-500">
+          {b1HtmlElement}
+          {arrow1Element}
+          {b2HtmlElement}
+          {arrow2Element}
+          {b3HtmlElement}
+        </div>
+      );
+    } else if (density === 'med') {
+      const flowHtml = sceneContent?.med?.[`beat${beat}`];
+      if (flowHtml) {
+        const filteredHtml = stripPastAnimations(flowHtml, beat, style.id);
+        contentElement = (
+          <div 
+            key={`med-content-${style.id}-${scene}-${beat}`}
+            className="w-full h-full"
+            dangerouslySetInnerHTML={{ __html: filteredHtml }}
+          />
+        );
+      }
+    } else if (density === 'high') {
+      const bentoHtml = sceneContent?.high?.[`beat${beat}`];
+      if (bentoHtml) {
+        const filteredHtml = stripPastAnimations(bentoHtml, beat, style.id);
+        contentElement = (
+          <div 
+            key={`high-content-${style.id}-${scene}-${beat}`}
+            className="w-full h-full"
+            dangerouslySetInnerHTML={{ __html: filteredHtml }}
+          />
+        );
+      }
+    }
+
+    if (!contentElement) {
+      return (
+        <div className="w-full h-full p-[5cqw] flex flex-col justify-center items-center select-none" style={{ backgroundColor: canvasBg, color: inkColor }}>
+          <h2 className="text-[2.5cqw] font-bold">{style.topic}</h2>
+          <p className="text-[1.2cqw] mt-[1cqw]" style={{ color: mutedColor }}>Content pending for Style #{style.id} · Scene {scene} · Beat {beat}</p>
+        </div>
+      );
+    }
+
     return (
       <div 
-        className="w-full h-full"
+        className={`w-full h-full p-[5cqw] flex flex-col justify-between select-none ${fontClass}`} 
+        style={{ backgroundColor: canvasBg, color: inkColor }}
         onClick={onClick}
-        dangerouslySetInnerHTML={{ __html: slideHtml }}
-      />
+      >
+        <div className="flex-1 flex flex-col justify-center space-y-[2cqw]">
+          {/* Header has stable key to prevent re-triggering animations on beat changes */}
+          <div key={stableKey} className={`text-center space-y-[0.5cqw] ${headerAnim}`}>
+            <h2 className="text-[2.5cqw] font-bold leading-tight" style={{ color: inkColor }}>{sceneTitle}</h2>
+            <p className="text-[1.1cqw]" style={{ color: mutedColor }}>{sceneSubtitle}</p>
+            <div dangerouslySetInnerHTML={{ __html: beatBadge }} />
+          </div>
+          {contentElement}
+        </div>
+        {/* Footer has stable key to prevent re-triggering animations on beat changes */}
+        <div key={`footer-${stableKey}`} className={`flex justify-between items-center text-[1cqw] font-mono ${footerAnim}`} style={{ color: mutedColor }}>
+          <span>{style.name.toUpperCase()}</span>
+          <span>{densityMeta.label}</span>
+        </div>
+      </div>
     );
   };
 
