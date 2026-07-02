@@ -113,31 +113,58 @@ export function getSlideHTML(style, mode = 'story', density = 'low', scene = 1, 
 
   if (sceneContent) {
     if (density === 'low') {
-      const b = sceneContent.low[beatKey];
-      if (b) {
-        const textAnim = getAnimClass(style.id, 2);
-        const subdescHtml = b.subdesc ? `<p class="text-[1.2cqw] font-light max-w-[45cqw] mt-[0.5cqw]" style="color: ${mutedColor}">${b.subdesc}</p>` : '';
-        const punchlineHtml = b.punchline ? `<p class="text-[1.4cqw] font-semibold max-w-[45cqw] mt-[1cqw] px-[1.5cqw] py-[0.6cqw] rounded-lg" style="color: ${inkColor}; background-color: ${accentColor}22; border: 1px solid ${accentColor}44">${b.punchline}</p>` : '';
+      const textAnim = getAnimClass(style.id, 2);
+      
+      // Determine which beats to render based on current beat
+      let beatsToRender = [];
+      if (beat >= 1) beatsToRender.push('beat1');
+      if (beat >= 2) beatsToRender.push('beat2');
+      if (beat >= 3) beatsToRender.push('beat3');
+
+      const beatsHtml = beatsToRender.map((bKey, idx) => {
+        const b = sceneContent.low[bKey];
+        if (!b) return '';
+        const isLatest = idx === beatsToRender.length - 1;
+        const itemAnim = getAnimClass(style.id, idx + 1);
+        const subdescHtml = b.subdesc ? `<p class="text-[0.9cqw] font-light mt-[0.3cqw]" style="color: ${mutedColor}">${b.subdesc}</p>` : '';
+        const punchlineHtml = b.punchline ? `<p class="text-[1cqw] font-semibold mt-[0.6cqw] px-[1cqw] py-[0.4cqw] rounded-lg text-center" style="color: ${inkColor}; background-color: ${accentColor}22; border: 1px solid ${accentColor}44">${b.punchline}</p>` : '';
+        
+        // Dim older beats to focus attention on the latest revealed beat
+        const dimClass = isLatest ? 'opacity-100 scale-100' : 'opacity-45 scale-95';
 
         return `
-          <div class="w-full h-full p-[5cqw] flex flex-col justify-between select-none ${fontClass}" style="background-color: ${canvasBg}; color: ${inkColor}">
-            <div class="flex-1 flex flex-col justify-center items-center text-center space-y-[2cqw]">
+          <div class="flex-1 flex flex-col items-center text-center p-[1.5cqw] rounded-xl border border-transparent transition-all duration-500 ${dimClass} ${itemAnim}">
+            <div class="h-[8cqw] flex items-center justify-center mb-[1cqw] w-full">
               ${b.visualHtml || ''}
-              <div class="space-y-[0.6cqw] ${textAnim}">
-                <h2 class="text-[2.8cqw] font-bold tracking-tight max-w-[52cqw] leading-tight" style="color: ${inkColor}">${b.title || sceneTitle}</h2>
-                <p class="text-[1.4cqw] font-light max-w-[45cqw]" style="color: ${mutedColor}">${b.desc || sceneSubtitle}</p>
-                ${subdescHtml}
-                ${punchlineHtml}
-              </div>
-              ${beatBadge}
             </div>
-            <div class="flex justify-between items-center text-[1cqw] font-mono ${footerAnim}" style="color: ${mutedColor}">
-              <span>${style.name.toUpperCase()}</span>
-              <span>${densityMeta.label}</span>
-            </div>
+            <h3 class="text-[1.4cqw] font-bold tracking-tight mb-[0.4cqw]" style="color: ${inkColor}">${b.title}</h3>
+            <p class="text-[1cqw] font-light max-w-[25cqw] leading-relaxed" style="color: ${mutedColor}">${b.desc}</p>
+            ${subdescHtml}
+            ${punchlineHtml}
           </div>
         `;
-      }
+      }).join(
+        `<div class="text-[2cqw] text-current opacity-30 shrink-0 self-center animate-match-1 px-[1cqw]">→</div>`
+      );
+
+      return `
+        <div class="w-full h-full p-[5cqw] flex flex-col justify-between select-none ${fontClass}" style="background-color: ${canvasBg}; color: ${inkColor}">
+          <div class="flex-1 flex flex-col justify-center space-y-[2cqw]">
+            <div class="text-center space-y-[0.5cqw] ${textAnim}">
+              <h2 class="text-[2.5cqw] font-bold leading-tight" style="color: ${inkColor}">${sceneTitle}</h2>
+              <p class="text-[1.1cqw]" style="color: ${mutedColor}">${sceneSubtitle}</p>
+              ${beatBadge}
+            </div>
+            <div class="flex items-stretch justify-center gap-[1.5cqw] max-w-[62cqw] mx-auto w-full transition-all duration-500">
+              ${beatsHtml}
+            </div>
+          </div>
+          <div class="flex justify-between items-center text-[1cqw] font-mono ${footerAnim}" style="color: ${mutedColor}">
+            <span>${style.name.toUpperCase()}</span>
+            <span>${densityMeta.label}</span>
+          </div>
+        </div>
+      `;
     }
 
     if (density === 'med') {
