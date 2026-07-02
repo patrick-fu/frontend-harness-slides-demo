@@ -35,6 +35,72 @@ export function getDensityMeta(density, scene) {
   return { label: `HIGH DENSITY · ${sceneLabel}`, layout: 'BENTO GRID' };
 }
 
+// Micro-animation injector to give rich details matching the topic
+export function enrichHTML(styleId, html, currentBeat, itemBeatIndex) {
+  if (!html) return html;
+  let enriched = html;
+
+  // Style 1 (Quantum Bloch Sphere Keynote)
+  if (styleId === 1) {
+    enriched = enriched.replace('<svg ', '<svg class="animate-rotate-slow" ');
+  }
+
+  // Style 2 (Sketch Board Emoji)
+  if (styleId === 2) {
+    if (itemBeatIndex === 1) {
+      enriched = enriched.replace('class="', 'class="animate-float-sticky-1 ');
+    } else if (itemBeatIndex === 2) {
+      enriched = enriched.replace('class="', 'class="animate-float-sticky-2 ');
+    }
+    enriched = enriched.replace('🤖', '<span class="inline-block animate-wiggle-nod">🤖</span>');
+  }
+
+  // Style 3 (Dialogue Stage)
+  if (styleId === 3) {
+    if (currentBeat === itemBeatIndex) {
+      enriched = enriched.replace('class="', 'class="animate-wiggle-nod ');
+    }
+  }
+
+  // Style 4 (Kinetic Type Punchline)
+  if (styleId === 4) {
+    if (currentBeat === itemBeatIndex) {
+      enriched = enriched.replace('class="', 'class="animate-mechanical-shake animate-kinetic-punch ');
+    }
+  }
+
+  // Style 5 (Object Metaphor Hero)
+  if (styleId === 5) {
+    if (currentBeat === itemBeatIndex) {
+      enriched = enriched.replace('class="', 'class="animate-bounce-jump ');
+    }
+  }
+
+  // Style 6 (Blackboard Chalk Talk)
+  if (styleId === 6) {
+    enriched = enriched.replace('class="', 'class="animate-chalk-wobble ');
+  }
+
+  // Style 7 (Arcade Boss Fight)
+  if (styleId === 7) {
+    if (itemBeatIndex === 1) {
+      enriched = enriched.replace('class="', 'class="animate-wiggle-nod ');
+    }
+    if (itemBeatIndex === 3 && currentBeat === 3) {
+      enriched = enriched.replace('class="', 'class="animate-damage-flash animate-screen-shake ');
+    }
+  }
+
+  // Style 8 (Spotlight Quote Poster)
+  if (styleId === 8) {
+    if (currentBeat === itemBeatIndex) {
+      enriched = enriched.replace('class="', 'class="animate-spotlight ');
+    }
+  }
+
+  return enriched;
+}
+
 // Dynamic Slide Generator — scene/beat progressive storytelling
 export function getSlideHTML(style, mode = 'story', density = 'low', scene = 1, beat = 1) {
   if (mode === 'specs') {
@@ -115,37 +181,96 @@ export function getSlideHTML(style, mode = 'story', density = 'low', scene = 1, 
     if (density === 'low') {
       const textAnim = getAnimClass(style.id, 2);
       
-      // Determine which beats to render based on current beat
-      let beatsToRender = [];
-      if (beat >= 1) beatsToRender.push('beat1');
-      if (beat >= 2) beatsToRender.push('beat2');
-      if (beat >= 3) beatsToRender.push('beat3');
+      const b1 = sceneContent.low.beat1;
+      const b2 = sceneContent.low.beat2;
+      const b3 = sceneContent.low.beat3;
 
-      const beatsHtml = beatsToRender.map((bKey, idx) => {
-        const b = sceneContent.low[bKey];
-        if (!b) return '';
-        const isLatest = idx === beatsToRender.length - 1;
-        const itemAnim = getAnimClass(style.id, idx + 1);
-        const subdescHtml = b.subdesc ? `<p class="text-[0.9cqw] font-light mt-[0.3cqw]" style="color: ${mutedColor}">${b.subdesc}</p>` : '';
-        const punchlineHtml = b.punchline ? `<p class="text-[1cqw] font-semibold mt-[0.6cqw] px-[1cqw] py-[0.4cqw] rounded-lg text-center" style="color: ${inkColor}; background-color: ${accentColor}22; border: 1px solid ${accentColor}44">${b.punchline}</p>` : '';
+      let b1Html = '';
+      let b2Html = '';
+      let b3Html = '';
+      let arrow1Html = '';
+      let arrow2Html = '';
+
+      if (b1) {
+        const vHtml1 = enrichHTML(style.id, b1.visualHtml || '', beat, 1);
+        const subdescHtml1 = b1.subdesc ? `<p class="text-[0.9cqw] font-light mt-[0.3cqw]" style="color: ${mutedColor}">${b1.subdesc}</p>` : '';
+        const punchlineHtml1 = b1.punchline ? `<p class="text-[1cqw] font-semibold mt-[0.6cqw] px-[1cqw] py-[0.4cqw] rounded-lg text-center" style="color: ${inkColor}; background-color: ${accentColor}22; border: 1px solid ${accentColor}44">${b1.punchline}</p>` : '';
         
-        // Dim older beats to focus attention on the latest revealed beat
-        const dimClass = isLatest ? 'opacity-100 scale-100' : 'opacity-45 scale-95';
+        const dimClass = (beat === 1) ? 'opacity-100 scale-100' : 'opacity-45 scale-95 filter-grayscale-[30%] blur-[0.3px]';
+        const itemAnim = getAnimClass(style.id, 1);
 
-        return `
-          <div class="flex-1 flex flex-col items-center text-center p-[1.5cqw] rounded-xl border border-transparent transition-all duration-500 ${dimClass} ${itemAnim}">
+        b1Html = `
+          <div class="flex-1 flex flex-col items-center text-center p-[1.5cqw] rounded-xl border border-transparent transition-all duration-700 ${dimClass} ${itemAnim}">
             <div class="h-[8cqw] flex items-center justify-center mb-[1cqw] w-full">
-              ${b.visualHtml || ''}
+              ${vHtml1}
             </div>
-            <h3 class="text-[1.4cqw] font-bold tracking-tight mb-[0.4cqw]" style="color: ${inkColor}">${b.title}</h3>
-            <p class="text-[1cqw] font-light max-w-[25cqw] leading-relaxed" style="color: ${mutedColor}">${b.desc}</p>
-            ${subdescHtml}
-            ${punchlineHtml}
+            <h3 class="text-[1.4cqw] font-bold tracking-tight mb-[0.4cqw]" style="color: ${inkColor}">${b1.title}</h3>
+            <p class="text-[1cqw] font-light max-w-[25cqw] leading-relaxed" style="color: ${mutedColor}">${b1.desc}</p>
+            ${subdescHtml1}
+            ${punchlineHtml1}
           </div>
         `;
-      }).join(
-        `<div class="text-[2cqw] text-current opacity-30 shrink-0 self-center animate-match-1 px-[1cqw]">→</div>`
-      );
+      }
+
+      if (b2) {
+        const vHtml2 = enrichHTML(style.id, b2.visualHtml || '', beat, 2);
+        const subdescHtml2 = b2.subdesc ? `<p class="text-[0.9cqw] font-light mt-[0.3cqw]" style="color: ${mutedColor}">${b2.subdesc}</p>` : '';
+        const punchlineHtml2 = b2.punchline ? `<p class="text-[1cqw] font-semibold mt-[0.6cqw] px-[1cqw] py-[0.4cqw] rounded-lg text-center" style="color: ${inkColor}; background-color: ${accentColor}22; border: 1px solid ${accentColor}44">${b2.punchline}</p>` : '';
+        
+        let stateClass = '';
+        if (beat === 1) {
+          stateClass = 'opacity-0 scale-75 w-0 h-0 overflow-hidden pointer-events-none border-0 m-0 p-0';
+        } else if (beat === 2) {
+          stateClass = 'opacity-100 scale-100';
+        } else {
+          stateClass = 'opacity-45 scale-95 filter-grayscale-[30%] blur-[0.3px]';
+        }
+        const itemAnim = getAnimClass(style.id, 2);
+
+        b2Html = `
+          <div class="flex-1 flex flex-col items-center text-center p-[1.5cqw] rounded-xl border border-transparent transition-all duration-700 ${stateClass} ${itemAnim}">
+            <div class="h-[8cqw] flex items-center justify-center mb-[1cqw] w-full">
+              ${vHtml2}
+            </div>
+            <h3 class="text-[1.4cqw] font-bold tracking-tight mb-[0.4cqw]" style="color: ${inkColor}">${b2.title}</h3>
+            <p class="text-[1cqw] font-light max-w-[25cqw] leading-relaxed" style="color: ${mutedColor}">${b2.desc}</p>
+            ${subdescHtml2}
+            ${punchlineHtml2}
+          </div>
+        `;
+
+        const arrowState = (beat >= 2) ? 'opacity-30 scale-100 w-auto px-[1cqw]' : 'opacity-0 scale-50 w-0 h-0 overflow-hidden m-0 p-0';
+        arrow1Html = `<div class="text-[2cqw] text-current shrink-0 self-center animate-match-1 transition-all duration-700 ${arrowState}">→</div>`;
+      }
+
+      if (b3) {
+        const vHtml3 = enrichHTML(style.id, b3.visualHtml || '', beat, 3);
+        const subdescHtml3 = b3.subdesc ? `<p class="text-[0.9cqw] font-light mt-[0.3cqw]" style="color: ${mutedColor}">${b3.subdesc}</p>` : '';
+        const punchlineHtml3 = b3.punchline ? `<p class="text-[1cqw] font-semibold mt-[0.6cqw] px-[1cqw] py-[0.4cqw] rounded-lg text-center" style="color: ${inkColor}; background-color: ${accentColor}22; border: 1px solid ${accentColor}44">${b3.punchline}</p>` : '';
+        
+        let stateClass = '';
+        if (beat < 3) {
+          stateClass = 'opacity-0 scale-75 w-0 h-0 overflow-hidden pointer-events-none border-0 m-0 p-0';
+        } else {
+          stateClass = 'opacity-100 scale-100';
+        }
+        const itemAnim = getAnimClass(style.id, 3);
+
+        b3Html = `
+          <div class="flex-1 flex flex-col items-center text-center p-[1.5cqw] rounded-xl border border-transparent transition-all duration-700 ${stateClass} ${itemAnim}">
+            <div class="h-[8cqw] flex items-center justify-center mb-[1cqw] w-full">
+              ${vHtml3}
+            </div>
+            <h3 class="text-[1.4cqw] font-bold tracking-tight mb-[0.4cqw]" style="color: ${inkColor}">${b3.title}</h3>
+            <p class="text-[1cqw] font-light max-w-[25cqw] leading-relaxed" style="color: ${mutedColor}">${b3.desc}</p>
+            ${subdescHtml3}
+            ${punchlineHtml3}
+          </div>
+        `;
+
+        const arrowState = (beat >= 3) ? 'opacity-30 scale-100 w-auto px-[1cqw]' : 'opacity-0 scale-50 w-0 h-0 overflow-hidden m-0 p-0';
+        arrow2Html = `<div class="text-[2cqw] text-current shrink-0 self-center animate-match-2 transition-all duration-700 ${arrowState}">→</div>`;
+      }
 
       return `
         <div class="w-full h-full p-[5cqw] flex flex-col justify-between select-none ${fontClass}" style="background-color: ${canvasBg}; color: ${inkColor}">
@@ -155,8 +280,12 @@ export function getSlideHTML(style, mode = 'story', density = 'low', scene = 1, 
               <p class="text-[1.1cqw]" style="color: ${mutedColor}">${sceneSubtitle}</p>
               ${beatBadge}
             </div>
-            <div class="flex items-stretch justify-center gap-[1.5cqw] max-w-[62cqw] mx-auto w-full transition-all duration-500">
-              ${beatsHtml}
+            <div class="flex items-stretch justify-center gap-[1cqw] max-w-[62cqw] mx-auto w-full transition-all duration-500">
+              ${b1Html}
+              ${arrow1Html}
+              ${b2Html}
+              ${arrow2Html}
+              ${b3Html}
             </div>
           </div>
           <div class="flex justify-between items-center text-[1cqw] font-mono ${footerAnim}" style="color: ${mutedColor}">

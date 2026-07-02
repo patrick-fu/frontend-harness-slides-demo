@@ -152,3 +152,121 @@
 .animate-subtle-2 { animation: subtleFadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.15s; }
 .animate-subtle-3 { animation: subtleFadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.25s; }
 .animate-subtle-4 { animation: subtleFadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.35s; }
+
+/* ========================================================= */
+/* 🌟 ADDITIONAL RICH KEYNOTE & INTERACTIVE ROBOT ANIMATIONS */
+/* ========================================================= */
+
+@keyframes rotateSlow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.animate-rotate-slow {
+  animation: rotateSlow 20s linear infinite;
+}
+
+@keyframes wiggleNod {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25% { transform: rotate(4deg) translateY(-0.3cqh); }
+  75% { transform: rotate(-4deg) translateY(0.2cqh); }
+}
+.animate-wiggle-nod {
+  animation: wiggleNod 1.2s ease-in-out infinite;
+}
+
+@keyframes bounceJump {
+  0% { transform: scale(0) translateY(5cqh); opacity: 0; }
+  50% { transform: scale(1.15) translateY(-1.5cqh); opacity: 0.9; }
+  80% { transform: scale(0.95) translateY(0.3cqh); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+.animate-bounce-jump {
+  animation: bounceJump 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes laserPulse {
+  0% { offset-distance: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+.animate-laser-pulse {
+  animation: laserPulse 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes faderSlideUp {
+  0% { transform: translateY(8cqh); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.animate-fader-slide {
+  animation: faderSlideUp 1s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+@keyframes thumpVibe {
+  0% { transform: translateY(-12cqh) scaleY(1.3); opacity: 0; }
+  60% { transform: translateY(0) scaleY(0.7); opacity: 1; }
+  75% { transform: translateY(-1.5cqh) scaleY(1.15); }
+  90% { transform: translateY(0.3cqh) scaleY(0.95); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+.animate-thump-vibe {
+  animation: thumpVibe 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes mechanicalShake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  10% { transform: translate(-0.3cqw, 0.2cqh) rotate(-0.5deg); }
+  20% { transform: translate(0.3cqw, -0.2cqh) rotate(0.5deg); }
+  30% { transform: translate(-0.3cqw, -0.1cqh) rotate(-0.5deg); }
+  40% { transform: translate(0.3cqw, 0.2cqh) rotate(0.5deg); }
+  50% { transform: translate(-0.2cqw, -0.2cqh) rotate(-0.3deg); }
+  60% { transform: translate(0.2cqw, 0.1cqh) rotate(0.3deg); }
+  70% { transform: translate(-0.1cqw, 0.1cqh) rotate(-0.1deg); }
+  80% { transform: translate(0.1cqw, -0.1cqh) rotate(0.1deg); }
+}
+.animate-mechanical-shake {
+  animation: mechanicalShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes screenShakeEffect {
+  0%, 100% { transform: translate(0, 0); }
+  10%, 30%, 50%, 70%, 90% { transform: translate(-1cqw, -0.8cqh); }
+  20%, 40%, 60%, 80% { transform: translate(1cqw, 0.8cqh); }
+}
+.animate-screen-shake {
+  animation: screenShakeEffect 0.35s ease-in-out both;
+}
+
+@keyframes damageFlashRed {
+  0%, 100% { filter: brightness(1) invert(0); }
+  50% { filter: brightness(1.2) sepia(1) saturate(10) hue-rotate(-50deg) invert(0.2); }
+}
+.animate-damage-flash {
+  animation: damageFlashRed 0.12s ease-in-out 4;
+}
+
+@keyframes bento3dFlip {
+  0% { transform: perspective(800px) rotateY(-90deg); opacity: 0; }
+  100% { transform: perspective(800px) rotateY(0deg); opacity: 1; }
+}
+.animate-3d-flip {
+  animation: bento3dFlip 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes breatheHaloPulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.6); opacity: 0.8; }
+}
+.animate-breathe-halo {
+  animation: breatheHaloPulse 2s ease-in-out infinite;
+}
+
+@keyframes chalkWobbleEffect {
+  0%, 100% { transform: translate(0, 0) rotate(0.2deg); }
+  33% { transform: translate(0.04cqw, 0.04cqh) rotate(-0.1deg); }
+  66% { transform: translate(-0.04cqw, -0.04cqh) rotate(0.1deg); }
+}
+.animate-chalk-wobble {
+  animation: chalkWobbleEffect 0.4s ease-in-out infinite;
+}
+
