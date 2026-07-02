@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  font-family: "Inter", system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #09090b;
+}
+
+/* Slide Stage Container Query Base */
+#slide-stage {
+  aspect-ratio: 16 / 9;
+  container-type: size;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  transition: all 0.50s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Custom continuous micro-animations */
+@keyframes continuous-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.animate-rotate-slow {
+  animation: continuous-rotate 25s linear infinite;
+}
+
+@keyframes float-sticky-1 {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-0.8cqh) rotate(1deg); }
+}
+.animate-float-sticky-1 {
+  animation: float-sticky-1 5s ease-in-out infinite;
+}
+
+@keyframes float-sticky-2 {
+  0%, 100% { transform: translateY(0) rotate(1.5deg); }
+  50% { transform: translateY(-0.6cqh) rotate(-0.5deg); }
+}
+.animate-float-sticky-2 {
+  animation: float-sticky-2 6s ease-in-out infinite;
+}
+
+@keyframes wiggle-nod {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-3deg) scale(1.02); }
+  75% { transform: rotate(3deg) scale(1.02); }
+}
+.animate-wiggle-nod {
+  animation: wiggle-nod 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes spotlight-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.95; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+.animate-spotlight {
+  animation: spotlight-pulse 5s ease-in-out infinite;
+}
+
+@keyframes pipeline-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(6, 182, 212, 0.4); border-color: rgba(6, 182, 212, 0.5); }
+  50% { box-shadow: 0 0 25px rgba(6, 182, 212, 0.8); border-color: rgba(6, 182, 212, 1); }
+}
+.animate-pipeline-pulse {
+  animation: pipeline-pulse 2s ease-in-out infinite;
+}
+
+@keyframes damage-flash {
+  0%, 100% { filter: invert(0); }
+  25%, 75% { filter: invert(1); }
+}
+.animate-damage-flash {
+  animation: damage-flash 0.35s ease-in-out 4;
+}
+
+@keyframes screen-shake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  10% { transform: translate(-5px, -3px) rotate(-1deg); }
+  20% { transform: translate(4px, 5px) rotate(1deg); }
+  30% { transform: translate(-3px, 2px) rotate(0deg); }
+  40% { transform: translate(5px, -1px) rotate(1deg); }
+  50% { transform: translate(-4px, 4px) rotate(-1deg); }
+  60% { transform: translate(3px, -2px) rotate(0deg); }
+  70% { transform: translate(-5px, 3px) rotate(1deg); }
+  80% { transform: translate(4px, -4px) rotate(-1deg); }
+  90% { transform: translate(-2px, 5px) rotate(0deg); }
+}
+.animate-screen-shake {
+  animation: screen-shake 0.35s ease-in-out 1;
+}
+
+@keyframes kinetic-punch {
+  0% { transform: scale(0.3); filter: blur(15px); }
+  70% { transform: scale(1.08); filter: blur(2px); }
+  100% { transform: scale(1); filter: blur(0); }
+}
+.animate-kinetic-punch {
+  animation: kinetic-punch 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes chalk-wobble {
+  0%, 100% { transform: skewX(-0.5deg) skewY(-0.5deg); }
+  50% { transform: skewX(0.5deg) skewY(0.5deg); }
+}
+.animate-chalk-wobble {
+  animation: chalk-wobble 0.4s infinite alternate;
+}
+
+/* Constant Stage Element Constancy Transitions */
+.beat-element {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.beat-element-active {
+  opacity: 1 !important;
+  transform: scale(1) translate(0, 0) !important;
+  filter: none !important;
+}
+
+.beat-element-historic {
+  opacity: 0.42 !important;
+  transform: scale(0.94) translate(0, 0.5cqh) !important;
+  filter: saturate(0.6) blur(0.5px) !important;
+}
+
+.beat-element-future {
+  opacity: 0 !important;
+  transform: scale(0.8) translateY(3cqh) !important;
+  pointer-events: none !important;
+}
+
+/* Custom scrollbar styling for boards */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
