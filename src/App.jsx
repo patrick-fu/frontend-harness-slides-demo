@@ -241,6 +241,58 @@ export function App() {
     navigate(view, styleId, 1, 0);
   };
 
+  // Touch Gestures support
+  const touchStartRef = useRef({ x: 0, y: 0 });
+
+  const handleTouchStart = (e) => {
+    const touch = e.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleTouchEnd = (e) => {
+    if (e.changedTouches.length === 0) return;
+    const touch = e.changedTouches[0];
+    const diffX = touch.clientX - touchStartRef.current.x;
+    const diffY = touch.clientY - touchStartRef.current.y;
+
+    const threshold = 55; // Touch swipe threshold
+
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      if (Math.abs(diffX) > threshold) {
+        if (diffX < 0) {
+          handleNextBeat();
+        } else {
+          handlePrevBeat();
+        }
+      }
+    } else {
+      if (Math.abs(diffY) > threshold) {
+        if (diffY < 0) {
+          if (scene < 5) navigate(view, selectedStyleId, scene + 1, 0);
+        } else {
+          if (scene > 1) navigate(view, selectedStyleId, scene - 1, 0);
+        }
+      }
+    }
+  };
+
+  // Split-screen click handlers (outer left 15% and right 15%)
+  const handleStageClick = (e) => {
+    if (e.target.closest("button") || e.target.closest("a")) {
+      return;
+    }
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickWidth = rect.width;
+    const ratio = clickX / clickWidth;
+
+    if (ratio < 0.15) {
+      handlePrevBeat();
+    } else if (ratio > 0.85) {
+      handleNextBeat();
+    }
+  };
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -488,7 +540,10 @@ export function App() {
                 >
                   <div 
                     id="slide-stage"
-                    className={`rounded-xl border overflow-hidden shadow-2xl absolute left-0 top-0 ${chrome.panel}`}
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                    onClick={handleStageClick}
+                    className={`rounded-xl border overflow-hidden shadow-2xl absolute left-0 top-0 cursor-default ${chrome.panel}`}
                     style={{
                       width: BASE_WIDTH,
                       height: BASE_HEIGHT,
@@ -496,7 +551,13 @@ export function App() {
                       transformOrigin: "top left",
                     }}
                   >
-                    <SlideRenderer style={currentStyle} scene={scene} beat={beat} language={language} />
+                    <SlideRenderer 
+                      style={currentStyle} 
+                      scene={scene} 
+                      beat={beat} 
+                      language={language} 
+                      onNavigate={(sNum, bNum) => navigate("lab", selectedStyleId, sNum, bNum)}
+                    />
                   </div>
                 </div>
               </div>

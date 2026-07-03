@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { 
   RotateCw, HelpCircle, MessageSquare, AlertTriangle, ShieldCheck, 
   Terminal, Play, Cpu, CheckSquare, Layers, Award, Code, Compass,
@@ -6,16 +6,6 @@ import {
   TrendingUp, Users, HardDrive
 } from "lucide-react";
 import { VisualMetaphorEngine } from "./VisualMetaphorEngine";
-
-const sectionLabels = {
-  opening: "Opening",
-  problem: "Problem",
-  mechanic: "Mechanic",
-  software: "Software",
-  hardware: "Hardware",
-  playbook: "Playbook",
-  closing: "Closing",
-};
 
 const getFontClass = (fontName) => {
   switch (fontName) {
@@ -32,7 +22,50 @@ const getFontClass = (fontName) => {
   }
 };
 
-export function SlideRenderer({ style, scene, beat, isThumbnail = false, language = "en" }) {
+function getSceneTransitionClass(styleId, scene) {
+  const num = parseInt(styleId, 10);
+  
+  if (num <= 8) { // Tier A: Playful, Springy, Dynamic
+    if ([2, 5].includes(num)) { // Sketch / Polaroid
+      switch (scene) {
+        case 1: return "animate-scale-up";
+        case 2: return "animate-paper-peel";
+        case 3: return "animate-rotate-in";
+        case 4: return "animate-slide-up";
+        default: return "animate-scale-up";
+      }
+    }
+    // Quantum, Cyberpunk, Radar
+    switch (scene) {
+      case 1: return "animate-crossfade";
+      case 2: return "animate-slide-left";
+      case 3: return "animate-scale-up";
+      case 4: return "animate-slide-up";
+      default: return "animate-glitch-entry";
+    }
+  } else if (num <= 16) { // Tier B: Mechanical, Technical, Grid
+    switch (scene) {
+      case 1: return "animate-slide-right";
+      case 2: return "animate-gate";
+      case 3: return "animate-slide-left";
+      case 4: return "animate-scale-up";
+      default: return "animate-slide-down";
+    }
+  } else { // Tier C: Print, Editorial, Serif, Heavy text (Elegant and minimal)
+    return "animate-crossfade";
+  }
+}
+
+function getStyleSymbol(styleId) {
+  const num = parseInt(styleId, 10);
+  if (num === 2) return "✏️";
+  if (num === 5) return "📸";
+  if (num <= 8) return "✦";
+  if (num <= 16) return "//";
+  return "§";
+}
+
+export function SlideRenderer({ style, scene, beat, isThumbnail = false, language = "en", onNavigate }) {
   const currentScene = style.scenes.find((s) => s.id === scene) || style.scenes[0];
   const beatData = currentScene.beats[beat] || currentScene.beats[0];
   const layout = currentScene.layout || "split";
@@ -41,7 +74,25 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
   // Map font styles dynamically matching Design DNA
   const headerFont = getFontClass(style.typography.header);
   const bodyFont = getFontClass(style.typography.body);
-  const stageMeta = isCjk ? `场景 ${scene} / 5 • 节拍 ${beat + 1} / 3` : `Scene ${scene} of 5 • Beat ${beat + 1} of 3`;
+
+  const styleNum = parseInt(style.id, 10);
+  let navProfile = "dots"; // default
+  if (styleNum <= 8) {
+    if ([2, 5, 7].includes(styleNum)) navProfile = "picker";
+    else navProfile = "dots";
+  } else if (styleNum <= 16) {
+    if ([10, 14].includes(styleNum)) navProfile = "picker";
+    else if ([12].includes(styleNum)) navProfile = "dots";
+    else navProfile = "tracker";
+  } else {
+    navProfile = "clean";
+  }
+
+  const romanNumerals = ["I", "II", "III", "IV", "V"];
+  const romanNum = romanNumerals[scene - 1];
+
+  const symbol = getStyleSymbol(style.id);
+  const transitionClass = getSceneTransitionClass(style.id, scene);
 
   // Arrange grid columns based on layout metadata
   let mainContent;
@@ -55,7 +106,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
         <div className="col-span-6 flex flex-col justify-center h-full">
           <div className="flex flex-col gap-[1.5cqh]">
             <span className={`text-[1.5cqw] font-bold tracking-widest uppercase opacity-75 select-none ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
-              {beatData.caption}
+              {symbol}
             </span>
             <h1 className={`text-[4cqw] leading-[1.1] font-black tracking-tight ${headerFont}`}>
               {beatData.title}
@@ -73,7 +124,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
         <div className="grid grid-cols-12 gap-[3cqw] items-end w-full">
           <div className="col-span-7 flex flex-col gap-[1cqh]">
             <span className={`text-[1.5cqw] font-bold tracking-widest uppercase opacity-75 ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
-              {beatData.caption}
+              {symbol}
             </span>
             <h1 className={`text-[3.5cqw] leading-[1.1] font-black tracking-tight ${headerFont}`}>
               {beatData.title}
@@ -95,7 +146,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
       <div className="col-span-12 grid grid-cols-12 gap-[4cqw] items-center relative w-full">
         <div className="col-span-7 flex flex-col gap-[1.5cqh]">
           <span className={`text-[1.5cqw] font-bold tracking-widest uppercase opacity-75 ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
-            {beatData.caption}
+            {symbol}
           </span>
           <h1 className={`text-[4.5cqw] leading-[1.05] font-black tracking-tight ${headerFont}`}>
             {beatData.title}
@@ -114,7 +165,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
       <div className="col-span-12 flex flex-col items-center text-center gap-[3cqh] justify-center h-full w-full">
         <div className="max-w-[50cqw] flex flex-col gap-[1cqh] items-center">
           <span className={`text-[1.4cqw] font-bold tracking-widest uppercase opacity-75 ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
-            {beatData.caption}
+            {symbol}
           </span>
           <h1 className={`text-[3.8cqw] leading-[1.1] font-black tracking-tight ${headerFont}`}>
             {beatData.title}
@@ -136,7 +187,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
         <div className="col-span-6 flex flex-col justify-center h-full">
           <div className="flex flex-col gap-[1.5cqh]">
             <span className={`text-[1.5cqw] font-bold tracking-widest uppercase opacity-75 select-none ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
-              {beatData.caption}
+              {symbol}
             </span>
             <h1 className={`text-[4cqw] leading-[1.1] font-black tracking-tight ${headerFont}`}>
               {beatData.title}
@@ -156,8 +207,9 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
 
   return (
     <div 
+      key={`${style.id}-${scene}`}
       lang={isCjk ? "zh-Hans" : "en"}
-      className={`w-full h-full relative p-[5cqw] flex flex-col justify-between overflow-hidden select-none transition-all duration-500 ${style.colors.bg} ${style.colors.ink} ${bodyFont}`}
+      className={`w-full h-full relative p-[5cqw] flex flex-col justify-between overflow-hidden select-none ${style.colors.bg} ${style.colors.ink} ${bodyFont} ${transitionClass}`}
     >
       {/* Background decorations based on style */}
       {style.id === "01" && (
@@ -185,6 +237,79 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
         }} />
       )}
 
+      {/* Floating Vertical Dots Navigation */}
+      {!isThumbnail && onNavigate && navProfile === "dots" && (
+        <div className="absolute right-[2.5cqw] top-1/2 -translate-y-1/2 flex flex-col gap-[1.5cqh] z-30 group/nav">
+          {[1, 2, 3, 4, 5].map((sNum) => {
+            const isActive = scene === sNum;
+            return (
+              <button
+                key={sNum}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onNavigate(sNum, 0);
+                }}
+                className="relative flex items-center justify-end focus:outline-none cursor-pointer h-[2.5cqh] w-[2.5cqh]"
+                title={style.scenes[sNum - 1]?.title}
+              >
+                <span className={`absolute right-[3cqw] font-mono text-[1cqw] px-[1cqw] py-[0.5cqh] rounded whitespace-nowrap bg-black/85 text-white border border-white/10 opacity-0 group-hover/nav:hover:opacity-100 transition-opacity pointer-events-none duration-200`}>
+                  {style.scenes[sNum - 1]?.title || `Scene ${sNum}`}
+                </span>
+                <span
+                  className={`h-[1cqh] rounded-full transition-all duration-300 ${
+                    isActive
+                      ? `w-[3cqw] bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.8)]`
+                      : `w-[1cqh] bg-current/25 hover:bg-current/60`
+                  }`}
+                />
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* 3D Picker Wheel Navigation */}
+      {!isThumbnail && onNavigate && navProfile === "picker" && (
+        <div className="absolute bottom-[3cqh] left-1/2 -translate-x-1/2 w-[50cqw] h-[6cqh] overflow-hidden z-30 select-none flex items-center justify-center">
+          <div className="flex items-center gap-[2cqw] transition-transform duration-500 ease-out h-full" style={{
+            transform: `translateX(${(3 - scene) * 9.5}cqw)`
+          }}>
+            {[1, 2, 3, 4, 5].map((sNum) => {
+              const isActive = scene === sNum;
+              const diff = sNum - scene;
+              const absDiff = Math.abs(diff);
+              
+              const scale = 1 - absDiff * 0.15;
+              const opacity = 1 - absDiff * 0.45;
+              const rotateY = diff * -15;
+              
+              return (
+                <button
+                  key={sNum}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onNavigate(sNum, 0);
+                  }}
+                  style={{
+                    transform: `scale(${scale}) rotateY(${rotateY}deg)`,
+                    opacity: opacity,
+                    transformStyle: "preserve-3d",
+                    perspective: "200px"
+                  }}
+                  className={`px-[1.5cqw] py-[0.5cqh] rounded-lg text-[1.1cqw] font-bold font-mono tracking-wider transition-all duration-500 whitespace-nowrap cursor-pointer ${
+                    isActive
+                      ? `bg-cyan-500 text-black shadow-[0_4px_12px_rgba(6,182,212,0.3)]`
+                      : `bg-current/5 hover:bg-current/15 text-current`
+                  }`}
+                >
+                  {style.scenes[sNum - 1]?.title ? style.scenes[sNum - 1].title.toUpperCase() : `SCENE ${sNum}`}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Slide Topline / Header */}
       <header className="flex justify-between items-center z-10 select-none">
         <div className="flex items-center gap-[1cqw]">
@@ -205,15 +330,57 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
         {mainContent}
       </div>
 
+      {/* Bottom Inline Tracker Progress Line */}
+      {!isThumbnail && onNavigate && navProfile === "tracker" && (
+        <div className="w-full h-[0.5cqh] bg-current/10 relative rounded-full mb-[1cqh] z-30 cursor-pointer overflow-hidden">
+          <div className="absolute inset-0 flex">
+            {[1, 2, 3, 4, 5].map((sNum) => (
+              <div
+                key={sNum}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onNavigate(sNum, 0);
+                }}
+                className="flex-1 h-full hover:bg-current/10 transition-colors cursor-pointer relative"
+                title={style.scenes[sNum - 1]?.title}
+              />
+            ))}
+          </div>
+          <div 
+            className="absolute top-0 left-0 h-full bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.6)] transition-all duration-500 pointer-events-none"
+            style={{
+              width: `${((scene - 1) * 3 + beat + 1) / 15 * 100}%`
+            }}
+          />
+          <div className="absolute inset-0 flex justify-between pointer-events-none">
+            {[1, 2, 3, 4, 5].map((sNum) => {
+              const isPassed = scene > sNum || (scene === sNum && beat >= 0);
+              return (
+                <div 
+                  key={sNum} 
+                  className={`w-[0.8cqh] h-[0.8cqh] rounded-full -translate-y-[0.15cqh] transition-colors duration-300 ${
+                    isPassed ? "bg-cyan-400" : "bg-neutral-600"
+                  }`} 
+                />
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Footer Punchline Area */}
       <footer className="flex justify-between items-center z-10 border-t border-current/10 pt-[1.5cqw] select-none">
         <p className={`text-[1.4cqw] font-medium italic opacity-90 tracking-wide flex items-center gap-[0.5cqw] ${bodyFont}`}>
           <span className="inline-block w-[0.8cqw] h-[0.8cqw] rounded-full bg-cyan-500 animate-pulse" />
           {beatData.beatLine}
         </p>
-        <span className="text-[1.1cqw] opacity-40 font-mono">
-          {stageMeta}
-        </span>
+        
+        {/* Render elegant classical Roman page numbers only for clean profile */}
+        {navProfile === "clean" ? (
+          <span className="text-[1.4cqw] opacity-75 font-serif tracking-widest italic">
+            — {romanNum} —
+          </span>
+        ) : null}
       </footer>
     </div>
   );
