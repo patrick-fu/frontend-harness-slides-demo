@@ -624,9 +624,9 @@ export function App() {
               </p>
             </div>
             {/* Horizontal Kanban board overflow system */}
-            <div className="flex-1 flex gap-6 overflow-x-auto pb-4 items-stretch select-none">
+            <div className="flex-1 flex gap-4 md:gap-6 overflow-x-auto pb-4 items-stretch select-none snap-x mandatory scroll-smooth">
               {/* LOW DENSITY COLUMN */}
-              <div className={`flex-1 min-w-[500px] border rounded-2xl p-4 flex flex-col h-full overflow-hidden ${chrome.panelSoft}`}>
+              <div className={`w-[85vw] md:w-auto md:flex-1 min-w-[280px] sm:min-w-[340px] md:min-w-[360px] lg:min-w-[400px] shrink-0 snap-center border rounded-2xl p-4 flex flex-col h-full overflow-hidden ${chrome.panelSoft}`}>
                 <div className={`flex items-center justify-between border-b ${isDarkTheme ? "border-zinc-800/80" : "border-slate-200"} pb-3 mb-4 shrink-0`}>
                   <div className="flex items-center gap-2">
                     <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
@@ -644,7 +644,7 @@ export function App() {
               </div>
 
               {/* MED DENSITY COLUMN */}
-              <div className={`flex-1 min-w-[500px] border rounded-2xl p-4 flex flex-col h-full overflow-hidden ${chrome.panelSoft}`}>
+              <div className={`w-[85vw] md:w-auto md:flex-1 min-w-[280px] sm:min-w-[340px] md:min-w-[360px] lg:min-w-[400px] shrink-0 snap-center border rounded-2xl p-4 flex flex-col h-full overflow-hidden ${chrome.panelSoft}`}>
                 <div className={`flex items-center justify-between border-b ${isDarkTheme ? "border-zinc-800/80" : "border-slate-200"} pb-3 mb-4 shrink-0`}>
                   <div className="flex items-center gap-2">
                     <span className="w-3 h-3 rounded-full bg-amber-500 animate-pulse" />
@@ -662,7 +662,7 @@ export function App() {
               </div>
 
               {/* HIGH DENSITY COLUMN */}
-              <div className={`flex-1 min-w-[500px] border rounded-2xl p-4 flex flex-col h-full overflow-hidden ${chrome.panelSoft}`}>
+              <div className={`w-[85vw] md:w-auto md:flex-1 min-w-[280px] sm:min-w-[340px] md:min-w-[360px] lg:min-w-[400px] shrink-0 snap-center border rounded-2xl p-4 flex flex-col h-full overflow-hidden ${chrome.panelSoft}`}>
                 <div className={`flex items-center justify-between border-b ${isDarkTheme ? "border-zinc-800/80" : "border-slate-200"} pb-3 mb-4 shrink-0`}>
                   <div className="flex items-center gap-2">
                     <span className="w-3 h-3 rounded-full bg-blue-500 animate-pulse" />
@@ -691,17 +691,11 @@ function BoardCard({ styleItem, language, chrome, t, onSelect }) {
   return (
     <div 
       onClick={onSelect}
-      className={`group rounded-xl border p-3 hover:border-cyan-500/50 hover:shadow-lg transition-all cursor-pointer flex gap-4 items-center ${chrome.panel}`}
-      style={{ minWidth: "480px" }} // Explicit min-width card constraint
+      className={`group rounded-xl border p-3 hover:border-cyan-500/50 hover:shadow-lg transition-all cursor-pointer flex flex-col gap-3 ${chrome.panel}`}
     >
-      <div className="w-[120px] aspect-video bg-zinc-950 overflow-hidden relative rounded-lg border border-zinc-850 flex items-center justify-center shrink-0">
+      <div className="w-full aspect-video bg-zinc-950 overflow-hidden relative rounded-lg border border-zinc-850 flex items-center justify-center shrink-0">
         <div 
-          className="absolute origin-center transition-transform duration-300"
-          style={{
-            width: BASE_WIDTH,
-            height: BASE_HEIGHT,
-            transform: "scale(0.063)", // Ultra scale down for Kanban thumbs
-          }}
+          className="slide-stage absolute inset-0 w-full h-full transition-transform duration-500"
         >
           <SlideRenderer 
             style={styleItem} 
@@ -713,17 +707,14 @@ function BoardCard({ styleItem, language, chrome, t, onSelect }) {
         </div>
       </div>
       
-      <div className="flex-1 min-w-0">
-        <div className="flex justify-between items-start">
-          <span className={`font-mono text-xs ${chrome.faint} font-bold shrink-0`}>
-            {t.styleLabel} {styleItem.id}
-          </span>
-          <ExternalLink className="w-3.5 h-3.5 text-zinc-600 group-hover:text-cyan-400 transition-colors shrink-0 ml-2" />
+      <div className="flex-1 min-w-0 w-full px-1">
+        <div className="flex justify-between items-center gap-2">
+          <p className={`text-xs md:text-sm font-black ${chrome.text} group-hover:text-cyan-400 transition-colors leading-none truncate`}>
+            {styleItem.name}
+          </p>
+          <ExternalLink className="w-3.5 h-3.5 text-zinc-600 group-hover:text-cyan-400 transition-colors shrink-0" />
         </div>
-        <p className={`text-xs font-black ${chrome.text} group-hover:text-cyan-400 transition-colors leading-none mt-1 truncate`}>
-          {styleItem.name}
-        </p>
-        <span className={`text-[10px] ${chrome.muted} truncate block mt-1`}>
+        <span className={`text-[10px] md:text-xs ${chrome.faint} truncate block mt-1.5`}>
           {styleItem.theme}
         </span>
       </div>
