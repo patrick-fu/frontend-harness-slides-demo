@@ -104,7 +104,7 @@ test.describe("Frontend Harness Slides Design System", () => {
     await page.locator('[data-testid="language-switcher"] button[title="中文"]').click();
 
     await expect(page.locator("h2")).toContainText("网格视图矩阵");
-    await expect(page.locator("body")).toContainText("主动错误抑制");
+    await expect(page.locator("body")).toContainText("主动误差抑制");
     await expect(page.locator("body")).toContainText("量子编译器架构");
   });
 
