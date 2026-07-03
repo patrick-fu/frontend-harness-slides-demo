@@ -25,11 +25,59 @@ const getFontClass = (fontName) => {
 function getContentTransitions(styleId, scene) {
   const num = parseInt(styleId, 10);
 
-  // Default fallbacks
-  let textClass = "animate-crossfade";
-  let visualClass = "animate-scale-up";
+  // Default values
+  let textClass = "";
+  let visualClass = "";
+  let containerClass = "";
 
-  if (num <= 8) { // Tier A: Playful, Springy, Dynamic
+  // 1. Check if the style is mapped to FULL-CONTAINER SLIDERS
+  // Mapped styles: 04, 09, 13, 15, 17, 18, 19, 20, 21, 22, 23, 24
+  if (num === 4) { // Kinetic Type
+    containerClass = "animate-full-slide-left";
+  } else if (num === 9) { // Signal Pipeline Flow
+    containerClass = "animate-full-slide-left";
+  } else if (num === 13) { // Subway Map of Intent (Rotating subway tracks!)
+    switch (scene) {
+      case 1: containerClass = "animate-full-slide-left"; break;
+      case 2: containerClass = "animate-full-slide-up"; break;
+      case 3: containerClass = "animate-full-slide-right"; break;
+      case 4: containerClass = "animate-full-slide-down"; break;
+      default: containerClass = "animate-full-slide-left";
+    }
+  } else if (num === 15) { // Context Bento (Bento puzzles)
+    switch (scene) {
+      case 1: containerClass = "animate-full-slide-up"; break;
+      case 2: containerClass = "animate-full-slide-left"; break;
+      case 3: containerClass = "animate-full-slide-down"; break;
+      case 4: containerClass = "animate-full-slide-right"; break;
+      default: containerClass = "animate-full-slide-up";
+    }
+  } else if (num === 17) { // Research Memo
+    containerClass = "animate-full-slide-up";
+  } else if (num === 18) { // Maintainer Issue Brief
+    containerClass = "animate-full-slide-left";
+  } else if (num === 19) { // Decision Record (ADR)
+    containerClass = "animate-full-slide-up";
+  } else if (num === 20) { // Benchmark Grid (Infinite Map Navigation)
+    switch (scene) {
+      case 1: containerClass = "animate-full-slide-left"; break;
+      case 2: containerClass = "animate-full-slide-up"; break;
+      case 3: containerClass = "animate-full-slide-right"; break;
+      case 4: containerClass = "animate-full-slide-down"; break;
+      default: containerClass = "animate-full-slide-left";
+    }
+  } else if (num === 21) { // Field Notes (Alternating Card Shuffles)
+    containerClass = (scene % 2 === 0) ? "animate-full-slide-down" : "animate-full-slide-up";
+  } else if (num === 22) { // Operating Manual Manual Flip
+    containerClass = "animate-full-slide-left";
+  } else if (num === 23) { // Checklist Ledger 横拉账本
+    containerClass = (scene % 2 === 0) ? "animate-full-slide-right" : "animate-full-slide-left";
+  } else if (num === 24) { // Code Diff Scroll
+    containerClass = "animate-full-slide-up";
+  } 
+  
+  // 2. Otherwise apply granular ELEMENT-LEVEL bespoke transitions
+  else if (num <= 8) { // Tier A remaining elements (01, 02, 03, 05, 06, 07, 08)
     if (num === 1) { // Minimal Quantum Keynote
       switch (scene) {
         case 1: textClass = "animate-scale-up"; visualClass = "animate-elastic-pop"; break;
@@ -53,14 +101,6 @@ function getContentTransitions(styleId, scene) {
         case 3: textClass = "animate-slide-up"; visualClass = "animate-glitch-entry"; break;
         case 4: textClass = "animate-crossfade"; visualClass = "animate-slide-down"; break;
         default: textClass = "animate-skew-in"; visualClass = "animate-crossfade";
-      }
-    } else if (num === 4) { // Kinetic Type
-      switch (scene) {
-        case 1: textClass = "animate-skew-in"; visualClass = "animate-slide-left"; break;
-        case 2: textClass = "animate-slide-right"; visualClass = "animate-skew-in"; break;
-        case 3: textClass = "animate-elastic-pop"; visualClass = "animate-slide-up"; break;
-        case 4: textClass = "animate-slide-up"; visualClass = "animate-elastic-pop"; break;
-        default: textClass = "animate-crossfade"; visualClass = "animate-skew-in";
       }
     } else if (num === 5) { // Polaroid Hero
       switch (scene) {
@@ -95,7 +135,7 @@ function getContentTransitions(styleId, scene) {
         default: textClass = "animate-crossfade"; visualClass = "animate-slide-down";
       }
     }
-  } else if (num <= 16) { // Tier B: Systems, Mechanical, Technical
+  } else if (num <= 16) { // Tier B remaining elements (10, 11, 12, 14, 16)
     switch (scene) {
       case 1: textClass = "animate-gate"; visualClass = "animate-slide-right"; break;
       case 2: textClass = "animate-slide-left"; visualClass = "animate-gate"; break;
@@ -103,17 +143,9 @@ function getContentTransitions(styleId, scene) {
       case 4: textClass = "animate-scale-up"; visualClass = "animate-slide-down"; break;
       default: textClass = "animate-gate"; visualClass = "animate-crossfade";
     }
-  } else { // Tier C: Editorial Serif Reports
-    switch (scene) {
-      case 1: textClass = "animate-crossfade"; visualClass = "animate-crossfade"; break;
-      case 2: textClass = "animate-bento-stagger"; visualClass = "animate-crossfade"; break;
-      case 3: textClass = "animate-crossfade"; visualClass = "animate-bento-stagger"; break;
-      case 4: textClass = "animate-bento-stagger"; visualClass = "animate-crossfade"; break;
-      default: textClass = "animate-crossfade"; visualClass = "animate-bento-stagger";
-    }
   }
 
-  return { textClass, visualClass };
+  return { textClass, visualClass, containerClass };
 }
 
 function getStyleSymbol(styleId) {
@@ -152,7 +184,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
   const romanNum = romanNumerals[scene - 1];
 
   const symbol = getStyleSymbol(style.id);
-  const { textClass, visualClass } = getContentTransitions(style.id, scene);
+  const { textClass, visualClass, containerClass } = getContentTransitions(style.id, scene);
 
   // Arrange grid columns based on layout metadata
   let mainContent;
@@ -384,10 +416,10 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
         </div>
       </header>
 
-      {/* Main Slide Layout with Dynamic Scene Key for Smooth Inner Transitions */}
+      {/* Main Slide Layout with Dynamic Scene Key for Smooth Inner Transitions (And Optional overall Container Slide) */}
       <div 
         key={`${style.id}-${scene}`}
-        className="grid grid-cols-12 gap-[4cqw] items-center my-auto z-10 min-h-[55cqh] w-full"
+        className={`grid grid-cols-12 gap-[4cqw] items-center my-auto z-10 min-h-[55cqh] w-full ${containerClass}`}
       >
         {mainContent}
       </div>
