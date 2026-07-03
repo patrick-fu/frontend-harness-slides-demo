@@ -22,38 +22,98 @@ const getFontClass = (fontName) => {
   }
 };
 
-function getSceneTransitionClass(styleId, scene) {
+function getContentTransitions(styleId, scene) {
   const num = parseInt(styleId, 10);
-  
+
+  // Default fallbacks
+  let textClass = "animate-crossfade";
+  let visualClass = "animate-scale-up";
+
   if (num <= 8) { // Tier A: Playful, Springy, Dynamic
-    if ([2, 5].includes(num)) { // Sketch / Polaroid
+    if (num === 1) { // Minimal Quantum Keynote
       switch (scene) {
-        case 1: return "animate-scale-up";
-        case 2: return "animate-paper-peel";
-        case 3: return "animate-rotate-in";
-        case 4: return "animate-slide-up";
-        default: return "animate-scale-up";
+        case 1: textClass = "animate-scale-up"; visualClass = "animate-elastic-pop"; break;
+        case 2: textClass = "animate-slide-left"; visualClass = "animate-slide-right"; break;
+        case 3: textClass = "animate-slide-up"; visualClass = "animate-crossfade"; break;
+        case 4: textClass = "animate-diagonal-slide"; visualClass = "animate-scale-up"; break;
+        default: textClass = "animate-crossfade"; visualClass = "animate-glitch-entry";
+      }
+    } else if (num === 2) { // Sketch Board Emoji
+      switch (scene) {
+        case 1: textClass = "animate-diagonal-slide"; visualClass = "animate-paper-peel"; break;
+        case 2: textClass = "animate-paper-peel"; visualClass = "animate-rotate-in"; break;
+        case 3: textClass = "animate-scale-up"; visualClass = "animate-diagonal-slide"; break;
+        case 4: textClass = "animate-slide-left"; visualClass = "animate-scale-up"; break;
+        default: textClass = "animate-crossfade"; visualClass = "animate-paper-peel";
+      }
+    } else if (num === 3) { // Cyberpunk Dialog
+      switch (scene) {
+        case 1: textClass = "animate-glitch-entry"; visualClass = "animate-skew-in"; break;
+        case 2: textClass = "animate-skew-in"; visualClass = "animate-scale-up"; break;
+        case 3: textClass = "animate-slide-up"; visualClass = "animate-glitch-entry"; break;
+        case 4: textClass = "animate-crossfade"; visualClass = "animate-slide-down"; break;
+        default: textClass = "animate-skew-in"; visualClass = "animate-crossfade";
+      }
+    } else if (num === 4) { // Kinetic Type
+      switch (scene) {
+        case 1: textClass = "animate-skew-in"; visualClass = "animate-slide-left"; break;
+        case 2: textClass = "animate-slide-right"; visualClass = "animate-skew-in"; break;
+        case 3: textClass = "animate-elastic-pop"; visualClass = "animate-slide-up"; break;
+        case 4: textClass = "animate-slide-up"; visualClass = "animate-elastic-pop"; break;
+        default: textClass = "animate-crossfade"; visualClass = "animate-skew-in";
+      }
+    } else if (num === 5) { // Polaroid Hero
+      switch (scene) {
+        case 1: textClass = "animate-rotate-in"; visualClass = "animate-paper-peel"; break;
+        case 2: textClass = "animate-paper-peel"; visualClass = "animate-scale-up"; break;
+        case 3: textClass = "animate-slide-left"; visualClass = "animate-rotate-in"; break;
+        case 4: textClass = "animate-slide-up"; visualClass = "animate-paper-peel"; break;
+        default: textClass = "animate-crossfade"; visualClass = "animate-scale-up";
+      }
+    } else if (num === 6) { // Blackboard Chalk
+      switch (scene) {
+        case 1: textClass = "animate-diagonal-slide"; visualClass = "animate-crossfade"; break;
+        case 2: textClass = "animate-crossfade"; visualClass = "animate-diagonal-slide"; break;
+        case 3: textClass = "animate-slide-up"; visualClass = "animate-scale-up"; break;
+        case 4: textClass = "animate-scale-up"; visualClass = "animate-slide-up"; break;
+        default: textClass = "animate-diagonal-slide"; visualClass = "animate-crossfade";
+      }
+    } else if (num === 7) { // Arcade Boss
+      switch (scene) {
+        case 1: textClass = "animate-glitch-entry"; visualClass = "animate-skew-in"; break;
+        case 2: textClass = "animate-skew-in"; visualClass = "animate-glitch-entry"; break;
+        case 3: textClass = "animate-slide-up"; visualClass = "animate-elastic-pop"; break;
+        case 4: textClass = "animate-scale-up"; visualClass = "animate-slide-up"; break;
+        default: textClass = "animate-glitch-entry"; visualClass = "animate-skew-in";
+      }
+    } else { // 08: Spotlight Quote
+      switch (scene) {
+        case 1: textClass = "animate-crossfade"; visualClass = "animate-scale-up"; break;
+        case 2: textClass = "animate-slide-up"; visualClass = "animate-crossfade"; break;
+        case 3: textClass = "animate-elastic-pop"; visualClass = "animate-slide-up"; break;
+        case 4: textClass = "animate-slide-left"; visualClass = "animate-scale-up"; break;
+        default: textClass = "animate-crossfade"; visualClass = "animate-slide-down";
       }
     }
-    // Quantum, Cyberpunk, Radar
+  } else if (num <= 16) { // Tier B: Systems, Mechanical, Technical
     switch (scene) {
-      case 1: return "animate-crossfade";
-      case 2: return "animate-slide-left";
-      case 3: return "animate-scale-up";
-      case 4: return "animate-slide-up";
-      default: return "animate-glitch-entry";
+      case 1: textClass = "animate-gate"; visualClass = "animate-slide-right"; break;
+      case 2: textClass = "animate-slide-left"; visualClass = "animate-gate"; break;
+      case 3: textClass = "animate-slide-up"; visualClass = "animate-scale-up"; break;
+      case 4: textClass = "animate-scale-up"; visualClass = "animate-slide-down"; break;
+      default: textClass = "animate-gate"; visualClass = "animate-crossfade";
     }
-  } else if (num <= 16) { // Tier B: Mechanical, Technical, Grid
+  } else { // Tier C: Editorial Serif Reports
     switch (scene) {
-      case 1: return "animate-slide-right";
-      case 2: return "animate-gate";
-      case 3: return "animate-slide-left";
-      case 4: return "animate-scale-up";
-      default: return "animate-slide-down";
+      case 1: textClass = "animate-crossfade"; visualClass = "animate-crossfade"; break;
+      case 2: textClass = "animate-bento-stagger"; visualClass = "animate-crossfade"; break;
+      case 3: textClass = "animate-crossfade"; visualClass = "animate-bento-stagger"; break;
+      case 4: textClass = "animate-bento-stagger"; visualClass = "animate-crossfade"; break;
+      default: textClass = "animate-crossfade"; visualClass = "animate-bento-stagger";
     }
-  } else { // Tier C: Print, Editorial, Serif, Heavy text (Elegant and minimal)
-    return "animate-crossfade";
   }
+
+  return { textClass, visualClass };
 }
 
 function getStyleSymbol(styleId) {
@@ -92,7 +152,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
   const romanNum = romanNumerals[scene - 1];
 
   const symbol = getStyleSymbol(style.id);
-  const transitionClass = getSceneTransitionClass(style.id, scene);
+  const { textClass, visualClass } = getContentTransitions(style.id, scene);
 
   // Arrange grid columns based on layout metadata
   let mainContent;
@@ -100,10 +160,10 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
     mainContent = (
       <>
         {/* Right Side Copy, Left Side Visual */}
-        <div className="col-span-6 h-full flex items-center justify-center relative min-h-[45cqh] order-first">
+        <div className={`col-span-6 h-full flex items-center justify-center relative min-h-[45cqh] order-first ${visualClass}`}>
           <VisualMetaphorEngine style={style} scene={scene} beat={beat} isThumbnail={isThumbnail} />
         </div>
-        <div className="col-span-6 flex flex-col justify-center h-full">
+        <div className={`col-span-6 flex flex-col justify-center h-full ${textClass}`}>
           <div className="flex flex-col gap-[1.5cqh]">
             <span className={`text-[1.5cqw] font-bold tracking-widest uppercase opacity-75 select-none ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
               {symbol}
@@ -121,7 +181,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
   } else if (layout === "topboard" || layout === "fullboard" || layout === "stickywall") {
     mainContent = (
       <div className="col-span-12 flex flex-col gap-[3cqh] h-full justify-between w-full">
-        <div className="grid grid-cols-12 gap-[3cqw] items-end w-full">
+        <div className={`grid grid-cols-12 gap-[3cqw] items-end w-full ${textClass}`}>
           <div className="col-span-7 flex flex-col gap-[1cqh]">
             <span className={`text-[1.5cqw] font-bold tracking-widest uppercase opacity-75 ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
               {symbol}
@@ -136,7 +196,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
             </p>
           </div>
         </div>
-        <div className="w-full flex items-center justify-center min-h-[30cqh] relative">
+        <div className={`w-full flex items-center justify-center min-h-[30cqh] relative ${visualClass}`}>
           <VisualMetaphorEngine style={style} scene={scene} beat={beat} isThumbnail={isThumbnail} />
         </div>
       </div>
@@ -144,7 +204,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
   } else if (layout === "poster") {
     mainContent = (
       <div className="col-span-12 grid grid-cols-12 gap-[4cqw] items-center relative w-full">
-        <div className="col-span-7 flex flex-col gap-[1.5cqh]">
+        <div className={`col-span-7 flex flex-col gap-[1.5cqh] ${textClass}`}>
           <span className={`text-[1.5cqw] font-bold tracking-widest uppercase opacity-75 ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
             {symbol}
           </span>
@@ -155,7 +215,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
             {beatData.body}
           </p>
         </div>
-        <div className="col-span-5 h-full flex items-center justify-center relative min-h-[35cqh]">
+        <div className={`col-span-5 h-full flex items-center justify-center relative min-h-[35cqh] ${visualClass}`}>
           <VisualMetaphorEngine style={style} scene={scene} beat={beat} isThumbnail={isThumbnail} />
         </div>
       </div>
@@ -163,7 +223,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
   } else if (layout === "center") {
     mainContent = (
       <div className="col-span-12 flex flex-col items-center text-center gap-[3cqh] justify-center h-full w-full">
-        <div className="max-w-[50cqw] flex flex-col gap-[1cqh] items-center">
+        <div className={`max-w-[50cqw] flex flex-col gap-[1cqh] items-center ${textClass}`}>
           <span className={`text-[1.4cqw] font-bold tracking-widest uppercase opacity-75 ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
             {symbol}
           </span>
@@ -174,7 +234,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
             {beatData.body}
           </p>
         </div>
-        <div className="w-full flex items-center justify-center min-h-[30cqh]">
+        <div className={`w-full flex items-center justify-center min-h-[30cqh] ${visualClass}`}>
           <VisualMetaphorEngine style={style} scene={scene} beat={beat} isThumbnail={isThumbnail} />
         </div>
       </div>
@@ -184,7 +244,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
     mainContent = (
       <>
         {/* Left Side: Copy */}
-        <div className="col-span-6 flex flex-col justify-center h-full">
+        <div className={`col-span-6 flex flex-col justify-center h-full ${textClass}`}>
           <div className="flex flex-col gap-[1.5cqh]">
             <span className={`text-[1.5cqw] font-bold tracking-widest uppercase opacity-75 select-none ${style.id === "02" ? "text-amber-600" : "text-cyan-500"}`}>
               {symbol}
@@ -198,7 +258,7 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
           </div>
         </div>
         {/* Right Side: Visual Metaphor Canvas */}
-        <div className="col-span-6 h-full flex items-center justify-center relative min-h-[45cqh]">
+        <div className={`col-span-6 h-full flex items-center justify-center relative min-h-[45cqh] ${visualClass}`}>
           <VisualMetaphorEngine style={style} scene={scene} beat={beat} isThumbnail={isThumbnail} />
         </div>
       </>
@@ -207,9 +267,8 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
 
   return (
     <div 
-      key={`${style.id}-${scene}`}
       lang={isCjk ? "zh-Hans" : "en"}
-      className={`w-full h-full relative p-[5cqw] flex flex-col justify-between overflow-hidden select-none ${style.colors.bg} ${style.colors.ink} ${bodyFont} ${transitionClass}`}
+      className={`w-full h-full relative p-[5cqw] flex flex-col justify-between overflow-hidden select-none ${style.colors.bg} ${style.colors.ink} ${bodyFont}`}
     >
       {/* Background decorations based on style */}
       {style.id === "01" && (
@@ -325,8 +384,11 @@ export function SlideRenderer({ style, scene, beat, isThumbnail = false, languag
         </div>
       </header>
 
-      {/* Main Slide Layout */}
-      <div className="grid grid-cols-12 gap-[4cqw] items-center my-auto z-10 min-h-[55cqh] w-full">
+      {/* Main Slide Layout with Dynamic Scene Key for Smooth Inner Transitions */}
+      <div 
+        key={`${style.id}-${scene}`}
+        className="grid grid-cols-12 gap-[4cqw] items-center my-auto z-10 min-h-[55cqh] w-full"
+      >
         {mainContent}
       </div>
 
