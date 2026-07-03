@@ -6,7 +6,7 @@ import { formatMessage, UI_TRANSLATIONS } from "./i18n/ui";
 import { 
   Monitor, LayoutGrid, Kanban, Play, ChevronRight, ChevronLeft, 
   Menu, X, RotateCcw, Sparkles, CheckCircle, Info, ExternalLink,
-  Sun, Moon, Languages
+  Sun, Moon, Languages, Github
 } from "lucide-react";
 
 // Standard aspect ratio parameters
@@ -322,6 +322,20 @@ export function App() {
             ))}
           </div>
 
+          {/* Source repository link */}
+          <a
+            data-testid="github-link"
+            href="https://github.com/patrick-fu/frontend-harness-slides"
+            target="_blank"
+            rel="noreferrer"
+            title={t.githubLabel}
+            aria-label={t.githubLabel}
+            className={`hidden sm:flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-lg border transition-all ${chrome.panelStrong} ${chrome.inactive}`}
+          >
+            <Github className="w-3.5 h-3.5" />
+            <span className="hidden xl:inline">{t.githubLabel}</span>
+          </a>
+
           {/* Global Tab view switcher */}
           <div className={`flex rounded-lg p-1 border ${chrome.panelStrong} shrink-0`}>
             <button
@@ -536,7 +550,7 @@ export function App() {
           </>
         )}
 
-        {/* 24-STYLE GRID VIEW CATALOG (Maximized edge-to-edge layout) */}
+        {/* STYLE PRESET GRID VIEW CATALOG (Maximized edge-to-edge layout) */}
         {view === "grid" && (
           <main className={`flex-1 overflow-y-auto p-4 ${chrome.main}`}>
             <div className="mb-6">

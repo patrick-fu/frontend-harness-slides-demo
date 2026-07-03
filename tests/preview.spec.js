@@ -55,9 +55,18 @@ test.describe("Frontend Harness Slides Design System", () => {
     await expect(page.locator("h2")).toContainText("Board View");
     
     // Board view should categorize low, med, high density columns
-    await expect(page.locator("span:has-text('01 - 08 (Low)')")).toBeVisible();
-    await expect(page.locator("span:has-text('09 - 16 (Med)')")).toBeVisible();
-    await expect(page.locator("span:has-text('17 - 24 (High)')")).toBeVisible();
+    await expect(page.getByText("Speaker-led", { exact: true })).toBeVisible();
+    await expect(page.getByText("Hybrid", { exact: true })).toBeVisible();
+    await expect(page.getByText("Report-ready", { exact: true })).toBeVisible();
+  });
+
+  test("header links back to the standalone GitHub repository", async ({ page }) => {
+    await page.goto("/");
+
+    await expect(page.locator('[data-testid="github-link"]')).toHaveAttribute(
+      "href",
+      "https://github.com/patrick-fu/frontend-harness-slides"
+    );
   });
 
   test("Grid view thumbnails fill their 16:9 frames at large viewport sizes", async ({ page }) => {

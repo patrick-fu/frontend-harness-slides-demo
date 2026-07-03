@@ -8,7 +8,7 @@ import {
 
 /**
  * MetaphorTierC
- * Handles Styles 17 - 24 (Editorial Text Report high density styles)
+ * Handles editorial text report high-density styles.
  * Animation profile: Strictly editorial, static fades, Magic Move shape transitions, no bounces.
  * Renders dynamically based on scene (1 to 5) and beat (0 to 2) values.
  */

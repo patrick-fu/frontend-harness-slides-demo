@@ -10,7 +10,7 @@ import { MetaphorTierC } from "./MetaphorTierC";
  * Main dispatcher delegating layout and visual rendering across three distinct motion tiers:
  * - Tier A (Styles 01-08): Spring, kinetic, wiggling, highly playful keynote styles.
  * - Tier B (Styles 09-16): Linear mechanical flow-guidance pipeline tracks.
- * - Tier C (Styles 17-24): Purely static, print-aligned, clean editorial text reports.
+ * - Tier C: Purely static, print-aligned, clean editorial text reports.
  */
 export function VisualMetaphorEngine({ style, scene, beat, isThumbnail = false }) {
   const styleNum = parseInt(style.id, 10);

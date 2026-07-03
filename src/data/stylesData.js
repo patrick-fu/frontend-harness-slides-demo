@@ -4,7 +4,7 @@ export const STAGE = {
   height: 1080,
 };
 
-// Unique data matrices for all 24 styles × 5 scenes
+// Unique data matrices for the style presets × 5 scenes
 const STYLE_SCENE_CONTENT = {
   "01": {
     topic: "Quantum Compiler Architecture",

@@ -1,6 +1,6 @@
-# Frontend Harness Slides Design System — 24-Style Specification Manifesto
+# Frontend Harness Slides Design System — Style Preset Specification Manifesto
 
-This document serves as the absolute source of truth and authoritative design specification for the **Frontend Harness Slides Design System**, cataloging all **24 presentation styles** across three density tiers. 
+This document serves as the absolute source of truth and authoritative design specification for the **Frontend Harness Slides Design System**, cataloging the current presentation style presets across three density tiers.
 
 This spec documents the design philosophy, typography, exact color palettes, specific visual metaphors, progressive storytelling mechanics, and step-by-step beat progressions that govern our slide deck system. Use this as a blueprint for implementing, refactoring, or extending the deck engine.
 
@@ -38,7 +38,7 @@ Slide hierarchy is organized into three density tiers. Each tier matches a speci
 ```
 +------------------------------------------------------------------------------------------+
 | 🟢 Speaker-Led (Low Density)   | 🟡 Balanced Hybrid (Med Density) | 🔵 Text Report (High Density) |
-| Styles 01 - 08                 | Styles 09 - 16                  | Styles 17 - 24               |
+| Speaker-led styles             | Hybrid styles                   | Report-ready styles          |
 | Presenter is the narrator.     | Reader & Speaker handoff.       | Self-reading reports.        |
 | Gorgeous, themed, elastic,     | Controlled flow pipelines,      | Restrained editorial layout, |
 | physical, rotating, shaking.   | faders, and route grids.        | bento partitions, diffs.     |
@@ -65,9 +65,9 @@ Slide hierarchy is organized into three density tiers. Each tier matches a speci
 
 ---
 
-## Part 3: Architectural Specs for the 24 Styles
+## Part 3: Architectural Specs for the Style Presets
 
-Below is the exhaustive catalog of all 24 Styles. Each section defines the exact typography, color palettes, visual metaphors, and behavioral recommendations for each style.
+Below is the exhaustive catalog of the current style presets. Each section defines the exact typography, color palettes, visual metaphors, and behavioral recommendations for each style.
 
 ---
 
@@ -272,7 +272,7 @@ Below is the exhaustive catalog of all 24 Styles. Each section defines the exact
 
 ---
 
-### TIER 3: TEXT REPORT / HIGH DENSITY (Styles 17 – 24)
+### TIER 3: TEXT REPORT / HIGH DENSITY
 
 #### Style 17: Research Memo
 * **Theme/Topic**: Impact of Latency on Mobile User Retention
