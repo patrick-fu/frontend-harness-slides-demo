@@ -65,13 +65,24 @@ export const getMetadata = (lang) => {
   };
 };
 
-export default function Style02({ scene, beat, language, isThumbnail }) {
+export default function Style02({ scene, beat, language, isThumbnail, onNavigate }) {
   const isZh = language === "zh";
+
+  // Left Vertical Strata Ruler Navigation Levels
+  const strataLevels = [
+    { sceneNum: 1, nameZh: "遗迹封面", nameEn: "Cover Sheet", depth: "-1.2m", pes: "IV PES", roman: "I", pct: 12 },
+    { sceneNum: 2, nameZh: "器形对比", nameEn: "Vessel Profile", depth: "-2.3m", pes: "VIII PES", roman: "II", pct: 31 },
+    { sceneNum: 3, nameZh: "地层发掘", nameEn: "Stratigraphy", depth: "-3.5m", pes: "XII PES", roman: "III", pct: 50 },
+    { sceneNum: 4, nameZh: "软木板比对", nameEn: "Corkboard Matrix", depth: "-4.5m", pes: "XV PES", roman: "IV", pct: 69 },
+    { sceneNum: 5, nameZh: "发掘总账", nameEn: "Excavation Ledger", depth: "-5.5m", pes: "XIX PES", roman: "V", pct: 88 },
+  ];
+
+  const activeLevel = strataLevels.find(l => l.sceneNum === scene) || strataLevels[0];
 
   // Render Scene 1: Cover Sheet (Ultralight)
   const renderScene1 = () => {
     return (
-      <div className="w-full h-full relative flex items-center justify-between px-[6cqw] py-[5cqh] bg-[#faf6ee] text-[#2d2722] overflow-hidden select-none">
+      <div className={`w-full h-full relative flex items-center justify-between py-[5cqh] bg-[#faf6ee] text-[#2d2722] overflow-hidden select-none ${isThumbnail ? "px-[6cqw]" : "pl-[10.5cqw] pr-[6cqw]"}`}>
         {/* Left Side: Field Diary Metadata */}
         <div className="flex flex-col justify-between h-full w-[25cqw] z-10">
           <div className="flex items-center gap-[1cqw] border-b border-[#2d2722]/20 pb-[2cqh]">
@@ -299,11 +310,12 @@ export default function Style02({ scene, beat, language, isThumbnail }) {
 
   // Render Scene 2: Vessel Profile Comparison (Light)
   const renderScene2 = () => {
+    const sheetWidthClass = isThumbnail ? "w-[42cqw]" : "w-[41cqw]";
     return (
-      <div className="w-full h-full relative flex items-center justify-center gap-[4cqw] px-[5cqw] py-[4cqh] bg-[#faf6ee] text-[#2d2722] overflow-hidden select-none">
+      <div className={`w-full h-full relative flex items-center justify-center py-[4cqh] bg-[#faf6ee] text-[#2d2722] overflow-hidden select-none ${isThumbnail ? "px-[5cqw] gap-[4cqw]" : "pl-[10cqw] pr-[5cqw] gap-[3cqw]"}`}>
         {/* Left Sheet: Geometric Rim & Base Profile */}
         <div 
-          className="w-[42cqw] h-[88cqh] bg-[#fcf8f0] border border-[#2d2722]/15 shadow-xl rounded-sm p-[2.5cqw] flex flex-col justify-between relative transition-transform duration-500 hover:rotate-0"
+          className={`${sheetWidthClass} h-[88cqh] bg-[#fcf8f0] border border-[#2d2722]/15 shadow-xl rounded-sm p-[2.5cqw] flex flex-col justify-between relative transition-transform duration-500 hover:rotate-0`}
           style={{ transform: "rotate(-1deg)" }}
         >
           {/* Paper Texture Overlay */}
@@ -420,7 +432,7 @@ export default function Style02({ scene, beat, language, isThumbnail }) {
 
         {/* Right Sheet: Dipinti Trade Markings Translation */}
         <div 
-          className="w-[42cqw] h-[88cqh] bg-[#fcf8f0] border border-[#2d2722]/15 shadow-xl rounded-sm p-[2.5cqw] flex flex-col justify-between relative transition-transform duration-500 hover:rotate-0"
+          className={`${sheetWidthClass} h-[88cqh] bg-[#fcf8f0] border border-[#2d2722]/15 shadow-xl rounded-sm p-[2.5cqw] flex flex-col justify-between relative transition-transform duration-500 hover:rotate-0`}
           style={{ transform: "rotate(1.5deg)" }}
         >
           {/* Paper Texture Overlay */}
@@ -517,9 +529,10 @@ export default function Style02({ scene, beat, language, isThumbnail }) {
     // Determine visibility and sweep state of layers based on beat
     const isAshSwept = beat >= 1;
     const isPumiceSwept = beat >= 2;
+    const rightColWidthClass = isThumbnail ? "w-[50cqw]" : "w-[48cqw]";
 
     return (
-      <div className="w-full h-full relative flex items-center justify-between px-[6cqw] py-[5cqh] bg-[#faf6ee] text-[#2d2722] overflow-hidden select-none">
+      <div className={`w-full h-full relative flex items-center justify-between py-[5cqh] bg-[#faf6ee] text-[#2d2722] overflow-hidden select-none ${isThumbnail ? "px-[6cqw]" : "pl-[10cqw] pr-[5cqw]"}`}>
         {/* Left Side: Stratigraphic Column */}
         <div className="w-[32cqw] h-full flex flex-col justify-between z-10">
           <div className="border-b border-[#2d2722]/10 pb-[1.5cqh]">
@@ -626,7 +639,7 @@ export default function Style02({ scene, beat, language, isThumbnail }) {
         </div>
 
         {/* Right Side: Excavated Artifacts with Dynamic Callouts */}
-        <div className="w-[50cqw] h-full flex flex-col justify-between pl-[4cqw] z-10">
+        <div className={`${rightColWidthClass} h-full flex flex-col justify-between pl-[4cqw] z-10`}>
           <div className="bg-[#fcf8f0] border border-[#2d2722]/15 shadow-lg rounded p-[2.5cqw] flex-1 flex flex-col justify-between relative">
             {/* Sketchy drawing of the Archaic Soil Layer Artifacts */}
             <div className="border-b border-[#2d2722]/10 pb-[1.5cqh] mb-[2cqh]">
@@ -722,7 +735,7 @@ export default function Style02({ scene, beat, language, isThumbnail }) {
   // Render Scene 4: Corkboard Matrix (Dense)
   const renderScene4 = () => {
     return (
-      <div className="w-full h-full relative p-[4cqw] bg-[#faf6ee] text-[#2d2722] overflow-hidden select-none flex flex-col justify-between">
+      <div className={`w-full h-full relative bg-[#faf6ee] text-[#2d2722] overflow-hidden select-none flex flex-col justify-between ${isThumbnail ? "p-[4cqw]" : "pl-[10cqw] pr-[4cqw] py-[4cqh]"}`}>
         {/* Header */}
         <div className="border-b border-[#2d2722]/10 pb-[1cqh] mb-[2cqh] z-10 flex justify-between items-end">
           <div>
@@ -894,7 +907,7 @@ export default function Style02({ scene, beat, language, isThumbnail }) {
   // Render Scene 5: Specimen Ledger Sheet (Extreme)
   const renderScene5 = () => {
     return (
-      <div className="w-full h-full relative bg-[#faf6ee] text-[#2d2722] overflow-hidden select-none p-[2cqw]">
+      <div className={`w-full h-full relative bg-[#faf6ee] text-[#2d2722] overflow-hidden select-none ${isThumbnail ? "p-[2cqw]" : "pl-[9.5cqw] pr-[2cqw] py-[2cqw]"}`}>
         {/* Dual Hand-Drawn Double-Line Borders */}
         <div className="w-full h-full border-8 border-double border-[#2d2722]/80 p-[2cqw] flex flex-col justify-between relative">
           
@@ -1168,6 +1181,144 @@ export default function Style02({ scene, beat, language, isThumbnail }) {
 
       {/* Main active scene view using Vertical Spatial Viewport Strata Track */}
       <div className="flex-1 w-full relative overflow-hidden">
+        
+        {/* Left Vertical Strata Ruler Navigation */}
+        {!isThumbnail && (
+          <div className="absolute left-[1.2cqw] top-[4cqh] bottom-[4cqh] w-[6.5cqw] z-30 select-none pointer-events-auto flex items-center justify-end">
+            {/* Wood Ruler Plank */}
+            <div className="w-[4.2cqw] h-full bg-[#ebd1b0] border-[0.22cqw] border-[#2d2722] rounded-[0.4cqw] shadow-[0.4cqw_0.4cqw_0_rgba(45,39,34,0.15)] flex flex-col justify-between py-[2cqh] px-[0.2cqw] relative">
+              
+              {/* Wood Grain & Graduation Ticks SVGs combined (using standard unitless viewBox coordinates) */}
+              <svg 
+                viewBox="0 0 100 1000" 
+                className="absolute inset-0 w-full h-full pointer-events-none" 
+                stroke="#2d2722" 
+                fill="none"
+              >
+                {/* Wood Grain Lines */}
+                <g strokeWidth="1.5" strokeOpacity="0.25">
+                  <path d="M 12 20 Q 35 200 24 400 T 12 800" />
+                  <path d="M 80 50 Q 60 300 72 600 T 68 950" />
+                  <path d="M 45 100 Q 55 450 40 750" />
+                </g>
+
+                {/* Graduation Ticks (Pes feet indicators) on the right margin */}
+                <g strokeWidth="2.5" strokeOpacity="0.9">
+                  {Array.from({ length: 41 }).map((_, i) => {
+                    const y = (i / 40) * 1000;
+                    const isMajor = i % 5 === 0;
+                    return (
+                      <line 
+                        key={i} 
+                        x1={isMajor ? 75 : 88} 
+                        y1={y} 
+                        x2={100} 
+                        y2={y} 
+                      />
+                    );
+                  })}
+                </g>
+              </svg>
+
+              {/* Roman Numerals & Clickable Nodes */}
+              {strataLevels.map((level) => {
+                const isActive = scene === level.sceneNum;
+                return (
+                  <div 
+                    key={level.sceneNum}
+                    onClick={() => onNavigate && onNavigate(level.sceneNum, 0)}
+                    className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer group flex flex-col items-center z-10"
+                    style={{ top: `${level.pct}%` }}
+                  >
+                    {/* Tooltip on Hover */}
+                    <div className="absolute left-[3.2cqw] scale-0 group-hover:scale-100 origin-left transition-transform duration-200 bg-[#fbf9f2] border border-[#2d2722]/60 px-[0.8cqw] py-[0.4cqh] rounded shadow-md z-30 pointer-events-none flex flex-col gap-[0.2cqh] min-w-[12cqw]">
+                      <span className="font-serif-ancient text-[0.8cqw] font-bold text-[#b83a25] leading-none">{level.pes}</span>
+                      <span className="font-handwriting text-[1.1cqw] font-black text-[#2d2722] leading-none mt-[0.2cqh]">{isZh ? level.nameZh : level.nameEn}</span>
+                      <span className="font-mono text-[0.75cqw] text-[#2d2722]/60 leading-none">{level.depth}</span>
+                    </div>
+
+                    {/* Clickable Area Ring */}
+                    <div className={`w-[2.4cqw] h-[2.4cqw] rounded-full border-[0.22cqw] flex items-center justify-center transition-all duration-300 ${
+                      isActive 
+                        ? "bg-[#b83a25] border-[#2d2722] text-[#faf6ee] scale-110 shadow-lg shadow-[#b83a25]/25" 
+                        : "bg-[#faf6ee] border-[#2d2722]/60 text-[#2d2722]/85 hover:bg-[#b83a25]/15 hover:border-[#b83a25] hover:text-[#b83a25] hover:scale-105"
+                    }`}>
+                      <span className="font-serif-ancient text-[1cqw] font-bold leading-none">{level.roman}</span>
+                    </div>
+                    
+                    {/* Depth Indicator */}
+                    <span className={`font-handwriting text-[0.85cqw] font-bold mt-[0.3cqh] transition-all duration-300 whitespace-nowrap ${
+                      isActive ? "text-[#b83a25] scale-105" : "text-[#2d2722]/60 group-hover:text-[#b83a25]"
+                    }`}>
+                      {level.depth}
+                    </span>
+
+                    {/* Roman Foot (Pes) Indicator */}
+                    <span className={`font-serif-ancient text-[0.6cqw] font-medium tracking-tighter opacity-40 group-hover:opacity-80 transition-opacity whitespace-nowrap mt-[0.1cqh] ${
+                      isActive ? "text-[#b83a25]/80 opacity-90" : "text-[#2d2722]"
+                    }`}>
+                      {level.pes}
+                    </span>
+                  </div>
+                );
+              })}
+
+              {/* Red Pencil Pointer */}
+              <div 
+                className="absolute z-20 pointer-events-none transition-all duration-1000"
+                style={{ 
+                  top: `${activeLevel.pct}%`, 
+                  left: "-2.4cqw",
+                  width: "3.2cqw",
+                  height: "2.2cqh",
+                  transform: "translateY(-50%)",
+                  transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)"
+                }}
+              >
+                <svg 
+                  viewBox="0 0 100 40" 
+                  className="w-full h-full overflow-visible"
+                  style={{ filter: "drop-shadow(0.2cqw 0.2cqw 0.1cqw rgba(45,39,34,0.15))" }}
+                >
+                  {/* Pencil Body */}
+                  <path 
+                    d="M 5,12 L 65,12 L 80,20 L 65,28 L 5,28 Z" 
+                    fill="#b83a25" 
+                    stroke="#2d2722" 
+                    strokeWidth="3.5" 
+                    strokeLinejoin="round" 
+                  />
+                  {/* Wood Tip */}
+                  <path 
+                    d="M 65,12 L 80,20 L 65,28 Z" 
+                    fill="#ebd1b0" 
+                    stroke="#2d2722" 
+                    strokeWidth="2.5" 
+                  />
+                  {/* Red Lead Tip */}
+                  <path 
+                    d="M 73,16 L 80,20 L 73,24 Z" 
+                    fill="#b83a25" 
+                    stroke="#2d2722" 
+                    strokeWidth="2" 
+                  />
+                  {/* Eraser */}
+                  <path 
+                    d="M 5,12 C 1,12 1,28 5,28" 
+                    fill="#e5989b" 
+                    stroke="#2d2722" 
+                    strokeWidth="3" 
+                  />
+                  {/* Metal Ring (Ferrule) */}
+                  <rect x="9" y="12" width="6" height="16" fill="#b0b0b0" stroke="#2d2722" strokeWidth="2" />
+                </svg>
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* Sliding Slides vertical track */}
         <div 
           className="flex flex-col h-[500%] w-full transition-transform duration-1000 ease-out"
           style={{

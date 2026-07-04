@@ -1,457 +1,945 @@
 import React from "react";
-import { Compass, Eye, Shield, Activity, Database, Layers, Trees, Circle, CheckCircle, ArrowRight, Droplets } from "lucide-react";
+import { 
+  Compass, Eye, Shield, Activity, Database, Layers, Trees, 
+  Circle, CheckCircle, ArrowRight, Droplets, Sprout, Wheat, 
+  Coins, Scroll, FileText, TrendingUp, UserCheck 
+} from "lucide-react";
 
-export const getMetadata = (lang) => ({
-  id: "16",
-  tier: "B",
-  name: lang === "zh" ? "中世纪三区轮作制健康监测" : "Medieval Crop Rotation Health",
-  theme: lang === "zh" ? "中世纪农业庄园经济制度" : "Manorial Agricultural Economy",
-  densityLabel: lang === "zh" ? "田垄生态微控" : "Manorial Agro-Monitor",
-  colors: { bg: "bg-[#091107]", ink: "text-[#edf7ea]", panel: "border-[#a3e635]/15", accent: "text-[#a3e635]" },
-  typography: { header: "font-serif", body: "font-sans" },
-  scenes: [
-    {
-      id: 1,
-      title: lang === "zh" ? "休耕土壤深耕与养分蓄力" : "Fallow Soil Ploughing & Nutrient Recovery",
-      beats: [
-        { id: 1, action: lang === "zh" ? "深耕蓄力" : "Plough Fallow", title: lang === "zh" ? "休耕荒野深耕与养分凝聚" : "Deep Ploughing for Silt Regeneration", body: lang === "zh" ? "深翻休耕区原野，翻松淤泥，借由野生苜蓿、三叶草等豆科植物缓慢吸收凝聚空气中的天然氮肥。" : "Ploughing deep into the fallow soil. Loosening silt clay to let wild clover and legumes slowly gather natural soil nitrogen." },
-        { id: 2, action: lang === "zh" ? "秋播冬麦" : "Sow Winter Wheat", title: lang === "zh" ? "首区冬小麦播种与覆土" : "Winter Wheat Sowing & Covering", body: lang === "zh" ? "在富氮的第一区细致开垄，播撒精选冬麦种子，覆盖腐殖细土，开启漫长越冬碳水化合物积累期。" : "Sowing selected winter wheat seeds across Zone 1 furrows, applying compost cover to start long winter starch accumulation." },
-        { id: 3, action: lang === "zh" ? "氮肥常锁" : "Nitrogen Lock", title: lang === "zh" ? "垄沟底层土壤有效氮常数锁定" : "Soil Nitrogen Phase Lock", body: lang === "zh" ? "测定并锁定垄沟底层有效氮素分布常数，确立大庄园最初的生态阻尼阈值，保证春季发芽率。" : "Locking effective nitrogen distributions across deep furrow slices, establishing the initial ecological threshold." }
-      ]
-    },
-    {
-      id: 2,
-      title: lang === "zh" ? "三区作物对比与生物固氮" : "Three-Zone Crop Contrast & Nitrogen Balance",
-      beats: [
-        { id: 1, action: lang === "zh" ? "冬麦叶分析" : "Scan Zone A", title: lang === "zh" ? "第一区冬麦叶片覆盖监测" : "Zone A Winter Wheat Leaf Area Scan", body: lang === "zh" ? "监测第一区冬小麦叶面积指数与叶绿素反射率，麦苗呈健康深绿色，根系深扎蓄力。" : "Tracking winter wheat leaf area indices and chlorophyll reflectance in Zone A. Shoots are deep green with strong roots." },
-        { id: 2, action: lang === "zh" ? "大麦春播" : "Sow Zone B", title: lang === "zh" ? "第二区春大麦与豌豆混播" : "Zone B Spring Barley & Pea Mix", body: lang === "zh" ? "在第二区混播春大麦与春豌豆，依靠豆科植物根瘤菌进行高能生物固氮，反哺春作物发育。" : "Co-sowing spring barley and peas in Zone B, harnessing root nodule bacteria to fix nitrogen and fuel crop growth." },
-        { id: 3, action: lang === "zh" ? "休耕养护" : "Scan Zone C", title: lang === "zh" ? "第三区牧草放牧与养分平衡" : "Zone C Grazing & Nutrient Recovery", body: lang === "zh" ? "第三区彻底闲置，用作放牧，利用牲畜粪尿与落叶缓慢反哺，在平衡中拉升土壤有机质含量。" : "Zone C remains fallow for sheep grazing. Harnessing animal manure and natural decay to rise soil organic mass." }
-      ]
-    },
-    {
-      id: 3,
-      title: lang === "zh" ? "轮作大流转与空间大轮换" : "The 3-Year Great Field Rotation Cycle",
-      beats: [
-        { id: 1, action: lang === "zh" ? "秋收秋播" : "Autumn Harvest", title: lang === "zh" ? "秋收期冬麦收割与深翻" : "Autumn Phase: Winter Wheat Harvest", body: lang === "zh" ? "八月金黄，收割一区冬小麦；二区春大麦收获并留茬；三区闲置翻耕，作好秋播冬麦底熵整备。" : "August gold. Harvesting Zone 1 winter wheat, cutting Zone 2 spring barley, deeply tilling Zone 3 fallow for autumn sowing." },
-        { id: 2, action: lang === "zh" ? "春回发芽" : "Spring Sprout", title: lang === "zh" ? "春播期大麦萌芽与放牧" : "Spring Phase: Barley Germination", body: lang === "zh" ? "冬去春来，二区播撒春作物吐绿发芽；一区改作休耕牧场恢复肥力；三区冬麦出苗葱郁，生命盎然。" : "Spring returns. Zone 2 sprouts spring crops, Zone 1 becomes fallow pasture to rest, Zone 3 winter wheat sprouts lushly." },
-        { id: 3, action: lang === "zh" ? "空间大转" : "Field Rotation", title: lang === "zh" ? "三区空间完全大轮转定格" : "Unified Spatial Rotation Calibration", body: lang === "zh" ? "执行经典三区大轮换：一区改春播；二区改休耕；三区改冬麦，达成永续循环的完美大账册。" : "Executing the classic three-field rotation: Zone 1 moves to spring, Zone 2 to fallow, Zone 3 to winter wheat. Loop closes." }
-      ]
-    },
-    {
-      id: 4,
-      title: lang === "zh" ? "渠系水动力平衡与有效氮度量" : "Hydrology Balance & Nitrogen Telemetry",
-      beats: [
-        { id: 1, action: lang === "zh" ? "测土测氮" : "Scan Soil", title: lang === "zh" ? "土壤有效氮磷钾高维扫描" : "Soil Nitrogen & Potassium Scan", body: lang === "zh" ? "对庄园数百个垄块的底层土壤湿度、有效氮浓度进行拉网测绘，绘制空间热阻三维对位图。" : "Mapping soil moisture and effective nitrogen levels across hundreds of ridges, creating a 3D field spectrograph." },
-        { id: 2, action: lang === "zh" ? "自适应水" : "Irrigate Balance", title: lang === "zh" ? "庄园渠系水阻尼流量柔性调校" : "Adaptive Sluice Flow Balancing", body: lang === "zh" ? "依据各垄块湿度差逆向开闭灌溉木闸，优化流体力学分布，抑制蒸发流，保证多区适水常数归一。" : "Modulating irrigation sluices based on moisture deltas, optimizing fluid hydraulics to keep soil moisture uniform." },
-        { id: 3, action: lang === "zh" ? "农业记账" : "Log Harvest", title: lang === "zh" ? "大庄园总收获积温账本审计" : "Manorial Harvest Proof Ledger", body: lang === "zh" ? "累加三区作物的光照积温常数，估算面粉出率、燕麦精饲料折损比，生成合规庄园经济科学账册。" : "Aggregating solar heat constants, computing winter wheat grain yields and oat forage weights for the lord's archives." }
-      ]
-    },
-    {
-      id: 5,
-      title: lang === "zh" ? "大庄园三区轮作总控台" : "Grand Three-Field Rotation Portal",
-      beats: [
-        { id: 1, action: lang === "zh" ? "农政编译" : "Stream Crops", title: lang === "zh" ? "多垄块农业气象指标并轨编译" : "Multi-Zone Agro-Meteorological Stream", body: lang === "zh" ? "庄园三区各垄温湿度、土壤氮素与气温蒸发风速大流高速汇流并轨，实时生成高维度农政账簿。" : "Merging real-time wind speed, soil nitrogen, and granary humidity telemetry into high-speed channels." },
-        { id: 2, action: lang === "zh" ? "三区并网" : "Agro Mesh Lock", title: lang === "zh" ? "冬麦、大麦与休耕三大生态锁定" : "Wheat, Barley & Fallow Dynamic Mesh", body: lang === "zh" ? "冬麦（主粮）、大麦（燕麦饲料）、休耕（肥力）三大转化轨道达成完美的百分百交叉，生态网红亮起。" : "Wheat (grain), barley (forage), and fallow (fertility) reach a perfect 100% convergence. Interlocking matrix fully locked." },
-        { id: 3, action: lang === "zh" ? "金印结账" : "Manor Seal", title: lang === "zh" ? "大庄园主金字印信终极签发" : "Grand Manor Harvest Ledger Sign-off", body: lang === "zh" ? "领主加盖大金重印，粮仓满溢爆库，三区轮换结账出炉，大循环宣告圆满落幕，全网绿灯通车。" : "The lord applies the great gold seal. Granaries overflow with grains. The rotation ledger is signed off with golden stars." }
-      ]
-    }
-  ]
-});
+export const getMetadata = (lang) => {
+  const isZh = lang === "zh";
+  return {
+    id: "16",
+    tier: "A",
+    density: "high",
+    name: isZh ? "中世纪三区轮作制健康监测" : "Medieval Crop Rotation Health",
+    theme: isZh ? "中世纪农业庄园经济制度" : "Manorial Agricultural Economy",
+    densityLabel: isZh ? "田垄生态微控" : "Manorial Agro-Monitor",
+    colors: { bg: "bg-[#0b140d]", ink: "text-[#f5f5f4]", panel: "border-[#eab308]/15", accent: "text-[#eab308]" },
+    typography: { header: "font-serif", body: "font-sans" },
+    scenes: [
+      {
+        id: 1,
+        name: isZh ? "休耕与轮作轮盘" : "Fallow & Rotation Wheel",
+        beats: [
+          { action: isZh ? "启动重力深耕" : "Initiate Heavy Ploughing" },
+          { action: isZh ? "秋播冬小麦" : "Sow Winter Wheat" },
+          { action: isZh ? "锁定土壤微量元素" : "Lock Soil Trace Elements" }
+        ]
+      },
+      {
+        id: 2,
+        name: isZh ? "冬麦与春大麦对比" : "Wheat vs Barley Field",
+        beats: [
+          { action: isZh ? "扫描冬麦氮含量" : "Scan Wheat Nitrogen" },
+          { action: isZh ? "春播大麦与豌豆" : "Sow Spring Barley" },
+          { action: isZh ? "激活生物固氮平衡" : "Activate Nitrogen Balance" }
+        ]
+      },
+      {
+        id: 3,
+        name: isZh ? "三场轮作时间轴" : "Three-Field Rotation Timeline",
+        beats: [
+          { action: isZh ? "冬麦成熟与秋收" : "Winter Wheat Harvest" },
+          { action: isZh ? "春大麦萌芽与休耕" : "Spring Barley Sprout" },
+          { action: isZh ? "执行三区空间大轮换" : "Execute Field Rotation" }
+        ]
+      },
+      {
+        id: 4,
+        name: isZh ? "庄园产量四象限" : "Manor Yield Quadrant",
+        beats: [
+          { action: isZh ? "核算冬麦产量" : "Audit Winter Wheat Yield" },
+          { action: isZh ? "核算大麦与牧草" : "Audit Barley & Pasture" },
+          { action: isZh ? "核算什一税与净收益" : "Audit Tithe & Net Revenue" }
+        ]
+      },
+      {
+        id: 5,
+        name: isZh ? "皇家庄园收割总账" : "Royal Manor Harvest Ledger",
+        beats: [
+          { action: isZh ? "载入谷物收成细账" : "Load Grain Inventory" },
+          { action: isZh ? "并轨计算教会什一税" : "Compile Church Tithe" },
+          { action: isZh ? "加盖皇家御用红蜡印章" : "Stamp Royal Wax Seal" }
+        ]
+      }
+    ]
+  };
+};
 
-export default function Style16({ scene, beat, language, isThumbnail }) {
-  const meta = getMetadata(language);
-  const currentScene = meta.scenes.find((s) => s.id === scene) || meta.scenes[0];
-  const currentBeat = currentScene.beats[beat] || currentScene.beats[0];
+export default function Style16({ scene, beat, language, onNavigate, isThumbnail }) {
   const isZh = language === "zh";
+  const meta = getMetadata(language);
 
-  // Mock nitrogen / water values based on scene and beat
-  const getAgroMetrics = () => {
-    if (scene === 1) {
-      if (beat === 0) return { nitrogen: "12 ppm", moisture: "45%" };
-      if (beat === 1) return { nitrogen: "14 ppm", moisture: "52%" };
-      return { nitrogen: "18 ppm (Rich)", moisture: "58%" };
-    }
-    if (scene === 2) {
-      if (beat === 0) return { nitrogen: "22 ppm", moisture: "60%" };
-      if (beat === 1) return { nitrogen: "26 ppm", moisture: "62%" };
-      return { nitrogen: "30 ppm (Rich)", moisture: "55%" };
-    }
-    if (scene === 3) {
-      if (beat === 0) return { nitrogen: "28 ppm", moisture: "50%" }; // Autumn
-      if (beat === 1) return { nitrogen: "34 ppm", moisture: "65%" }; // Spring
-      return { nitrogen: "38 ppm (Peak)", moisture: "48%" }; // Summer Rotation
-    }
-    return { nitrogen: "35 ppm", moisture: "54%" };
+  // Scene 1: Premise - Ultralight (Organic agricultural cover)
+  const renderScene1 = () => {
+    return (
+      <div className="w-full h-full relative flex items-center justify-between gap-[4cqw] px-[6cqw] py-[4cqh] bg-[#0b140d] select-none">
+        {/* Left Side: Title & Description */}
+        <div className="w-[38cqw] flex flex-col justify-center text-left z-10">
+          <div className="font-mono text-[1.1cqw] text-[#eab308] font-black tracking-[0.3cqw] uppercase opacity-80 mb-[1.5cqh] animate-pulse">
+            {isZh ? "—— 皇家庄园土地测度与生态监测" : "—— MANORIAL LAND MEASUREMENT & AGRO-MONITOR"}
+          </div>
+          <h1 className="text-[3.8cqw] font-serif font-black leading-[1.1] text-[#eab308] drop-shadow-[0_0_15px_rgba(234,179,8,0.3)] tracking-tight">
+            {isZh ? "中世纪三区轮作制" : "MEDIEVAL THREE-FIELD"}
+            <br />
+            {isZh ? "健康监测系统" : "CROP ROTATION HEALTH"}
+          </h1>
+          <p className="text-[1.2cqw] text-stone-300 font-sans mt-[3cqh] leading-[1.65] opacity-90 border-l-2 border-[#eab308]/40 pl-[1.5cqw]">
+            {isZh 
+              ? "在温切斯特皇家庄园的肥沃垄沟间，经典的三区轮作制维系着土地的永续生命。通过将耕地划分为冬播区、春播区与休耕牧场，我们得以在没有化肥的中世纪，实现地力的完美自我修复与谷物的稳定丰收。" 
+              : "Across the fertile furrows of the Winchester Royal Manor, the classic three-field rotation sustains the eternal life of the soil. By dividing arable land into autumn-sown, spring-sown, and fallow pasture, we achieve perfect soil self-regeneration and stable grain yields in the medieval era."}
+          </p>
+
+          {/* Interactive Beat Status */}
+          <div className="mt-[4cqh] flex items-center gap-[1.2cqw]">
+            <div className="w-[1cqw] h-[1cqw] rounded-full bg-[#eab308] animate-ping" />
+            <span className="font-mono text-[1.1cqw] text-[#eab308] font-bold tracking-widest uppercase">
+              {beat === 0 && (isZh ? "重力深耕：翻松淤泥，凝聚氮肥" : "HEAVY PLOUGHING: LOOSENING SILT CLAY")}
+              {beat === 1 && (isZh ? "秋播冬麦：开垄覆土，越冬积累" : "WINTER SOWING: FURROW STARCH ACCUMULATION")}
+              {beat >= 2 && (isZh ? "微量元素：锁定垄沟底层有效氮" : "TRACE ELEMENTS: LOCKING DEEP SOIL NITROGEN")}
+            </span>
+          </div>
+        </div>
+
+        {/* Right Side: Beautiful SVG Medieval Plow & Rotation Wheel */}
+        <div className="flex-1 h-full flex items-center justify-center z-10">
+          <svg viewBox="0 0 500 500" className="w-[32cqw] h-[32cqw] overflow-visible">
+            <defs>
+              <filter id="barley-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <radialGradient id="soil-grad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#eab308" stopOpacity="0.15" />
+                <stop offset="100%" stopColor="#0b140d" stopOpacity="0" />
+              </radialGradient>
+            </defs>
+
+            {/* Background soil glow */}
+            <circle cx="250" cy="250" r="220" fill="url(#soil-grad)" />
+
+            {/* Outer three-field wheel rotation */}
+            <circle cx="250" cy="250" r="200" fill="none" stroke="#eab308" strokeWidth="1" strokeDasharray="4 8" className="opacity-40" />
+            <circle cx="250" cy="250" r="180" fill="none" stroke="#eab308" strokeWidth="1.5" className="opacity-60" />
+
+            {/* Three sectors */}
+            <line x1="250" y1="250" x2="250" y2="70" stroke="#eab308" strokeWidth="2" className="opacity-50" />
+            <line x1="250" y1="250" x2="94" y2="340" stroke="#eab308" strokeWidth="2" className="opacity-50" />
+            <line x1="250" y1="250" x2="406" y2="340" stroke="#eab308" strokeWidth="2" className="opacity-50" />
+
+            {/* Sector labels */}
+            <g transform="translate(250, 105)" className="text-center">
+              <text textAnchor="middle" fill="#eab308" className="font-serif text-[11px] font-bold tracking-wider">
+                {isZh ? "冬小麦田 / WINTER WHEAT" : "WINTER WHEAT FIELD"}
+              </text>
+              <text textAnchor="middle" fill="#a3a3a3" className="font-sans text-[8px]">
+                {isZh ? "秋播作物 / Autumn Sown" : "Autumn Sown Crop"}
+              </text>
+            </g>
+            <g transform="translate(135, 305)" className="text-center">
+              <text textAnchor="middle" fill="#eab308" className="font-serif text-[11px] font-bold tracking-wider">
+                {isZh ? "春大麦田 / SPRING BARLEY" : "SPRING BARLEY FIELD"}
+              </text>
+              <text textAnchor="middle" fill="#a3a3a3" className="font-sans text-[8px]">
+                {isZh ? "春播作物 / Spring Sown" : "Spring Sown Crop"}
+              </text>
+            </g>
+            <g transform="translate(365, 305)" className="text-center">
+              <text textAnchor="middle" fill="#eab308" className="font-serif text-[11px] font-bold tracking-wider">
+                {isZh ? "休耕牧场 / FALLOW MEADOW" : "FALLOW MEADOW"}
+              </text>
+              <text textAnchor="middle" fill="#a3a3a3" className="font-sans text-[8px]">
+                {isZh ? "地力恢复 / Soil Recovery" : "Soil Rest & Grazing"}
+              </text>
+            </g>
+
+            {/* Rotation arrows */}
+            <path d="M 270 50 A 200 200 0 0 1 430 290" fill="none" stroke="#eab308" strokeWidth="2" strokeDasharray="5 5" className="opacity-30" />
+            <path d="M 390 320 A 200 200 0 0 1 110 320" fill="none" stroke="#eab308" strokeWidth="2" strokeDasharray="5 5" className="opacity-30" />
+            <path d="M 70 290 A 200 200 0 0 1 230 50" fill="none" stroke="#eab308" strokeWidth="2" strokeDasharray="5 5" className="opacity-30" />
+
+            {/* Active rotation flow (grows as beat advances) */}
+            {beat >= 1 && (
+              <g className="opacity-80">
+                <path d="M 250 70 A 180 180 0 0 1 406 340" fill="none" stroke="#eab308" strokeWidth="3" className="animate-flow" filter="url(#barley-glow)" />
+                <path d="M 406 340 A 180 180 0 0 1 94 340" fill="none" stroke="#eab308" strokeWidth="3" className="animate-flow" filter="url(#barley-glow)" />
+                <path d="M 94 340 A 180 180 0 0 1 250 70" fill="none" stroke="#eab308" strokeWidth="3" className="animate-flow" filter="url(#barley-glow)" />
+              </g>
+            )}
+
+            {/* Medieval Heavy Plow (Carruca) in the center */}
+            <g transform="translate(150, 200) scale(0.4)" className="stroke-[#eab308] fill-none stroke-2">
+              {/* Wheels */}
+              <circle cx="100" cy="200" r="35" strokeWidth="3" />
+              <circle cx="100" cy="200" r="5" fill="#eab308" />
+              <line x1="100" y1="165" x2="100" y2="235" />
+              <line x1="65" y1="200" x2="135" y2="200" />
+              <line x1="75" y1="175" x2="125" y2="225" />
+              <line x1="75" y1="225" x2="125" y2="175" />
+
+              <circle cx="180" cy="200" r="25" strokeWidth="3" />
+              <circle cx="180" cy="200" r="5" fill="#eab308" />
+              <line x1="180" y1="175" x2="180" y2="225" />
+              <line x1="155" y1="200" x2="205" y2="200" />
+
+              {/* Frame / Beam */}
+              <path d="M 100 200 L 350 150" strokeWidth="4" />
+              <path d="M 180 200 L 220 160" strokeWidth="3" />
+
+              {/* Coulter (vertical blade) */}
+              <path d="M 280 160 L 280 230 L 260 250 Z" fill="#eab308" fillOpacity="0.2" strokeWidth="3" />
+
+              {/* Moldboard (curved plate) */}
+              <path d="M 280 230 Q 320 230 350 200 Q 330 250 280 250 Z" fill="#eab308" fillOpacity="0.4" strokeWidth="3" />
+
+              {/* Handles */}
+              <path d="M 320 155 L 420 100" strokeWidth="4" />
+              <path d="M 320 155 L 400 120 L 420 220" strokeWidth="3" />
+              <path d="M 420 100 L 440 100" strokeWidth="3" />
+              <path d="M 420 220 L 440 220" strokeWidth="3" />
+
+              {/* Soil furrow line under plow */}
+              <path d="M 50 240 Q 150 240 250 245 T 450 240" stroke="#78350f" strokeWidth="4" strokeDasharray="5 5" className="opacity-60" />
+            </g>
+
+            {/* Soil trace elements indicators (grows as beat advances) */}
+            {beat >= 2 && (
+              <g className="opacity-90 animate-pulse">
+                <circle cx="250" cy="250" r="10" fill="#eab308" filter="url(#barley-glow)" />
+                <text x="250" y="280" textAnchor="middle" fill="#eab308" className="font-mono text-[10px] font-bold">
+                  {isZh ? "土壤有效氮：优 (24 ppm)" : "SOIL NITROGEN: OPTIMAL (24 ppm)"}
+                </text>
+              </g>
+            )}
+          </svg>
+        </div>
+      </div>
+    );
   };
 
-  const metrics = getAgroMetrics();
+  // Scene 2: Dual - Light (Wheat Field vs. Barley Field)
+  const renderScene2 = () => {
+    return (
+      <div className="w-full h-full relative flex items-center justify-between gap-[4cqw] px-[6cqw] py-[4cqh] bg-[#0b140d] select-none">
+        {/* Left Side: Non-symmetric Soil Plots */}
+        <div className="w-[45cqw] h-full flex items-center justify-center z-10">
+          <svg viewBox="0 0 800 350" className="w-full h-full overflow-visible">
+            <defs>
+              <linearGradient id="soil-left" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#451a03" />
+                <stop offset="100%" stopColor="#1c0d02" />
+              </linearGradient>
+              <linearGradient id="soil-right" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#27272a" />
+                <stop offset="100%" stopColor="#09090b" />
+              </linearGradient>
+              <filter id="yellow-glow">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
 
-  return (
-    <div className={`w-full h-full flex flex-col justify-between p-[3.5cqw] relative ${meta.colors.bg} ${meta.colors.ink} select-none overflow-hidden`} key={`${scene}-${beat}`}>
-      {/* Background soft topography contours (resembling rolling farmland furrows) */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <svg className="w-full h-full" viewBox="0 0 800 500" fill="none" stroke="currentColor">
-          <path d="M 0 100 Q 150 150, 300 100 T 600 100 T 800 100" strokeWidth="1" />
-          <path d="M 0 200 Q 150 250, 300 200 T 600 200 T 800 200" strokeWidth="1.5" />
-          <path d="M 0 300 Q 150 350, 300 300 T 600 300 T 800 300" strokeWidth="2" />
-          <path d="M 0 400 Q 150 450, 300 400 T 600 400 T 800 400" strokeWidth="2.5" />
-        </svg>
-      </div>
+            {/* Left Plot: Winter Wheat (60% width) */}
+            <g transform="translate(50, 40)">
+              <polygon points="0,120 240,60 440,150 200,210" fill="url(#soil-left)" stroke="#eab308" strokeWidth="1" className="opacity-80" />
+              
+              {/* Ridges and furrows */}
+              <line x1="40" y1="110" x2="240" y2="160" stroke="#78350f" strokeWidth="2" className="opacity-60" />
+              <line x1="80" y1="100" x2="280" y2="150" stroke="#78350f" strokeWidth="2" className="opacity-60" />
+              <line x1="120" y1="90" x2="320" y2="140" stroke="#78350f" strokeWidth="2" className="opacity-60" />
+              <line x1="160" y1="80" x2="360" y2="130" stroke="#78350f" strokeWidth="2" className="opacity-60" />
 
-      {/* Slide Header */}
-      <div className="flex justify-between items-start border-b border-[#a3e635]/15 pb-[2cqh] z-10">
-        <div>
-          <span className="font-mono text-[1.1cqw] tracking-widest uppercase opacity-60 flex items-center gap-[0.5cqw]">
-            <Trees className="w-[1.2cqw] h-[1.2cqw] text-[#a3e635] animate-pulse" />
-            {meta.theme}
+              {/* Wheat shoots (golden stalks) */}
+              <g className="stroke-[#eab308] fill-none stroke-1.5">
+                <path d="M 80 120 Q 75 100 85 90 M 85 90 Q 90 85 85 80" />
+                <path d="M 120 110 Q 115 90 125 80 M 125 80 Q 130 75 125 70" />
+                <path d="M 160 100 Q 155 80 165 70 M 165 70 Q 170 65 165 60" />
+                <path d="M 140 145 Q 135 125 145 115 M 145 115 Q 150 110 145 105" />
+                <path d="M 180 135 Q 175 115 185 105 M 185 105 Q 190 100 185 95" />
+                <path d="M 220 125 Q 215 95 225 85 M 225 85 Q 230 80 225 75" />
+              </g>
+
+              {/* Scanning line (active at beat === 0) */}
+              {beat === 0 && (
+                <g className="animate-pulse">
+                  <polygon points="0,120 240,60 440,150 200,210" fill="none" stroke="#eab308" strokeWidth="3" filter="url(#yellow-glow)" />
+                  <line x1="100" y1="95" x2="340" y2="185" stroke="#eab308" strokeWidth="4" filter="url(#yellow-glow)" className="animate-scan" />
+                </g>
+              )}
+
+              {/* Labels */}
+              <text x="50" y="190" fill="#eab308" className="font-serif text-[14px] font-bold">
+                {isZh ? "第一区：冬小麦田 (秋播)" : "Zone I: Winter Wheat (Autumn Sown)"}
+              </text>
+              <text x="50" y="205" fill="#a3a3a3" className="font-mono text-[9px]">
+                {isZh ? "有效氮: 24 ppm (高) | 土壤水分: 58%" : "NITROGEN: 24 ppm (HIGH) | MOISTURE: 58%"}
+              </text>
+            </g>
+
+            {/* Right Plot: Spring Barley (40% width) */}
+            <g transform="translate(480, 40)">
+              <polygon points="0,120 160,80 280,140 120,180" fill="url(#soil-right)" stroke={beat >= 1 ? "#22c55e" : "#4b5563"} strokeWidth="1" className="opacity-80" />
+              
+              {/* Ridges and furrows */}
+              <line x1="30" y1="110" x2="150" y2="150" stroke="#3f3f46" strokeWidth="1.5" className="opacity-60" />
+              <line x1="60" y1="100" x2="180" y2="140" stroke="#3f3f46" strokeWidth="1.5" className="opacity-60" />
+              <line x1="90" y1="90" x2="210" y2="130" stroke="#3f3f46" strokeWidth="1.5" className="opacity-60" />
+
+              {/* Barley shoots (green shoots, active at beat >= 1) */}
+              {beat >= 1 ? (
+                <g className="stroke-[#22c55e] fill-none stroke-1.5 animate-pulse">
+                  <path d="M 50 120 Q 45 105 52 98" />
+                  <path d="M 52 98 Q 58 95 50 90" />
+                  <path d="M 90 110 Q 85 95 92 88" />
+                  <path d="M 110 140 Q 105 125 112 118" />
+                  <path d="M 150 130 Q 145 115 152 108" />
+                </g>
+              ) : (
+                <g className="opacity-20 stroke-stone-600 fill-none stroke-1">
+                  <circle cx="50" cy="120" r="2" />
+                  <circle cx="90" cy="110" r="2" />
+                  <circle cx="110" cy="140" r="2" />
+                  <circle cx="150" cy="130" r="2" />
+                </g>
+              )}
+
+              {/* Nitrogen-fixing bacteria glow (active at beat >= 2) */}
+              {beat >= 2 && (
+                <g className="opacity-90">
+                  <circle cx="120" cy="110" r="15" fill="none" stroke="#22c55e" strokeWidth="1" strokeDasharray="2 2" className="animate-spin-slow" />
+                  <circle cx="120" cy="110" r="4" fill="#22c55e" filter="url(#yellow-glow)" />
+                  <text x="120" y="85" fill="#22c55e" className="font-mono text-[8px] font-bold" textAnchor="middle">RHIZOBIUM ACTIVE</text>
+                </g>
+              )}
+
+              {/* Labels */}
+              <text x="20" y="190" fill={beat >= 1 ? "#22c55e" : "#a3a3a3"} className="font-serif text-[14px] font-bold">
+                {isZh ? "第二区：春大麦田 (春播)" : "Zone II: Spring Barley (Spring Sown)"}
+              </text>
+              <text x="20" y="205" fill="#a3a3a3" className="font-mono text-[9px]">
+                {isZh ? "有效氮: 18 ppm (中) | 土壤水分: 45%" : "NITROGEN: 18 ppm (MED) | MOISTURE: 45%"}
+              </text>
+            </g>
+
+            {/* Nitrogen Flow particles (active at beat >= 2) */}
+            {beat >= 2 && (
+              <g className="opacity-80">
+                <path d="M 480 150 Q 400 120 300 160" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeDasharray="5 5" className="animate-flow" />
+                <polygon points="300,160 308,155 306,164" fill="#22c55e" />
+                <text x="400" y="110" fill="#22c55e" className="font-mono text-[9px] font-bold" textAnchor="middle">
+                  {isZh ? "生物固氮反哺 (+6 ppm)" : "BIOLOGICAL NITROGEN FIXATION (+6 ppm)"}
+                </text>
+              </g>
+            )}
+          </svg>
+        </div>
+
+        {/* Right Side: Copy & Indicators */}
+        <div className="w-[38cqw] flex flex-col justify-center text-left z-10">
+          <span className="font-mono text-[1cqw] tracking-widest uppercase text-[#eab308] font-bold flex items-center gap-[0.5cqw] mb-[1.5cqh]">
+            <span className="w-[0.8cqw] h-[0.8cqw] bg-[#eab308] rounded-full animate-ping" />
+            {isZh ? "双区养分对位与生物固氮" : "DUAL-ZONE NUTRIENT & NITROGEN BALANCE"}
           </span>
-          <h1 className="text-[3cqw] font-serif font-black tracking-tight mt-[0.5cqh]">
-            {currentScene.title}
-          </h1>
-        </div>
-        <div className="text-right font-mono">
-          <div className="text-[1.2cqw] font-bold text-[#a3e635]">
-            {isZh ? "庄园三区轮作监控" : "Three-Field Rotation Monitor"}
-          </div>
-          <div className="text-[0.9cqw] opacity-50 uppercase tracking-widest mt-[0.5cqh]">
-            {meta.densityLabel}
+          <h2 className="text-[2.6cqw] font-serif font-black leading-tight text-[#eab308] mb-[2cqh]">
+            {isZh ? "冬小麦田 vs. 春大麦田" : "WHEAT FIELD VS. BARLEY FIELD"}
+          </h2>
+          <p className="text-[1.1cqw] leading-[1.6] text-stone-300 font-sans mb-[3cqh]">
+            {isZh 
+              ? "在庄园的非对称土地布局中，第一区冬小麦代表着前一年秋天的播种，经过漫长冬天的积温，叶面积指数已达到健康峰值；第二区春大麦与春豌豆混播，利用豆科植物根瘤菌进行高能生物固氮，将空气中的氮气转化为可吸收的土壤养分，反哺春作物的发育，实现天然的氮平衡。" 
+              : "In the asymmetric land layout of the manor, Zone I winter wheat represents the sowing of the previous autumn. After a long winter of heat accumulation, the leaf area index has reached a healthy peak. Zone II spring barley is co-sown with spring peas, harnessing root nodule bacteria of legumes for high-energy biological nitrogen fixation, converting atmospheric nitrogen into absorbable soil nutrients to fuel crop growth and achieve natural nitrogen balance."}
+          </p>
+
+          {/* Indicators */}
+          <div className="grid grid-cols-2 gap-[1.5cqw] p-[1.5cqw] bg-[#121c11] border border-[#eab308]/20 rounded-xl font-mono text-[0.95cqw] text-stone-300">
+            <div>
+              <span className="opacity-60 text-[0.8cqw] block">{isZh ? "一区冬麦叶绿素反射" : "ZONE I CHLOROPHYLL"}</span>
+              <span className="font-bold text-[#eab308]">
+                {beat >= 0 ? "94.2% (OPTIMAL)" : "STANDBY"}
+              </span>
+            </div>
+            <div>
+              <span className="opacity-60 text-[0.8cqw] block">{isZh ? "二区根瘤固氮活性" : "ZONE II NITROGEN FIXATION"}</span>
+              <span className="font-bold text-[#eab308]">
+                {beat >= 1 ? "ACTIVE (100%)" : "HOLD"}
+              </span>
+            </div>
           </div>
         </div>
       </div>
+    );
+  };
 
-      {/* Main Content Area */}
-      <div className="grid grid-cols-12 gap-[2.5cqw] flex-1 my-[2.5cqh] items-stretch z-10">
-        {/* Left Column: Story copy */}
-        <div className="col-span-5 flex flex-col justify-between pr-[1cqw]">
-          <div className="flex flex-col gap-[1.5cqh]">
-            <span className="font-mono text-[1cqw] tracking-widest uppercase text-[#a3e635] font-bold flex items-center gap-[0.5cqw]">
-              <span className="w-[0.8cqw] h-[0.8cqw] bg-[#a3e635] rounded-full animate-ping" />
-              {currentBeat.action}
-            </span>
-            <h2 className="text-[2.2cqw] font-serif font-black leading-tight">
-              {currentBeat.title}
+  // Scene 3: Process - Standard (Three-field seasonal rotation timeline)
+  const renderScene3 = () => {
+    return (
+      <div className="w-full h-full relative flex flex-col justify-between px-[6cqw] py-[4cqh] bg-[#0b140d] select-none">
+        {/* Header */}
+        <div className="border-b border-[#eab308]/15 pb-[1.5cqh] flex justify-between items-end shrink-0 z-10">
+          <div>
+            <h2 className="font-serif text-[1.8cqw] font-black text-[#eab308] tracking-tight uppercase flex items-center gap-[0.5cqw]">
+              <Activity className="w-[2cqw] h-[2cqw] text-[#eab308]" />
+              {isZh ? "三区季节轮作时间轴" : "THREE-FIELD SEASONAL ROTATION TIMELINE"}
             </h2>
-            <p className="text-[1.1cqw] leading-[1.6] opacity-80 font-sans">
-              {currentBeat.body}
+            <p className="font-mono text-[0.85cqw] text-stone-400 mt-1">
+              {isZh ? "冬小麦、春大麦与休耕牧场的三年空间大轮换" : "The 3-Year Spatial Rotation Cycle of Wheat, Barley, and Fallow"}
             </p>
           </div>
-
-          {/* Real-time agrochemical indicators */}
-          <div className="bg-[#121c11] border border-[#a3e635]/20 rounded-xl p-[1.5cqw] flex flex-col gap-[1.2cqh]">
-            <div className="flex justify-between items-center border-b border-[#a3e635]/15 pb-[0.8cqh]">
-              <span className="text-[0.9cqw] font-mono font-bold tracking-wider opacity-60 text-zinc-300">
-                {isZh ? "土壤化学与水合参数" : "SOIL BIOCHEM TELEMETRY"}
-              </span>
-              <Droplets className="w-[1.1cqw] h-[1.1cqw] text-[#a3e635]" />
-            </div>
-
-            <div className="grid grid-cols-2 gap-[1cqw] text-[0.95cqw] font-mono text-zinc-300">
-              <div>
-                <span className="opacity-50 text-[0.8cqw] block">{isZh ? "有效氮素" : "SOIL NITROGEN"}</span>
-                <span className="font-bold text-[#a3e635]">
-                  {metrics.nitrogen}
-                </span>
-              </div>
-              <div>
-                <span className="opacity-50 text-[0.8cqw] block">{isZh ? "垄上水含率" : "SOIL MOISTURE"}</span>
-                <span className="font-bold text-[#a3e635]">
-                  {metrics.moisture}
-                </span>
-              </div>
-            </div>
-
-            {/* Total biomass accumulation gauge */}
-            <div className="flex flex-col gap-[0.4cqh] mt-[0.5cqh]">
-              <div className="flex justify-between text-[0.75cqw] font-mono opacity-60 text-zinc-300">
-                <span>{isZh ? "庄园生物量积累指数" : "BIOMASS ACCUMULATION RATE"}</span>
-                <span className="text-[#a3e635] font-bold">{scene === 1 ? "18%" : scene === 2 ? "48%" : scene === 3 ? "76%" : "99.2%"}</span>
-              </div>
-              <div className="w-full h-[0.5cqh] bg-zinc-800 rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-[#a3e635] rounded-full transition-all duration-1000 shadow-[0_0_8px_#a3e635]"
-                  style={{ width: scene === 1 ? "18%" : scene === 2 ? "48%" : scene === 3 ? "76%" : "99.2%" }}
-                />
-              </div>
-            </div>
+          <div className="bg-[#121c11] border border-[#eab308]/20 px-3 py-1.5 rounded-lg text-[#eab308] font-mono text-[0.75cqw] font-bold">
+            {isZh ? "轮作大流转：三年周期" : "ROTATION CYCLE: 3-YEAR LOOP"}
           </div>
         </div>
 
-        {/* Right Column: Visual Three-Field Map (Bespoke per scene density) */}
-        <div className="col-span-7 bg-[#101b10] border border-[#a3e635]/15 rounded-2xl p-[2cqw] flex flex-col justify-between relative overflow-hidden">
-          {/* Subtle horizontal field furrow grids */}
-          <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(163,230,53,0.15)_1px,transparent_1px)] [background-size:100%_1.5cqh]" />
+        {/* Timeline Cards */}
+        <div className="flex-1 grid grid-cols-3 gap-[2cqw] my-[3cqh] items-stretch z-10">
+          {[
+            { 
+              id: 0,
+              name: isZh ? "第一阶段：冬麦成熟与秋收" : "Phase I: Winter Wheat Harvest", 
+              season: isZh ? "秋收期 (8月 - 10月)" : "Autumn Harvest (Aug - Oct)", 
+              icon: "🌾", 
+              desc: isZh ? "八月金黄，收割一区冬小麦；二区春大麦收获并留茬；三区闲置翻耕，作好秋播冬麦底熵整备。" : "August gold. Harvesting Zone I winter wheat; Zone II spring barley harvested with stubble left; Zone III ploughed deep for autumn sowing.",
+              active: beat >= 0,
+              color: "border-[#eab308] shadow-[0_0_20px_rgba(234,179,8,0.25)]"
+            },
+            { 
+              id: 1,
+              name: isZh ? "第二阶段：春大麦萌芽与休耕" : "Phase II: Spring Barley Sprout", 
+              season: isZh ? "春播期 (3月 - 5月)" : "Spring Sowing (Mar - May)", 
+              icon: "🌱", 
+              desc: isZh ? "冬去春来，二区播撒春大麦与春豌豆；一区改作休耕牧场，利用牲畜粪尿缓慢反哺恢复肥力；三区冬麦出苗葱郁。" : "Spring returns. Sowing spring barley and peas in Zone II; Zone I becomes fallow pasture to restore fertility with manure; Zone III winter wheat sprouts lushly.",
+              active: beat >= 1,
+              color: "border-[#eab308] shadow-[0_0_20px_rgba(234,179,8,0.25)]"
+            },
+            { 
+              id: 2,
+              name: isZh ? "第三阶段：执行三区空间大轮换" : "Phase III: Execute Field Rotation", 
+              season: isZh ? "空间大轮转 (三年循环)" : "Spatial Rotation (3-Year Loop)", 
+              icon: "🔄", 
+              desc: isZh ? "执行经典三区大轮换：一区改春播；二区改休耕；三区改冬麦，达成永续循环的完美大账册，地力永不枯竭。" : "Executing the classic three-field rotation: Zone I moves to spring, Zone II to fallow, Zone III to winter wheat. Loop closes, soil never depletes.",
+              active: beat >= 2,
+              color: "border-[#eab308] shadow-[0_0_20px_rgba(234,179,8,0.25)]"
+            }
+          ].map((item) => {
+            const isCardActive = beat === item.id;
+            return (
+              <div 
+                key={item.id} 
+                className={`p-[1.8cqw] rounded-xl border bg-[#121c11]/90 flex flex-col justify-between transition-all duration-500 ${
+                  isCardActive 
+                    ? item.color + " scale-[1.03] z-10" 
+                    : item.active 
+                      ? "border-[#eab308]/30 opacity-60 scale-100" 
+                      : "border-stone-800 opacity-20 scale-95"
+                }`}
+              >
+                <div className="flex justify-between items-start">
+                  <span className="text-[2.2cqw]">{item.icon}</span>
+                  <span className={`text-[0.75cqw] font-mono font-bold px-[0.6cqw] py-[0.2cqh] rounded ${
+                    isCardActive ? "bg-[#eab308] text-[#0b140d]" : "bg-[#eab308]/10 text-[#eab308]"
+                  }`}>
+                    {item.season}
+                  </span>
+                </div>
+                <div className="mt-[2cqh]">
+                  <h3 className="font-serif font-black text-[1.3cqw] text-[#eab308] mb-[1cqh]">{item.name}</h3>
+                  <p className="text-[0.9cqw] text-stone-300 font-sans leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
-          {scene === 1 && (
-            // Scene 1 (Ultralight): 1 giant striking 3-field circular rotation chart
-            <div className="flex-1 flex flex-col justify-center items-center relative">
-              <div className="w-[16cqw] h-[16cqw] rounded-full border-2 border-dashed border-[#a3e635]/30 bg-[#142615] flex flex-col items-center justify-center p-[1.5cqw] relative shadow-sm">
-                <span className="text-[0.75cqw] font-mono opacity-50 block uppercase text-zinc-300 mb-[1.5cqh]">3-FIELD ROTATION MAP</span>
-                
-                {/* SVG circular sector lines */}
-                <svg className="w-[85%] h-[80%] fill-none stroke-[#a3e635]" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="38" strokeWidth="1" className="opacity-25" />
-                  {/* Rotating dashed tracks */}
-                  <circle cx="50" cy="50" r="38" stroke="#a3e635" strokeWidth="1.5" strokeDasharray="15,10" className="animate-spin-slow" />
-                  
-                  {/* Tri-sector lines */}
-                  <line x1="50" y1="50" x2="50" y2="12" stroke="#a3e635" strokeWidth="1.5" />
-                  <line x1="50" y1="50" x2="82" y2="68" stroke="#a3e635" strokeWidth="1.5" />
-                  <line x1="50" y1="50" x2="18" y2="68" stroke="#a3e635" strokeWidth="1.5" />
+        {/* Footer */}
+        <div className="border-t border-[#eab308]/10 pt-[1.2cqh] flex justify-between text-[0.8cqw] font-mono opacity-60 z-10">
+          <span>{isZh ? "大庄园主三区轮替账册" : "THREE-FIELD ROTATION COMPLIANCE LEDGER_XVI // COMPILING"}</span>
+          <span>VERIFICATION CODE: 0x16_CROP_ROTATION</span>
+        </div>
+      </div>
+    );
+  };
 
-                  {/* Active growing plant node */}
-                  <g 
-                    className="transition-all duration-1000"
-                    style={{
-                      transform: beat === 0 ? "translate(30px, 40px)" : beat === 1 ? "translate(70px, 40px)" : "translate(50px, 78px)"
-                    }}
-                  >
-                    <circle cx="0" cy="0" r="6" fill="#a3e635" className="animate-pulse" />
-                    <Trees className="w-3.5 h-3.5 text-[#101b10] absolute -top-[7px] -left-[7px]" />
-                  </g>
-                </svg>
+  // Scene 4: Matrix - Dense (Manor Agricultural Yield Quadrant)
+  const renderScene4 = () => {
+    return (
+      <div className="w-full h-full relative flex flex-col justify-between px-[6cqw] py-[4cqh] bg-[#0b140d] select-none">
+        {/* Header */}
+        <div className="border-b border-[#eab308]/15 pb-[1.5cqh] flex justify-between items-end shrink-0 z-10">
+          <div>
+            <h2 className="font-serif text-[1.8cqw] font-black text-[#eab308] tracking-tight uppercase flex items-center gap-[0.5cqw]">
+              <Layers className="w-[2cqw] h-[2cqw] text-[#eab308]" />
+              {isZh ? "庄园农产收益四象限矩阵" : "MANOR AGRICULTURAL YIELD QUADRANT"}
+            </h2>
+            <p className="font-mono text-[0.85cqw] text-stone-400 mt-1">
+              {isZh ? "冬麦产量、大麦吨位、休耕载畜量与皇家税收的联合核算" : "Joint Audit of Wheat Yield, Barley Tons, Grazing Capacity, and Taxes"}
+            </p>
+          </div>
+          <div className="bg-[#121c11] border border-[#eab308]/20 px-3 py-1.5 rounded-lg text-[#eab308] font-mono text-[0.75cqw] font-bold">
+            {isZh ? "高密度收益核算" : "HIGH-DENSITY YIELD MATRIX"}
+          </div>
+        </div>
 
-                <span className="text-[1.1cqw] font-serif font-black text-[#a3e635] mt-[1cqh]">
-                  {beat === 0 ? (isZh ? "土壤休耕蓄肥" : "Fallow resting") : beat === 1 ? (isZh ? "冬小麦播种" : "Winter Sown") : (isZh ? "有效氮锁定" : "Nitrogen Locked")}
-                </span>
+        {/* 2x2 Grid */}
+        <div className="flex-1 grid grid-cols-2 gap-[2cqw] my-[3cqh] z-10">
+          {[
+            {
+              id: 0,
+              title: isZh ? "冬小麦产量 / WINTER WHEAT YIELD" : "WINTER WHEAT YIELD",
+              val: "320 Bushels / Acre",
+              info: isZh ? "淀粉转化率 94.2% | 灌浆饱满，麦粒金黄" : "Starch conversion rate 94.2% | Golden grains",
+              growth: "+12.4% vs Last Year",
+              icon: Wheat,
+              active: beat === 0
+            },
+            {
+              id: 1,
+              title: isZh ? "春大麦与饲料 / SPRING BARLEY & FORAGE" : "SPRING BARLEY & FORAGE",
+              val: "185 Tons Total",
+              info: isZh ? "燕麦精料折损比 4.2% | 满足庄园牲畜越冬饲料" : "Oat forage weight 42 Tons | Sufficient animal feed",
+              growth: "+8.5% vs Last Year",
+              icon: Sprout,
+              active: beat === 1
+            },
+            {
+              id: 2,
+              title: isZh ? "休耕牧场载畜量 / FALLOW GRAZING CAPACITY" : "FALLOW GRAZING CAPACITY",
+              val: "450 Sheep Heads",
+              info: isZh ? "土壤氮素回升 +8 ppm | 牲畜粪尿与落叶缓慢反哺" : "Soil nitrogen recovery +8 ppm | Manure fertilization",
+              growth: "Optimal Soil Recovery",
+              icon: Trees,
+              active: beat === 1
+            },
+            {
+              id: 3,
+              title: isZh ? "皇家税收与收益 / ROYAL TAXES & REVENUE" : "ROYAL TAXES & REVENUE",
+              val: "£42.8 Silver Pennies",
+              info: isZh ? "教会什一税 10% | 领主净收益 £28.5" : "Church Tithe 10% | Lord's Net Profit £28.5",
+              growth: "Tithe Tax: 10% Church Share",
+              icon: Coins,
+              active: beat === 2
+            }
+          ].map((item, idx) => (
+            <div 
+              key={idx} 
+              className={`p-[1.8cqw] rounded-xl border bg-[#121c11]/90 flex justify-between items-center transition-all duration-500 ${
+                item.active 
+                  ? "border-[#eab308] shadow-[0_0_20px_rgba(234,179,8,0.25)] scale-[1.02] z-10" 
+                  : "border-stone-800 opacity-40 scale-100"
+              }`}
+            >
+              <div className="flex flex-col gap-[0.5cqh] text-left">
+                <span className="text-[0.8cqw] font-mono font-bold text-[#eab308] tracking-wider uppercase">{item.title}</span>
+                <span className="text-[1.6cqw] font-serif font-black text-stone-100">{item.val}</span>
+                <span className="text-[0.9cqw] text-stone-300 font-sans leading-relaxed">{item.info}</span>
+                <span className="text-[0.8cqw] font-mono text-emerald-400 font-bold mt-[0.5cqh]">{item.growth}</span>
+              </div>
+              <item.icon className={`w-[2.5cqw] h-[2.5cqw] transition-all duration-500 ${
+                item.active ? "text-[#eab308] scale-110" : "text-stone-600 scale-100"
+              }`} />
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div className="border-t border-[#eab308]/10 pt-[1.2cqh] flex justify-between text-[0.8cqw] font-mono opacity-60 z-10">
+          <span>{isZh ? "温切斯特大庄园土地测度学会" : "Winchester Royal Manorial Agricultural Association"}</span>
+          <span>{isZh ? "自适应垄沟水流及肥力热阻自对准技术" : "convection soil dynamic feedback controls"}</span>
+        </div>
+      </div>
+    );
+  };
+
+  // Scene 5: Ledger - Extreme (Royal Manor Harvest Ledger)
+  const renderScene5 = () => {
+    return (
+      <div className="w-full h-full relative flex flex-col justify-between px-[6cqw] py-[4cqh] bg-[#0b140d] select-none">
+        {/* Header */}
+        <div className="border-b border-[#eab308]/15 pb-[1.5cqh] flex justify-between items-end shrink-0 z-10">
+          <div className="flex items-center gap-3">
+            <Database className="w-[2cqw] h-[2cqw] text-[#eab308]" />
+            <div>
+              <h2 className="font-serif text-[1.8cqw] font-black text-[#eab308] tracking-tight uppercase">
+                {isZh ? "皇家庄园收割总账" : "ROYAL MANOR HARVEST LEDGER"}
+              </h2>
+              <p className="font-mono text-[0.85cqw] text-stone-400 mt-1">
+                {isZh ? "温切斯特大庄园谷物收成与什一税终极签发账册" : "Winchester Manor Grain Inventory & Church Tithe Final Sign-off"}
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col items-end font-mono text-[0.75cqw] text-stone-500 text-right shrink-0">
+            <p><strong>{isZh ? "账册编码：" : "LEDGER_ID: "}</strong>WIN-HARVEST-1086</p>
+            <p><strong>{isZh ? "安全级别：" : "CLASS: "}</strong>ROYAL-SECRET-CONFIDENTIAL</p>
+          </div>
+        </div>
+
+        {/* Main Ledger Content */}
+        <div className="flex-1 grid grid-cols-12 gap-[2cqw] my-[2.5cqh] overflow-hidden z-10">
+          {/* Left Column: Crop Inventory Table (Col 1-5) */}
+          <div className="col-span-5 flex flex-col justify-between border-r border-[#eab308]/10 pr-[1.5cqw] overflow-hidden shrink-0">
+            <div className="flex-1 flex flex-col gap-[1.5cqh] justify-center font-mono text-[0.85cqw] text-stone-300">
+              <div className="text-[#eab308] font-bold text-[1cqw] border-b border-[#eab308]/20 pb-[0.5cqh] mb-[1cqh] flex justify-between">
+                <span>{isZh ? "谷物收成细账" : "GRAIN INVENTORY"}</span>
+                <span>{isZh ? "单位: 夸脱" : "UNIT: QUARTERS"}</span>
+              </div>
+              
+              {[
+                { name: isZh ? "冬小麦 (Winter Wheat)" : "Winter Wheat", val: "1,240 Qtr", price: "£124.0", status: isZh ? "粮仓 A (满)" : "Granary A (Full)" },
+                { name: isZh ? "春大麦 (Spring Barley)" : "Spring Barley", val: "850 Qtr", price: "£68.0", status: isZh ? "粮仓 B (满)" : "Granary B (Full)" },
+                { name: isZh ? "黑麦 (Rye Bushels)" : "Rye Bushels", val: "420 Bush", price: "£21.0", status: isZh ? "粮仓 C" : "Granary C" },
+                { name: isZh ? "燕麦 (Oats Forage)" : "Oats Forage", val: "680 Bush", price: "£17.0", status: isZh ? "饲料仓" : "Forage Store" }
+              ].map((row, idx) => (
+                <div key={idx} className="bg-[#121c11]/40 p-[0.8cqw] rounded border border-[#eab308]/10 flex justify-between items-center">
+                  <div className="flex flex-col text-left">
+                    <span className="text-stone-100 font-bold">{row.name}</span>
+                    <span className="text-[0.75cqw] text-stone-500">{row.status}</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[#eab308] font-bold block">{row.val}</span>
+                    <span className="text-[0.75cqw] text-stone-400">{row.price}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Middle Column: Financial Ledger & Church Tithe (Col 6-9) */}
+          <div className="col-span-4 flex flex-col justify-between border-r border-[#eab308]/10 pr-[1.5cqw] overflow-hidden shrink-0">
+            <div className="flex-1 flex flex-col gap-[1.5cqh] justify-center font-mono text-[0.85cqw] text-stone-300">
+              <div className="text-[#eab308] font-bold text-[1cqw] border-b border-[#eab308]/20 pb-[0.5cqh] mb-[1cqh]">
+                {isZh ? "财务核算与教会什一税" : "FINANCIAL LEDGER & TITHE"}
               </div>
 
-              <div className="text-center font-serif text-[1.1cqw] mt-[2cqh]">
-                <p className="font-extrabold">{isZh ? "三区轮作，地力永续" : "Rotate the fields, and the soils yield eternal bread."}</p>
-                <p className="text-[0.95cqw] font-sans opacity-60 mt-[0.5cqh] font-mono text-lime-300">
-                  {isZh ? "休耕蓄氮中 · 微生态常数 1.34" : "Regenerative Nitrogen Gather · Micro-constant 1.34"}
+              {[
+                { name: isZh ? "庄园总产值 (Gross Value)" : "Total Gross Value", val: "£230.0", color: "text-stone-100 font-bold" },
+                { name: isZh ? "教会什一税 (Church Tithe 10%)" : "Church Tithe (10%)", val: "-£23.0", color: "text-red-400" },
+                { name: isZh ? "皇家税收 (Royal Tax 5%)" : "Royal Tax (5%)", val: "-£11.5", color: "text-red-400" },
+                { name: isZh ? "来年留种 (Seed Reserve 15%)" : "Seed Reserve (15%)", val: "-£34.5", color: "text-stone-400" },
+                { name: isZh ? "领主净收益 (Net Manorial Profit)" : "Net Manorial Profit", val: "£161.0", color: "text-emerald-400 font-extrabold text-[1cqw]" }
+              ].map((row, idx) => (
+                <div key={idx} className="flex justify-between items-center py-[0.5cqh] border-b border-stone-800/60">
+                  <span className="text-stone-400 text-left">{row.name}</span>
+                  <span className={row.color}>{row.val}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column: Royal Wax Seal & Verification (Col 10-12) */}
+          <div className="col-span-3 flex flex-col justify-between pl-[1cqw] relative shrink-0">
+            <div className="flex-1 flex flex-col justify-between">
+              <div>
+                <h4 className="font-mono text-[0.9cqw] text-[#eab308] font-bold flex items-center gap-1.5 border-b border-[#eab308]/20 pb-1.5 mb-2">
+                  <Scroll className="w-4 h-4 text-[#eab308]" />
+                  {isZh ? "皇家审计与印信验证" : "ROYAL AUDIT & SEAL"}
+                </h4>
+                <p className="font-mono text-[0.75cqw] text-stone-500 text-left leading-relaxed">
+                  {isZh 
+                    ? "根据《末日审判书》之规定，庄园每年收割账册须经皇家土地测度官审计，并加盖皇家御用红蜡印章方可生效。" 
+                    : "According to the Domesday Book, manorial harvest ledgers must be audited by royal land surveyors and stamped with the royal wax seal."}
                 </p>
               </div>
-            </div>
-          )}
 
-          {scene === 2 && (
-            // Scene 2 (Light): Symmetrical comparison of Winter Sown vs Spring Sown field biology
-            <div className="flex-1 flex flex-col justify-between my-[0.5cqh]">
-              <div className="text-[1cqw] font-mono opacity-50 flex items-center gap-[0.5cqw]">
-                <Trees className="w-[1.2cqw] h-[1.2cqw] text-[#a3e635]" />
-                {isZh ? "冬麦生长与春播豆科固氮双向对位" : "WINTER WHEAT GROWTH VS SPRING LEGUME BIOMASS"}
-              </div>
+              {/* Royal Wax Seal */}
+              <div className="flex-1 flex items-center justify-center my-[1.5cqh]">
+                {beat >= 2 ? (
+                  <div className="animate-sprout">
+                    <svg viewBox="0 0 160 160" className="w-[12cqw] h-[12cqw] overflow-visible">
+                      <defs>
+                        <filter id="seal-glow" x="-20%" y="-20%" width="140%" height="140%">
+                          <feGaussianBlur stdDeviation="5" result="blur" />
+                          <feMerge>
+                            <feMergeNode in="blur" />
+                            <feMergeNode in="SourceGraphic" />
+                          </feMerge>
+                        </filter>
+                      </defs>
 
-              <div className="flex-1 relative flex items-center justify-center">
-                <svg className="w-[90%] h-[75%] fill-none stroke-[#a3e635]" viewBox="0 0 400 150">
-                  {/* Winter wheat leaf index curve (Top) */}
-                  <path d="M 30 40 C 130 40, 150 75, 200 75" strokeWidth="2" className="opacity-30" />
-                  <path d="M 30 40 C 130 40, 150 75, 200 75" strokeWidth="2.5" strokeDasharray="180" strokeDashoffset={beat >= 1 ? 0 : 180} className="stroke-lime-400 transition-all duration-1000" />
-                  
-                  {/* Spring barley root nodule fix (Bottom) */}
-                  <path d="M 30 110 C 130 110, 150 75, 200 75" strokeWidth="2" className="opacity-30" />
-                  <path d="M 30 110 C 130 110, 150 75, 200 75" strokeWidth="2.5" strokeDasharray="180" strokeDashoffset={beat >= 2 ? 0 : 180} className="stroke-lime-400 transition-all duration-1000 stroke-dashed" />
+                      {/* Outer irregular clay shape */}
+                      <path 
+                        d="M 80 10 C 120 12, 150 30, 148 75 C 146 120, 125 145, 80 148 C 35 150, 12 125, 10 80 C 8 35, 40 8, 80 10 Z" 
+                        fill="#991b1b" 
+                        stroke="#7f1d1d" 
+                        strokeWidth="3" 
+                        style={{
+                          filter: "drop-shadow(0 10px 15px rgba(153, 27, 27, 0.4))"
+                        }}
+                      />
 
-                  {/* Balanced nutrient convergence */}
-                  <path d="M 200 75 H 370" strokeWidth="3" className="opacity-20" />
-                  <path d="M 200 75 H 370" strokeWidth="3.5" strokeDasharray="170" strokeDashoffset={beat >= 2 ? 0 : 170} className="stroke-[#edf7ea] transition-all duration-1000" />
+                      {/* Inner circular border */}
+                      <circle cx="80" cy="80" r="55" fill="none" stroke="#7f1d1d" strokeWidth="2" strokeDasharray="3 3" />
+                      <circle cx="80" cy="80" r="50" fill="none" stroke="#7f1d1d" strokeWidth="1.5" />
 
-                  {/* Junction nutrient node */}
-                  <g transform="translate(200, 75)" className={beat >= 2 ? "scale-110" : "scale-100 opacity-60"}>
-                    <circle cx="0" cy="0" r="8" fill="#a3e635" />
-                    <circle cx="0" cy="0" r="3" fill="#091107" />
-                  </g>
+                      {/* Seal Text */}
+                      <path id="seal-text-path" d="M 35 80 A 45 45 0 0 1 125 80" fill="none" stroke="none" />
+                      <text className="font-serif text-[8px] font-black tracking-widest fill-[#fca5a5]">
+                        <textPath href="#seal-text-path" startOffset="50%" textAnchor="middle">
+                          SIGILLUM REGIS HENRICI
+                        </textPath>
+                      </text>
 
-                  {/* Text labels */}
-                  <text x="40" y="30" className="text-[7.5px] font-mono fill-current text-lime-200" stroke="none">{isZh ? "一区冬小麦叶面积 (Zone A)" : "Zone A Winter Wheat Leaf Index"}</text>
-                  <text x="40" y="125" className="text-[7.5px] font-mono fill-current text-lime-400" stroke="none">{isZh ? "二区春大麦根瘤固氮 (Zone B)" : "Zone B Spring Legume Nodule Fix"}</text>
-                  <text x="215" y="65" className="text-[8px] font-serif font-black fill-current text-[#edf7ea]" stroke="none">{isZh ? "大庄园生态极性交汇点" : "Unified Ecological Equilibrium"}</text>
-                </svg>
-              </div>
+                      <path id="seal-text-path-bottom" d="M 125 80 A 45 45 0 0 1 35 80" fill="none" stroke="none" />
+                      <text className="font-serif text-[8px] font-black tracking-widest fill-[#fca5a5]">
+                        <textPath href="#seal-text-path-bottom" startOffset="50%" textAnchor="middle">
+                          WINCHESTER MANOR 1086
+                        </textPath>
+                      </text>
 
-              <div className="grid grid-cols-2 gap-[1cqw] border-t border-[#a3e635]/10 pt-[1.2cqh] text-[0.9cqw] font-mono text-lime-300">
-                <div>
-                  <span className="opacity-60">{isZh ? "一区叶绿素反射:" : "Zone A Chlorophyll:"}</span>
-                  <span className="ml-[0.5cqw] font-bold">{beat >= 1 ? "94.2% OPTIMAL" : "STANDBY"}</span>
-                </div>
-                <div>
-                  <span className="opacity-60">{isZh ? "二区根瘤菌固氮:" : "Zone B Legume bacteria:"}</span>
-                  <span className="ml-[0.5cqw] font-bold">{beat >= 2 ? "ACTIVE 100%" : "HOLD"}</span>
-                </div>
-              </div>
-            </div>
-          )}
+                      {/* Center Crown / Plow Emblem */}
+                      <g transform="translate(55, 55) scale(0.3)" className="fill-none stroke-[#fca5a5] stroke-[4px]">
+                        <path d="M 10 120 L 10 50 L 50 90 L 80 40 L 110 90 L 150 50 L 150 120 Z" fill="#7f1d1d" />
+                        <rect x="10" y="120" width="140" height="15" rx="5" fill="#fca5a5" />
+                        <circle cx="10" cy="45" r="5" fill="#fca5a5" />
+                        <circle cx="80" cy="35" r="5" fill="#fca5a5" />
+                        <circle cx="150" cy="45" r="5" fill="#fca5a5" />
+                      </g>
 
-          {scene === 3 && (
-            // Scene 3 (Standard): 3 connected stages of crop rotation cycle (Autumn, Spring, Summer Rotation)
-            <div className="flex-1 flex flex-col justify-between my-[0.5cqh]">
-              <div className="text-[1cqw] font-mono opacity-50 flex justify-between text-lime-200">
-                <span>{isZh ? "三区轮替大流转时间轴" : "THREE CHRONOLOGICAL ROTATION STAGES"}</span>
-                <span className="animate-pulse">● Rotation Timeline Locked</span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-[1.2cqw] my-[2cqh] flex-1">
-                {[
-                  { name: isZh ? "秋播期蓄力" : "Autumn Sow", unit: "Aug - Oct Phase", icon: "🍂", desc: isZh ? "一区播冬麦；二区留茬；三区深翻" : "Sowing winter wheat in Zone 1. Till Zone 3.", active: true },
-                  { name: isZh ? "春回发嫩绿" : "Spring Sprout", unit: "Mar - May Phase", icon: "🌱", desc: isZh ? "二区春播大麦豌豆；一区休耕放牧" : "Sowing barley/legumes in Zone 2. Grazing Zone 1.", active: beat >= 1 },
-                  { name: isZh ? "轮转大交错" : "Unified Rotation", unit: "3-Year Great Cycle", icon: "🔄", desc: isZh ? "一春、二休、三冬，大流转闭合" : "Unified spatial rotation is triggered. Loop sealed.", active: beat >= 2 }
-                ].map((item, i) => (
-                  <div key={i} className={`p-[1.2cqw] rounded-xl border bg-[#122413] flex flex-col justify-between transition-all duration-500 ${
-                    item.active 
-                      ? "border-[#a3e635] shadow-md scale-100" 
-                      : "border-zinc-850 opacity-20 scale-95"
-                  }`}>
-                    <div className="flex justify-between items-start">
-                      <span className="text-[1.8cqw]">{item.icon}</span>
-                      <span className="text-[0.75cqw] font-mono font-bold bg-[#a3e635]/20 text-[#edf7ea] px-[0.5cqw] py-[0.1cqh] rounded">
-                        {item.unit}
-                      </span>
-                    </div>
-                    <div>
-                      <h4 className="font-serif font-black text-[1cqw] mt-[1cqh] text-[#edf7ea]">{item.name}</h4>
-                      <p className="text-[0.75cqw] text-zinc-300 mt-[0.5cqh] font-sans leading-tight">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="text-[0.8cqw] font-mono opacity-50 flex justify-between">
-                <span>{isZh ? "大庄园主金印结算印信" : "CROP ROTATION STAGES VERIFIED"}</span>
-                <span className="text-[#a3e635] font-bold">
-                  {beat === 0 ? "STAGE 1 PASS" : beat === 1 ? "STAGE 2 ACTIVE" : "永续循环已锁定"}
-                </span>
-              </div>
-            </div>
-          )}
-
-          {scene === 4 && (
-            // Scene 4 (Dense): 2x2 database alignment and soil nitrogen telemetry
-            <div className="flex-1 flex flex-col justify-between my-[0.5cqh]">
-              <div className="text-[1cqw] font-mono opacity-50 flex justify-between">
-                <span>{isZh ? "土壤化学多点扫描与沟渠闸门控制遥测板" : "SOIL MULTI-POINT CHEMISTRY & SLUICE DRAIN CONTROL"}</span>
-                <span>{isZh ? "水动力自整定" : "SENSORS ONLINE"}</span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-[1.2cqw] my-[1cqh] flex-1">
-                {[
-                  { title: isZh ? "垄上底层土壤有效氮常数" : "SOIL EFFECTIVE NITROGEN MAP", val: "38 ppm (Peak)", info: isZh ? "豆科固氮充沛，肥力正常" : "Legumes bacteria active & rich", icon: Activity, active: true },
-                  { title: isZh ? "庄园灌渠木闸自调节" : "ADAPTIVE SLUICE BALANCE", val: "Sluice 25% Open", info: isZh ? "微调多区湿度防干涝" : "Moisture constant synced", icon: Compass, active: beat >= 1 },
-                  { title: isZh ? "作物成熟期碳水转化率" : "WHEAT STARCH CONVERSION", val: "94.2% Rate", info: isZh ? "冬小麦灌浆饱满" : "Optimal winter wheat grain weights", icon: Layers, active: beat >= 1 },
-                  { title: isZh ? "庄园总产量置信证明" : "MANORIAL BIOMASS LEDGER", val: "99.98% True", info: isZh ? "核算秋粮出粉率与精料吨位" : "Sufficient Lord's harvest certified", icon: Shield, active: beat >= 2 }
-                ].map((item, i) => (
-                  <div key={i} className={`p-[1.2cqw] rounded-xl border bg-[#122413] flex justify-between items-center transition-all duration-500 ${
-                    item.active ? "border-[#a3e635] shadow-sm" : "border-zinc-850 opacity-20"
-                  }`}>
-                    <div className="flex flex-col gap-[0.3cqh]">
-                      <span className="text-[0.75cqw] font-mono font-bold opacity-60 text-lime-200 uppercase">{item.title}</span>
-                      <span className="text-[1.3cqw] font-serif font-black text-[#edf7ea]">{item.val}</span>
-                      <span className="text-[0.75cqw] text-zinc-300 font-sans">{item.info}</span>
-                    </div>
-                    <item.icon className="w-[2cqw] h-[2cqw] text-[#a3e635]" />
-                  </div>
-                ))}
-              </div>
-
-              <div className="w-full bg-[#142615] h-[0.4cqh] rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-[#a3e635] transition-all duration-700" 
-                  style={{ width: beat === 0 ? "35%" : beat === 1 ? "70%" : "100%" }}
-                />
-              </div>
-            </div>
-          )}
-
-          {scene === 5 && (
-            // Scene 5 (Extreme / High Density): Grand Medieval Manor Harmony Dashboard
-            <div className="flex-1 flex flex-col justify-between my-[0.2cqh]">
-              {/* Top summary cards */}
-              <div className="grid grid-cols-4 gap-[0.8cqw]">
-                {[
-                  { name: isZh ? "庄园总耕地" : "MANOR FARMLAND", val: "1,200 " + (isZh ? "条垄" : "Ridges"), color: "text-[#edf7ea]" },
-                  { name: isZh ? "肥力循环度" : "NITROGEN RECOVERY", val: "100% (Balanced)", color: "text-emerald-400" },
-                  { name: isZh ? "领主印信等级" : "MANORIAL SHIELD", val: "Lord Class", color: "text-emerald-400" },
-                  { name: isZh ? "大麦与麦粉重" : "HARVEST WEIGHT", val: beat >= 2 ? "142 " + (isZh ? "吨" : "Tons") : beat >= 1 ? "52 " + (isZh ? "吨" : "Tons") : "15" }
-                ].map((ind, i) => (
-                  <div key={i} className="bg-[#122413] border border-[#a3e635]/20 rounded-xl p-[0.8cqw] text-center shadow-sm">
-                    <span className="text-[0.7cqw] font-mono opacity-50 block text-lime-300 uppercase">{ind.name}</span>
-                    <span className={`text-[1.1cqw] font-serif font-black ${ind.color} block mt-[0.2cqh]`}>{ind.val}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Central Map & Spectrogram Ticker */}
-              <div className="grid grid-cols-12 gap-[1cqw] my-[1cqh] flex-1">
-                {/* SVG top-down field plan */}
-                <div className="col-span-7 bg-[#122413] border border-[#a3e635]/20 rounded-xl p-[1.5cqw] relative flex flex-col justify-between shadow-sm">
-                  <span className="text-[0.75cqw] font-mono opacity-50 block text-lime-300">{isZh ? "三区垄沟多点热阻与微生态气场监测图" : "THREE-FIELD TOP-DOWN CROP & SILT SPECTRUM"}</span>
-                  
-                  <div className="flex-1 relative flex items-center justify-center">
-                    <svg className="w-full h-full fill-none stroke-[#a3e635]" viewBox="0 0 240 100">
-                      {/* Grid background */}
-                      <path d="M 0 50 H 240 M 80 0 V 100 M 160 0 V 100" stroke="#a3e635" strokeWidth="0.5" strokeDasharray="2,4" className="opacity-15" />
-                      
-                      {/* Soil rotation cycles */}
-                      <circle cx="120" cy="50" r="30" stroke="#a3e635" strokeWidth="1" strokeDasharray="3,6" className="opacity-20 animate-spin-slow" />
-                      
-                      {/* Field nodes glowing */}
-                      {[
-                        { x: 40, y: 30, t: isZh ? "冬麦 (Zone 1)" : "Winter", active: true },
-                        { x: 120, y: 30, t: isZh ? "春播 (Zone 2)" : "Spring", active: beat >= 1 },
-                        { x: 200, y: 30, t: isZh ? "休耕 (Zone 3)" : "Fallow", active: beat >= 2 },
-                        { x: 40, y: 70, t: "Starch", active: true },
-                        { x: 120, y: 70, t: "Proteins", active: beat >= 1 },
-                        { x: 200, y: 70, t: "Silt", active: beat >= 2 }
-                      ].map((node, idx) => (
-                        <g key={idx} className="transition-all duration-500">
-                          <circle cx={node.x} cy={node.y} r="12" fill={node.active ? "#1a381c" : "#122413"} stroke={node.active ? "#a3e635" : "#2d4d30"} strokeWidth="1.5" />
-                          <text x={node.x - 11} y={node.y + 3} className="text-[7px] font-sans font-black fill-white" stroke="none">{node.t}</text>
-                          {node.active && (
-                            <circle cx={node.x} cy={node.y} r="14" stroke="#a3e635" strokeWidth="1" className="animate-ping opacity-25" style={{ animationDuration: "4s" }} />
-                          )}
-                        </g>
-                      ))}
+                      {/* Crack lines on wax */}
+                      <path d="M 25 35 Q 40 45 50 30" fill="none" stroke="#7f1d1d" strokeWidth="1" className="opacity-60" />
+                      <path d="M 130 120 Q 110 110 120 95" fill="none" stroke="#7f1d1d" strokeWidth="1" className="opacity-60" />
                     </svg>
                   </div>
-                </div>
-
-                {/* Right side: Event and chemical phase logs */}
-                <div className="col-span-5 bg-[#122413] border border-[#a3e635]/20 rounded-xl p-[1.5cqw] flex flex-col justify-between shadow-sm font-mono text-[0.75cqw]">
-                  <span className="opacity-50 text-[0.7cqw] uppercase border-b border-[#a3e635]/15 pb-[0.3cqh] block text-lime-300">
-                    {isZh ? "大领主城堡庄园大账目" : "MANORIAL HARVEST REPORT"}
-                  </span>
-                  
-                  <div className="flex-1 flex flex-col justify-center gap-[0.5cqh] my-1 leading-none text-lime-200">
-                    <div className="text-zinc-500">&gt; SILT_PLOUGHING_READY</div>
-                    <div className="text-zinc-400">&gt; Sluice moisture balanced</div>
-                    <div className={`transition-opacity ${beat >= 1 ? "opacity-100 text-[#a3e635]" : "opacity-15"}`}>
-                      &gt; nodule nitrogen locked
-                    </div>
-                    <div className={`transition-opacity ${beat >= 2 ? "opacity-100 text-emerald-400 font-extrabold" : "opacity-5"}`}>
-                      &gt; CROP ROTATION LOOP SYNC SECURED
-                    </div>
+                ) : (
+                  <div className="w-[12cqw] h-[12cqw] border border-dashed border-stone-800 rounded-full flex items-center justify-center text-center text-stone-600 font-mono text-[0.8cqw] italic">
+                    {isZh ? "等待加盖皇家印章" : "SEAL UNSTAMPED"}
                   </div>
-
-                  <div className={`text-[0.65cqw] p-[0.5cqw] rounded bg-emerald-950/40 text-emerald-400 border border-emerald-500/20 flex items-center gap-[0.3cqw] ${beat >= 2 ? "opacity-100" : "opacity-20"}`}>
-                    <Shield className="w-3 h-3 flex-shrink-0" />
-                    <span className="truncate">{isZh ? "领主印绶加盖，大宗收获结账完毕" : "Lord stamp applied. Harvest complete."}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom system status bar */}
-              <div className="text-[0.8cqw] font-mono opacity-60 flex justify-between items-center px-1 border-t border-[#a3e635]/15 pt-[0.6cqh]">
-                <span>{isZh ? "中世纪大庄园三区轮换数字化微生态控温研究大纲" : "Medieval Manorial Crop Rotation Micro-ecological System"}</span>
-                <span className="flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping" />
-                  {isZh ? "地力永续大流转绿标高亮通车" : "ROTATION STATUS: OPTIMAL COMPILER"}
-                </span>
+                )}
               </div>
             </div>
-          )}
-
-          {/* Sub status footer */}
-          <div className="border-t border-[#a3e635]/10 pt-[0.8cqh] flex justify-between text-[0.75cqw] font-mono opacity-50 mt-1">
-            <span>{isZh ? "大庄园主三区轮替账册" : "THREE-FIELD ROTATION COMPLIANCE LEDGER_XVI // COMPILING"}</span>
-            <span>VERIFICATION CODE: 0x16_CROP_ROTATION</span>
           </div>
+        </div>
+
+        {/* Footer */}
+        <div className="border-t border-[#eab308]/10 pt-[1.2cqh] flex justify-between text-[0.8cqw] font-mono opacity-60 z-10">
+          <span>© 1086 - 2026 {isZh ? "温切斯特大庄园土地测度学会" : "Winchester Royal Manorial Agricultural Association"}</span>
+          <span>{isZh ? "自适应垄沟水流及肥力热阻自对准技术" : "convection soil dynamic feedback controls"}</span>
+        </div>
+      </div>
+    );
+  };
+
+  const renderScene = (s) => {
+    switch (s) {
+      case 1: return renderScene1();
+      case 2: return renderScene2();
+      case 3: return renderScene3();
+      case 4: return renderScene4();
+      case 5: return renderScene5();
+      default: return renderScene1();
+    }
+  };
+
+  // Bespoke Navigation (Agricultural Season Indicator)
+  const renderNavigation = () => {
+    if (isThumbnail || !onNavigate) return null;
+
+    const nodes = [
+      { s: 1, x: 100, name: isZh ? "1. 休耕深耕" : "1. Fallow & Plow" },
+      { s: 2, x: 300, name: isZh ? "2. 双区对比" : "2. Wheat & Barley" },
+      { s: 3, x: 500, name: isZh ? "3. 三区轮作" : "3. Rotation Timeline" },
+      { s: 4, x: 700, name: isZh ? "4. 产量矩阵" : "4. Yield Quadrant" },
+      { s: 5, x: 900, name: isZh ? "5. 皇家总账" : "5. Royal Ledger" }
+    ];
+
+    const currentX = nodes[scene - 1]?.x || 100;
+
+    return (
+      <div className="w-[70cqw] h-[10cqh] mx-auto mt-[1cqh] relative select-none shrink-0 z-20">
+        <svg viewBox="0 0 1000 100" className="w-full h-full overflow-visible">
+          {/* Furrow line in background */}
+          <path 
+            d="M 50 60 Q 250 80 500 60 T 950 60" 
+            className="fill-none stroke-stone-700 stroke-2" 
+          />
+          {/* Ploughed soil texture under furrow */}
+          <path 
+            d="M 50 65 Q 250 85 500 65 T 950 65" 
+            className="fill-none stroke-[#78350f] stroke-1 opacity-40" 
+            strokeDasharray="2 4"
+          />
+
+          {/* Render the 5 nodes */}
+          {nodes.map((node) => {
+            const isActive = scene === node.s;
+            let nodeY = 60;
+            if (node.s === 1) nodeY = 64.3;
+            if (node.s === 2) nodeY = 69.7;
+            if (node.s === 3) nodeY = 60.0;
+            if (node.s === 4) nodeY = 50.3;
+            if (node.s === 5) nodeY = 55.7;
+
+            return (
+              <g 
+                key={node.s} 
+                className="cursor-pointer group"
+                onClick={() => onNavigate(node.s, 0)}
+              >
+                {/* Invisible larger click area */}
+                <circle cx={node.x} cy={nodeY} r={25} className="fill-transparent stroke-none" />
+
+                {/* Glowing background ring for active node */}
+                <circle 
+                  cx={node.x} 
+                  cy={nodeY} 
+                  r={isActive ? 14 : 7} 
+                  className={`transition-all duration-500 fill-none ${
+                    isActive ? "stroke-[#eab308] stroke-2" : "stroke-stone-600 stroke-1 group-hover:stroke-stone-400"
+                  }`} 
+                  style={{
+                    filter: isActive ? "drop-shadow(0 0 8px rgba(234, 179, 8, 0.6))" : "none"
+                  }}
+                />
+
+                {/* Core seed dot */}
+                <circle 
+                  cx={node.x} 
+                  cy={nodeY} 
+                  r={isActive ? 5 : 3} 
+                  className={`transition-all duration-500 ${
+                    isActive ? "fill-[#eab308]" : "fill-stone-500 group-hover:fill-stone-300"
+                  }`} 
+                />
+
+                {/* Sprouting plant icon when active */}
+                {isActive && (
+                  <g 
+                    transform={`translate(${node.x}, ${nodeY})`} 
+                    className="animate-sprout"
+                    style={{ transformOrigin: "0px 0px" }}
+                  >
+                    {/* Stem */}
+                    <line x1="0" y1="0" x2="0" y2="-12" stroke="#22c55e" strokeWidth="2" strokeLinecap="round" />
+                    {/* Left Leaf (SVG Leaf Path with subtle vein line) */}
+                    <path d="M 0 -12 Q -8 -17 -14 -10 Q -6 -7 0 -12 Z" fill="#22c55e" stroke="#15803d" strokeWidth="1" />
+                    {/* Right Leaf (SVG Leaf Path with subtle vein line) */}
+                    <path d="M 0 -12 Q 8 -17 14 -10 Q 6 -7 0 -12 Z" fill="#22c55e" stroke="#15803d" strokeWidth="1" />
+                    {/* Little bud/shoot in center */}
+                    <circle cx="0" cy="-12" r="1.5" fill="#4ade80" />
+                  </g>
+                )}
+
+                {/* Node label */}
+                <text 
+                  x={node.x} 
+                  y={nodeY - 25} 
+                  textAnchor="middle" 
+                  className={`font-serif text-[11px] tracking-wider transition-all duration-500 ${
+                    isActive ? "fill-[#eab308] font-bold" : "fill-stone-500 group-hover:fill-stone-400"
+                  }`}
+                >
+                  {node.name}
+                </text>
+              </g>
+            );
+          })}
+
+          {/* Sliding seed/sprout indicator along the furrow path */}
+          {(() => {
+            let currentY = 60;
+            if (scene === 1) currentY = 64.3;
+            if (scene === 2) currentY = 69.7;
+            if (scene === 3) currentY = 60.0;
+            if (scene === 4) currentY = 50.3;
+            if (scene === 5) currentY = 55.7;
+
+            return (
+              <g style={{ transition: "all 1s cubic-bezier(0.16, 1, 0.3, 1)" }} transform={`translate(${currentX}, ${currentY})`}>
+                <circle 
+                  cx={0} 
+                  cy={0} 
+                  r={10} 
+                  className="fill-[#eab308]/20 filter blur-[3px]" 
+                />
+                <circle 
+                  cx={0} 
+                  cy={0} 
+                  r={4} 
+                  className="fill-[#eab308]" 
+                />
+              </g>
+            );
+          })()}
+        </svg>
+      </div>
+    );
+  };
+
+  return (
+    <div className="w-full h-full bg-[#0b140d] text-stone-200 relative overflow-hidden font-sans p-[3cqw] flex flex-col justify-between select-none">
+      {/* Self-contained style block for Google Fonts and Animations */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+        
+        .font-serif {
+          font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+        }
+        
+        .font-sans {
+          font-family: 'Inter', sans-serif;
+        }
+        
+        @keyframes rotate-slow {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes flow-dash {
+          to { stroke-dashoffset: -40; }
+        }
+        
+        @keyframes scan-line {
+          0% { transform: translateY(-20px); opacity: 0.3; }
+          50% { opacity: 1; }
+          100% { transform: translateY(180px); opacity: 0.3; }
+        }
+        
+        @keyframes sprout-grow {
+          0% { transform: scale(0); opacity: 0; }
+          60% { transform: scale(1.15); opacity: 0.9; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .animate-spin-slow {
+          animation: rotate-slow 30s linear infinite;
+        }
+        
+        .animate-flow {
+          stroke-dasharray: 8 12;
+          animation: flow-dash 1.5s linear infinite;
+        }
+        
+        .animate-scan {
+          animation: scan-line 3s ease-in-out infinite;
+        }
+        
+        .animate-sprout {
+          animation: sprout-grow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+      `}</style>
+
+      {/* Main active scene view using Vertical Spatial Viewport Track */}
+      <div className="flex-1 w-full relative overflow-hidden">
+        <div 
+          className="flex flex-col h-[500%] w-full transition-transform duration-[1200ms]"
+          style={{
+            transform: `translateY(-${(scene - 1) * 20}%)`,
+            transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)"
+          }}
+        >
+          <div className="w-full h-[20%] shrink-0">{renderScene(1)}</div>
+          <div className="w-full h-[20%] shrink-0">{renderScene(2)}</div>
+          <div className="w-full h-[20%] shrink-0">{renderScene(3)}</div>
+          <div className="w-full h-[20%] shrink-0">{renderScene(4)}</div>
+          <div className="w-full h-[20%] shrink-0">{renderScene(5)}</div>
         </div>
       </div>
 
-      {/* Decorative Slide Footer */}
-      <div className="flex justify-between items-center text-[0.8cqw] font-mono opacity-55 border-t border-[#a3e635]/10 pt-[1.2cqh] z-10">
-        <span>© 1086 - 2026 {isZh ? "温切斯特大庄园土地测度学会" : "Winchester Royal Manorial Agricultural Association"}</span>
-        <span>{isZh ? "自适应垄沟水流及肥力热阻自对准技术" : "convection soil dynamic feedback controls"}</span>
-      </div>
+      {/* Bespoke Navigation (Agricultural Season Indicator) */}
+      {renderNavigation()}
     </div>
   );
 }

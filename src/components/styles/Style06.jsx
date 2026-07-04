@@ -1,6 +1,6 @@
 import React from "react";
 import { 
-  Sparkles, Music, Activity, Layers, Activity as WaveIcon, Compass, Award, Tag
+  Sparkles, Music, Layers, Activity as WaveIcon, Compass, Award, Tag
 } from "lucide-react";
 
 export const getMetadata = (lang) => ({
@@ -36,7 +36,7 @@ export const getMetadata = (lang) => ({
       beats: [
         { id: 1, action: lang === "zh" ? "展开声部小节线" : "Draw Staff Measures", title: lang === "zh" ? "五线谱对数时间格栅" : "Musical Staff Logarithmic Grid", body: lang === "zh" ? "在黑板上勾画出平行的对数小节格栅，确立精密的正步时间节拍（Tempo），这是所有声部保持绝对同步的刚性律动骨架。" : "Chalking parallel staff lines across the blackboard, establishing a rigid logarithmic tempo grid to keep all entering voices synchronized." },
         { id: 2, action: lang === "zh" ? "导入副调逆行" : "Trigger Retrograde", title: lang === "zh" ? "逆行对位与倒影副主题" : "Retrograde & Inversion Counterpoint", body: lang === "zh" ? "导入副主题的倒影与逆行（Retrograde）轨迹，使旋律关于时间轴和音高轴产生完美的几何镜像翻转，推升复调张力。" : "Injecting inversion and retrograde paths, mirroring melodies perfectly across both pitch and temporal axes to escalate counterpoint tension." },
-        { id: 3, action: lang === "zh" ? "完成声部协奏" : "Harmonize Ensemble", title: lang === "zh" ? "多声部理性谐律交织" : "Multi-voice Polyphony Convergence", body: lang === "zh" ? "高音、中音与低音声部全部进入，在黑板谱线上交汇。不同频段的声波高度叠合，融汇为完美的巴罗克复调乐章。" : "Soprano, Alto, and Bass converge in full polyphony. Waveforms overlap seamlessly on the staff lines, locking the final Baroque resolution." }
+        { id: 3, action: lang === "zh" ? "完成声部协奏" : "Harmonize Ensemble", title: lang === "zh" ? "多声部理性谐律交织" : "Multi-voice Polyphony Convergence", body: lang === "zh" ? "高音、中音与低音声部全部进入，在黑板谱线上交汇。不同频段 of 声波高度叠合，融汇为完美的巴罗克复调乐章。" : "Soprano, Alto, and Bass converge in full polyphony. Waveforms overlap seamlessly on the staff lines, locking the final Baroque resolution." }
       ]
     },
     {
@@ -60,7 +60,7 @@ export const getMetadata = (lang) => ({
   ]
 });
 
-export default function Style06({ scene, beat, language, isThumbnail }) {
+export default function Style06({ scene, beat, language, isThumbnail, onNavigate }) {
   const meta = getMetadata(language);
   const currentScene = meta.scenes.find((s) => s.id === scene) || meta.scenes[0];
   const currentBeat = currentScene.beats[beat] || currentScene.beats[0];
@@ -200,7 +200,7 @@ export default function Style06({ scene, beat, language, isThumbnail }) {
         return (
           <div className="grid grid-cols-2 gap-[1.5cqw] w-full max-w-[42cqw] animate-scale-up font-mono" key={`s4-${beat}`}>
             {/* Rule 1 */}
-            <div className={`border border-slate-800 bg-slate-950/20 p-[1.5cqw] rounded relative transition-all duration-500 ${beat >= 0 ? "opacity-100 scale-100 border-emerald-500/20" : "opacity-20 scale-95"}`}>
+            <div className={`border border-slate-800 bg-slate-950/20 p-[1.5cqw] rounded relative transition-all duration-500 ${beat >= 0 ? "opacity-100 scale-100" : "opacity-20 scale-95"}`}>
               <div className="absolute top-2 right-3 font-mono text-[1cqw] text-emerald-400 font-bold">DUX</div>
               <span className="font-handwriting text-[1.25cqw] text-white font-bold block mb-1">{language === "zh" ? "主旋主题 seed" : "DUX: MELODIC SEED"}</span>
               <p className="text-[0.9cqw] opacity-85 text-slate-300 font-sans leading-tight">
@@ -285,8 +285,205 @@ export default function Style06({ scene, beat, language, isThumbnail }) {
     }
   };
 
+  const renderNavigation = () => {
+    if (isThumbnail || !onNavigate) return null;
+
+    const notes = [
+      { s: 1, x: 20, y: 440, name: "Do", hasLedger: true },
+      { s: 2, x: 25, y: 350, name: "Re" },
+      { s: 3, x: 30, y: 260, name: "Mi" },
+      { s: 4, x: 35, y: 170, name: "Fa" },
+      { s: 5, x: 40, y: 80, name: "Sol" }
+    ];
+
+    return (
+      <div className="absolute left-[2.5cqw] top-[15cqh] bottom-[15cqh] w-[8cqw] flex flex-col items-center justify-center z-20">
+        <svg viewBox="0 0 100 600" className="w-full h-full overflow-visible">
+          {/* 5 Vertical Staff Lines */}
+          <line x1="30" y1="40" x2="30" y2="560" stroke="white" strokeWidth="1.2" strokeOpacity="0.25" />
+          <line x1="40" y1="40" x2="40" y2="560" stroke="white" strokeWidth="1.2" strokeOpacity="0.25" />
+          <line x1="50" y1="40" x2="50" y2="560" stroke="white" strokeWidth="1.2" strokeOpacity="0.25" />
+          <line x1="60" y1="40" x2="60" y2="560" stroke="white" strokeWidth="1.2" strokeOpacity="0.25" />
+          <line x1="70" y1="40" x2="70" y2="560" stroke="white" strokeWidth="1.2" strokeOpacity="0.25" />
+
+          {/* G-Clef Chalk Outline vector at the bottom */}
+          <g transform="translate(5, 480) scale(1)">
+            <path d="M 45,78 C 45,78 48,78 48,74 C 48,68 42,55 45,35 C 47,20 54,12 51,12 C 48,12 43,20 43,30 C 43,45 58,48 58,58 C 58,68 45,69 38,62 C 32,55 35,42 45,42 C 55,42 55,55 48,55 C 44,55 43,51 46,51 L 46,75" 
+              fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
+              strokeOpacity="0.6" />
+          </g>
+
+          {/* Render Notes */}
+          {notes.map((note) => {
+            const isActive = scene === note.s;
+            return (
+              <g 
+                key={note.s} 
+                className="cursor-pointer group" 
+                onClick={() => onNavigate && onNavigate(note.s, 0)}
+              >
+                {/* Invisible larger click target */}
+                <circle cx={note.x} cy={note.y} r="25" fill="transparent" />
+
+                {/* Ledger line for Do */}
+                {note.hasLedger && (
+                  <line 
+                    x1={note.x} 
+                    y1={note.y - 20} 
+                    x2={note.x} 
+                    y2={note.y + 20} 
+                    stroke="white" 
+                    strokeWidth="1.5" 
+                    strokeOpacity={isActive ? "0.8" : "0.4"} 
+                    className="transition-all duration-300"
+                  />
+                )}
+
+                {/* Active Glowing Soundwaves */}
+                {isActive && (
+                  <g transform={`translate(${note.x}, ${note.y})`}>
+                    {/* Soundwave Arc Left 1 */}
+                    <path 
+                      d="M -18 -12 A 15 15 0 0 0 -18 12" 
+                      fill="none" 
+                      stroke="#fef08a" 
+                      strokeWidth="1.5" 
+                      strokeLinecap="round"
+                      className="animate-wave-left-1"
+                    />
+                    {/* Soundwave Arc Left 2 */}
+                    <path 
+                      d="M -26 -18 A 22 22 0 0 0 -26 18" 
+                      fill="none" 
+                      stroke="#fef08a" 
+                      strokeWidth="1" 
+                      strokeLinecap="round"
+                      className="animate-wave-left-2"
+                    />
+                    {/* Soundwave Arc Right 1 */}
+                    <path 
+                      d="M 18 -12 A 15 15 0 0 1 18 12" 
+                      fill="none" 
+                      stroke="#fef08a" 
+                      strokeWidth="1.5" 
+                      strokeLinecap="round"
+                      className="animate-wave-right-1"
+                    />
+                    {/* Soundwave Arc Right 2 */}
+                    <path 
+                      d="M 26 -18 A 22 22 0 0 1 26 18" 
+                      fill="none" 
+                      stroke="#fef08a" 
+                      strokeWidth="1" 
+                      strokeLinecap="round"
+                      className="animate-wave-right-2"
+                    />
+                    
+                    {/* Yellow Chalk Circle around active note */}
+                    <path 
+                      d="M -14 0 C -14 -14, 14 -14, 14 0 C 14 14, -14 14, -13 2" 
+                      fill="none" 
+                      stroke="#fef08a" 
+                      strokeWidth="2" 
+                      strokeLinecap="round"
+                      className="animate-chalk-circle"
+                    />
+                  </g>
+                )}
+
+                {/* Note Head (vibrates if active) */}
+                <g 
+                  className={isActive ? "animate-vibrate" : "transition-transform duration-300 group-hover:scale-110"}
+                  style={{ transformOrigin: `${note.x}px ${note.y}px` }}
+                >
+                  {/* Tilted Ellipse for note head */}
+                  <ellipse 
+                    cx={note.x} 
+                    cy={note.y} 
+                    rx="9" 
+                    ry="6.5" 
+                    transform={`rotate(-20 ${note.x} ${note.y})`}
+                    className={`transition-all duration-300 ${
+                      isActive 
+                        ? "fill-yellow-200 stroke-yellow-200" 
+                        : "fill-white/80 stroke-white/80 group-hover:fill-white group-hover:stroke-white"
+                    }`}
+                    strokeWidth="1"
+                  />
+                  {/* Note Stem */}
+                  <line 
+                    x1={note.x + 8.5} 
+                    y1={note.y - 2} 
+                    x2={note.x + 8.5} 
+                    y2={note.y - 24} 
+                    stroke={isActive ? "#fef08a" : "white"} 
+                    strokeWidth="1.5" 
+                    strokeOpacity={isActive ? "0.9" : "0.7"}
+                    className="transition-all duration-300"
+                  />
+                </g>
+
+                {/* Note Name Label */}
+                <text 
+                  x="80" 
+                  y={note.y + 4} 
+                  className={`font-handwriting text-[14px] transition-all duration-300 select-none ${
+                    isActive 
+                      ? "fill-yellow-200 font-bold scale-110" 
+                      : "fill-white/40 group-hover:fill-white/80"
+                  }`}
+                  style={{ transformOrigin: `80px ${note.y}px` }}
+                >
+                  {note.name}
+                </text>
+              </g>
+            );
+          })}
+        </svg>
+      </div>
+    );
+  };
+
   return (
     <div className={`w-full h-full flex flex-col justify-between p-[5cqw] relative ${meta.colors.bg} ${meta.colors.ink} overflow-hidden select-none`}>
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes vibrate-anim {
+          0%, 100% { transform: translate(0, 0); }
+          20% { transform: translate(-0.8px, 0.8px); }
+          40% { transform: translate(-0.8px, -0.8px); }
+          60% { transform: translate(0.8px, 0.8px); }
+          80% { transform: translate(0.8px, -0.8px); }
+        }
+        .animate-vibrate {
+          animation: vibrate-anim 0.1s linear infinite;
+        }
+        @keyframes wave-left-anim-1 {
+          0% { transform: scale(0.8); opacity: 0.9; }
+          100% { transform: scale(1.4); opacity: 0; }
+        }
+        @keyframes wave-left-anim-2 {
+          0% { transform: scale(0.7); opacity: 0.9; }
+          100% { transform: scale(1.6); opacity: 0; }
+        }
+        .animate-wave-left-1, .animate-wave-right-1 {
+          animation: wave-left-anim-1 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+        }
+        .animate-wave-left-2, .animate-wave-right-2 {
+          animation: wave-left-anim-2 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+          animation-delay: 0.5s;
+        }
+        @keyframes draw-circle {
+          0% { stroke-dasharray: 120; stroke-dashoffset: 120; }
+          100% { stroke-dasharray: 120; stroke-dashoffset: 0; }
+        }
+        .animate-chalk-circle {
+          animation: draw-circle 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+      `}} />
+
+      {/* Left Vertical Staff Navigation */}
+      {renderNavigation()}
+
       {/* Top Slide Meta Header */}
       <div className="w-full flex justify-between items-start border-b border-slate-700/20 pb-[2cqh] z-10 shrink-0">
         <div className="flex flex-col gap-0.5">
@@ -304,7 +501,7 @@ export default function Style06({ scene, beat, language, isThumbnail }) {
       </div>
 
       {/* Central Split Layout Panel */}
-      <div className="flex-1 w-full grid grid-cols-12 gap-[4cqw] items-center my-[3cqh] z-10 overflow-hidden">
+      <div className={`flex-1 w-full grid grid-cols-12 gap-[4cqw] items-center my-[3cqh] z-10 overflow-hidden ${(!isThumbnail && onNavigate) ? "pl-[8cqw]" : ""}`}>
         {/* Left Column: Semantic Copy Content Block */}
         <div className="col-span-6 flex flex-col gap-[2cqh] text-left pr-[2cqw] justify-center min-h-[35cqh]">
           <h1 className="text-[3.8cqw] leading-[1.1] font-bold tracking-tight font-handwriting text-white animate-slide-right" key={`title-${scene}-${beat}`}>

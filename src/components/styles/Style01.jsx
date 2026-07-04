@@ -65,103 +65,94 @@ export const getMetadata = (lang) => {
 export default function Style01({ scene, beat, language, onNavigate, isThumbnail }) {
   const isZh = language === "zh";
 
-  // Bespoke Theme Navigation (Gravitational Orbit Gauge)
+  // Right Vertical Gravitational Picker (Middle Focal Highlight & Edge Fade)
   const renderNavigation = () => {
     if (isThumbnail || !onNavigate) return null;
 
-    const currentX = scene === 1 ? 100 : scene === 2 ? 300 : scene === 3 ? 500 : scene === 4 ? 700 : 900;
-    const currentY = scene === 1 ? 30 : scene === 2 ? 52.5 : scene === 3 ? 60 : scene === 4 ? 52.5 : 30;
+    const navNodes = [
+      { s: 1, briefEn: "Singularity", briefZh: "奇点视界", fullBilingual: "Singularity / 奇点" },
+      { s: 2, briefEn: "Geodesics", briefZh: "度规测地", fullBilingual: "Geodesics / 测地线" },
+      { s: 3, briefEn: "Accretion", briefZh: "物质吸积", fullBilingual: "Accretion / 物质吸积" },
+      { s: 4, briefEn: "Entropy", briefZh: "量子热力", fullBilingual: "Entropy / 量子热力" },
+      { s: 5, briefEn: "Telemetry", briefZh: "视界总账", fullBilingual: "Telemetry / 视界总账" }
+    ];
 
     return (
-      <div className="w-[60cqw] h-[8cqh] mx-auto mt-[1.5cqh] relative select-none shrink-0 z-20">
-        <svg viewBox="0 0 1000 100" className="w-full h-full overflow-visible">
-          {/* Concentric gravity potential well rings in background */}
-          <ellipse cx="500" cy="180" rx="300" ry="120" className="fill-none stroke-slate-800/20 stroke-1" />
-          <ellipse cx="500" cy="180" rx="200" ry="80" className="fill-none stroke-slate-800/10 stroke-1" />
+      <div className="absolute inset-y-0 right-0 w-[28cqw] flex items-center justify-end select-none z-30 pointer-events-none">
+        {/* Vertical, dark gravitational well centerline */}
+        <div className="absolute right-[4cqw] top-[15cqh] bottom-[15cqh] w-[2px] bg-gradient-to-b from-transparent via-slate-800/80 to-transparent pointer-events-none" />
 
-          {/* Geodetic bending line */}
-          <path 
-            d="M 100 30 Q 500 90 900 30" 
-            className="fill-none stroke-slate-800 stroke-2" 
-          />
-
-          {/* Render the 5 nodes */}
-          {[
-            { s: 1, x: 100, y: 30, name: isZh ? "奇点视界" : "Singularity" },
-            { s: 2, x: 300, y: 52.5, name: isZh ? "度规测地" : "Geodesics" },
-            { s: 3, x: 500, y: 60, name: isZh ? "物质吸积" : "Accretion" },
-            { s: 4, x: 700, y: 52.5, name: isZh ? "量子热力" : "Entropy" },
-            { s: 5, x: 900, y: 30, name: isZh ? "视界总账" : "Telemetry" }
-          ].map((node) => {
-            const isActive = scene === node.s;
-            return (
-              <g 
-                key={node.s} 
-                className="cursor-pointer group"
-                onClick={() => onNavigate(node.s, 0)}
-              >
-                {/* Invisible larger click area */}
-                <circle cx={node.x} cy={node.y} r={20} className="fill-transparent stroke-none" />
-
-                {/* Glowing background ring for active node */}
-                <circle 
-                  cx={node.x} 
-                  cy={node.y} 
-                  r={isActive ? 12 : 6} 
-                  className={`transition-all duration-500 fill-none ${
-                    isActive ? "stroke-cyan-400 stroke-2 animate-pulse" : "stroke-slate-700 stroke-1 group-hover:stroke-slate-500"
-                  }`} 
-                />
-
-                {/* Core dot */}
-                <circle 
-                  cx={node.x} 
-                  cy={node.y} 
-                  r={isActive ? 6 : 4} 
-                  className={`transition-all duration-500 ${
-                    isActive ? "fill-cyan-400" : "fill-slate-600 group-hover:fill-slate-400"
-                  }`} 
-                />
-
-                {/* Node label */}
-                <text 
-                  x={node.x} 
-                  y={node.y - 18} 
-                  textAnchor="middle" 
-                  className={`font-mono text-[10px] tracking-wider transition-all duration-500 ${
-                    isActive ? "fill-cyan-400 font-bold" : "fill-slate-500 group-hover:fill-slate-400"
-                  }`}
-                >
-                  {node.name}
-                </text>
-              </g>
-            );
-          })}
-
-          {/* The sliding active "photon" node */}
-          <g style={{ transition: "all 0.6s cubic-bezier(0.25, 1, 0.5, 1)" }}>
-            <circle 
-              cx={currentX} 
-              cy={currentY} 
-              r={8} 
-              className="fill-cyan-400/40 filter blur-[4px]" 
-            />
-            <circle 
-              cx={currentX} 
-              cy={currentY} 
-              r={3} 
-              className="fill-cyan-400" 
-            />
-          </g>
-
-          {/* Animated ripple wave that triggers on scene change */}
-          <g 
-            transform={`translate(${currentX}, ${currentY})`} 
-            key={`nav-ripple-${scene}`}
+        {/* Sliding track for nodes */}
+        <div className="relative w-full h-[60cqh] flex items-center overflow-visible">
+          <div 
+            className="absolute right-0 w-full flex flex-col transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            style={{
+              transform: `translateY(${(3 - scene) * 10}cqh)`,
+              height: "50cqh"
+            }}
           >
-            <circle cx="0" cy="0" r="10" className="fill-none stroke-cyan-400 animate-ripple-g" />
-          </g>
-        </svg>
+            {navNodes.map((node) => {
+              const dist = Math.abs(node.s - scene);
+              const isActive = dist === 0;
+              
+              let textClass = "";
+              let labelText = "";
+
+              if (dist === 0) {
+                textClass = "text-[2.2cqw] font-black text-[#22d3ee] opacity-100 drop-shadow-[0_0_12px_rgba(34,211,238,0.6)]";
+                labelText = node.fullBilingual;
+              } else if (dist === 1) {
+                textClass = "text-[1.2cqw] font-bold text-slate-400 opacity-50 group-hover:opacity-80";
+                labelText = isZh ? node.briefZh : node.briefEn;
+              } else {
+                textClass = "text-[0.8cqw] font-medium text-slate-600 opacity-20 group-hover:opacity-40";
+                labelText = isZh ? node.briefZh : node.briefEn;
+              }
+
+              return (
+                <div 
+                  key={node.s} 
+                  onClick={() => onNavigate(node.s, 0)}
+                  className="h-[10cqh] w-full relative flex items-center justify-end cursor-pointer pointer-events-auto group"
+                >
+                  {/* Node label - positioned left of the centerline */}
+                  <div className="absolute right-[6cqw] text-right whitespace-nowrap pointer-events-none">
+                    <span className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-mono tracking-wider block ${textClass}`}>
+                      {labelText}
+                    </span>
+                  </div>
+
+                  {/* Orbit-node representation on the centerline */}
+                  <div className="absolute right-[4cqw] translate-x-1/2 flex items-center justify-center w-0 h-0 pointer-events-none">
+                    {/* Glowing outer ring for active node */}
+                    {isActive && (
+                      <>
+                        <div className="w-[1.8cqw] h-[1.6cqw] rounded-full border-2 border-[#22d3ee] animate-pulse absolute" />
+                        <div className="w-[2.6cqw] h-[2.6cqw] rounded-full border border-[#22d3ee]/30 animate-ping absolute" />
+                      </>
+                    )}
+
+                    {/* Neighboring node ring */}
+                    {!isActive && dist === 1 && (
+                      <div className="w-[1.2cqw] h-[1.2cqw] rounded-full border border-slate-600 absolute transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:border-slate-400 group-hover:scale-110" />
+                    )}
+
+                    {/* Core dot */}
+                    <div 
+                      className={`rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] absolute ${
+                        isActive 
+                          ? "w-[0.8cqw] h-[0.8cqw] bg-[#22d3ee]" 
+                          : dist === 1 
+                            ? "w-[0.5cqw] h-[0.5cqw] bg-slate-500 group-hover:bg-slate-300" 
+                            : "w-[0.35cqw] h-[0.35cqw] bg-slate-700 group-hover:bg-slate-500"
+                      }`}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     );
   };
@@ -1221,8 +1212,8 @@ export default function Style01({ scene, beat, language, onNavigate, isThumbnail
         }
       `}</style>
 
-      {/* Main active scene view using Horizontal Spatial Viewport Track */}
-      <div className="flex-1 w-full relative overflow-hidden">
+      {/* Main active scene view using Horizontal Spatial Viewport Track with padding to prevent vertical picker overlap */}
+      <div className="flex-1 w-full pr-[24cqw] relative overflow-hidden">
         <div 
           className="flex w-[500%] h-full transition-transform duration-1000 ease-out"
           style={{
@@ -1238,7 +1229,7 @@ export default function Style01({ scene, beat, language, onNavigate, isThumbnail
         </div>
       </div>
 
-      {/* Gravitational Orbit Gauge Navigation */}
+      {/* Right Vertical Gravitational Picker */}
       {renderNavigation()}
     </div>
   );

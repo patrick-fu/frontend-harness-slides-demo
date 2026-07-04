@@ -77,242 +77,177 @@ export const getMetadata = (lang) => {
   };
 };
 
+// 5个场景的头部元数据和 metope 导航图标定义
+const SCENES_META = [
+  { id: 1, titleZh: "神庙门廊", titleEn: "Portico Truth", Icon: Landmark, badgeEn: "A-TIER CLASSICAL" },
+  { id: 2, titleZh: "广场对决", titleEn: "Dialectic Dual", Icon: Scale, badgeEn: "DIALECTIC DISPUTE" },
+  { id: 3, titleZh: "民主路径", titleEn: "Agora Process", Icon: Flame, badgeEn: "ASSEMBLY TIMELINE" },
+  { id: 4, titleZh: "部落矩阵", titleEn: "Ballot Matrix", Icon: Users, badgeEn: "DEME BALLOT MATRIX" },
+  { id: 5, titleZh: "梭伦法典", titleEn: "Solon Stele", Icon: Coins, badgeEn: "SOVEREIGN STELE" }
+];
+
+// Top Architrave Metope Tracker 统一头部与导航组件
+const TopArchitraveHeader = ({ scene, language, onNavigate }) => {
+  const isZh = language === "zh";
+  const currentMeta = SCENES_META[scene - 1] || SCENES_META[0];
+  const Icon = currentMeta.Icon;
+
+  const subtitlesZh = [
+    "雅典民主制辩难 • 绪论",
+    "对决：苏格拉底辩证法",
+    "议事路径：阿果拉圆形广场",
+    "主权表决：十部落公民大会",
+    "宪政丰碑：梭伦立法大宪章"
+  ];
+  const subtitlesEn = [
+    "Athenian Agora Debates • Introduction",
+    "Dialectic Dual • Thesis & Antithesis",
+    "Agora Legislative Process • Circular Plaza",
+    "Ekklesia Ballot Matrix • Ten Sovereign Demes",
+    "Solon's Constitutional Stele • State Law"
+  ];
+
+  const currentSubtitle = isZh ? subtitlesZh[scene - 1] : subtitlesEn[scene - 1];
+
+  // Triglyph component representing three classical vertical grooves
+  const Triglyph = () => (
+    <div className="w-[1.2cqw] h-[4.5cqh] flex items-center justify-between px-[0.15cqw] shrink-0 border-x border-[#1a1b26]/5 opacity-35 select-none">
+      <div className="w-[1.5px] h-[75%] bg-[#1a1b26]" />
+      <div className="w-[1.5px] h-[75%] bg-[#1a1b26]" />
+      <div className="w-[1.5px] h-[75%] bg-[#1a1b26]" />
+    </div>
+  );
+
+  return (
+    <div className="w-full flex flex-col z-40 shrink-0 mb-[1.5cqh]">
+      <style>{`
+        @keyframes sundialRotate {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        .animate-sundial-rotate {
+          animation: sundialRotate 30s linear infinite;
+        }
+        .greek-fret-band {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='8' viewBox='0 0 16 8'%3E%3Cpath d='M0 4h6V2h-3v4h6V4H16' fill='none' stroke='%231a1b26' stroke-width='0.8' stroke-opacity='0.12'/%3E%3C/svg%3E");
+          background-repeat: repeat-x;
+        }
+      `}</style>
+
+      {/* 1. Header Metadata Area */}
+      <div className="w-full flex justify-between items-start pb-[1cqh] border-b border-[#1a1b26]/10">
+        <div className="flex flex-col gap-0.5">
+          <span className="font-serif text-[1.1cqw] tracking-wider uppercase text-[#c5a26f] font-black">
+            {isZh ? "雅典民主与政治哲学" : "Classical Greek Philosophy"}
+          </span>
+          <span className="text-[0.9cqw] text-slate-500 font-mono tracking-tight uppercase">
+            {currentSubtitle}
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5 bg-white px-3 py-1 rounded border border-[#1a1b26]/10 shadow-sm transition-all duration-300">
+          <Icon className="w-3.5 h-3.5 text-[#c5a26f]" />
+          <span className="font-mono text-[0.8cqw] text-[#1a1b26] font-bold uppercase">
+            {currentMeta.badgeEn}
+          </span>
+        </div>
+      </div>
+
+      {/* 2. Top Double-Line Architrave Border */}
+      <div className="w-full h-[3px] border-b-[3px] border-double border-[#1a1b26]/25 mt-[0.5cqh] mb-[0.2cqh]" />
+
+      {/* 3. Classical Greek Frieze divided into 5 rectangular metopes */}
+      <div className="w-full flex items-center justify-between bg-[#ebeae2]/15 border border-[#1a1b26]/10 rounded shadow-sm relative overflow-visible h-[6cqh] px-[0.5cqw]">
+        <Triglyph />
+        {SCENES_META.map((meta) => {
+          const sNum = meta.id;
+          const isActive = scene === sNum;
+          const MetopeIcon = meta.Icon;
+
+          return (
+            <React.Fragment key={sNum}>
+              <button
+                onClick={() => onNavigate && onNavigate(sNum, 0)}
+                className={`flex-1 h-[4.8cqh] mx-[0.4cqw] cursor-pointer relative flex items-center justify-center rounded transition-all duration-500 select-none group border ${
+                  isActive
+                    ? "bg-[#fffdf6] border-[#c5a26f] shadow-[0_0_12px_rgba(255,255,255,0.95)] z-10 scale-[1.02]"
+                    : "bg-[#f4f3f0]/60 border-[#1a1b26]/10 hover:bg-[#fffdf6]/80 hover:border-[#1a1b26]/20 hover:scale-[1.01]"
+                }`}
+              >
+                {/* Active backlight glow */}
+                {isActive && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#fffbf4]/80 via-[#fffefe]/95 to-[#fffbf4]/80 rounded opacity-90 z-[-1]" />
+                )}
+
+                {/* Ambient Rotating Sundial Shadow on the background behind the active metope */}
+                {isActive && (
+                  <div className="absolute inset-0 pointer-events-none overflow-visible z-[-2] flex items-center justify-center">
+                    {/* Tick Ring */}
+                    <svg className="w-[10cqw] h-[10cqw] absolute text-[#1a1b26]/5 scale-[1.3]" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="1 3" />
+                      <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" strokeWidth="0.3" />
+                      {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => (
+                        <line
+                          key={deg}
+                          x1="50"
+                          y1="2"
+                          x2="50"
+                          y2="6"
+                          stroke="currentColor"
+                          strokeWidth="0.6"
+                          transform={`rotate(${deg} 50 50)`}
+                        />
+                      ))}
+                    </svg>
+                    {/* Rotating Shadow Wedge */}
+                    <div 
+                      className="w-[11cqw] h-[11cqw] absolute flex items-center justify-center animate-sundial-rotate scale-[1.35]"
+                      style={{ transformOrigin: "center center" }}
+                    >
+                      <svg className="w-full h-full overflow-visible text-slate-800/15" viewBox="0 0 100 100">
+                        <polygon points="50,50 48.5,0 51.5,0" fill="currentColor" filter="blur(0.5px)" />
+                      </svg>
+                    </div>
+                  </div>
+                )}
+
+                {/* Metope Content: Icon and Text carved on the slab */}
+                <div className={`flex items-center gap-[0.8cqw] transition-colors duration-300 ${
+                  isActive ? "text-[#c5a26f]" : "text-slate-500 group-hover:text-slate-800"
+                }`}>
+                  <MetopeIcon className={`w-[2.2cqh] h-[2.2cqh] stroke-[1.6] transition-transform duration-500 ${
+                    isActive ? "scale-110 drop-shadow-[0_0_2px_rgba(197,162,111,0.3)]" : "group-hover:scale-105"
+                  }`} />
+                  <span className="font-serif text-[1cqw] font-bold tracking-wider">
+                    {isZh ? meta.titleZh : meta.titleEn}
+                  </span>
+                </div>
+
+                {/* Sub-scene dot indicator for beauty */}
+                <div className={`absolute bottom-1 w-1 h-1 rounded-full transition-all duration-300 ${
+                  isActive ? "bg-[#c5a26f] scale-125" : "bg-transparent"
+                }`} />
+              </button>
+              <Triglyph />
+            </React.Fragment>
+          );
+        })}
+      </div>
+
+      {/* 4. Greek Fret Meander Decorative Band Running under the Frieze */}
+      <div className="w-full h-[0.8cqh] greek-fret-band mt-[0.3cqh] mb-[1cqh]" />
+    </div>
+  );
+};
+
 export default function Style03({ scene = 1, beat = 0, language = "en", isThumbnail = false, onNavigate }) {
   const isZh = language === "zh";
 
-  // 自定义台阶导航子组件，实现3D大理石台阶与5根多立克石柱
-  const TempleStepsNavigation = () => {
-    return (
-      <div className="absolute inset-x-[4cqw] bottom-[1.5cqh] h-[13cqh] z-40 flex items-end justify-center pointer-events-auto">
-        <svg className="w-[82cqw] h-[13cqh]" viewBox="0 0 820 100" preserveAspectRatio="none">
-          <defs>
-            {/* 多立克柱子的柱身渐变效果：营造古典圆柱立体感 */}
-            <linearGradient id="nav-column-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#8d8b83" />
-              <stop offset="20%" stopColor="#dedcd5" />
-              <stop offset="50%" stopColor="#f7f6f2" />
-              <stop offset="80%" stopColor="#c7c5bd" />
-              <stop offset="100%" stopColor="#7a7872" />
-            </linearGradient>
-            
-            {/* 激活的多立克圆柱亮丽金色渐变 */}
-            <linearGradient id="nav-column-active" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#b8935c" />
-              <stop offset="20%" stopColor="#fae7cc" />
-              <stop offset="50%" stopColor="#fff8f0" />
-              <stop offset="85%" stopColor="#e5c395" />
-              <stop offset="100%" stopColor="#9a7442" />
-            </linearGradient>
-
-            {/* 大理石暗面阴影 */}
-            <linearGradient id="marble-stair-shadow" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#c5c3ba" />
-              <stop offset="100%" stopColor="#9e9c93" />
-            </linearGradient>
-
-            {/* 激活台阶高光发光滤镜 */}
-            <filter id="glow-light" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="6" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
-          </defs>
-
-          {/* 三层 3D 大理石台阶 */}
-          {/* 第一层（最底台阶） */}
-          <polygon 
-            points="30,100 790,100 770,83 50,83" 
-            fill="#dbd9cf" 
-            stroke="#b3b1a6" 
-            strokeWidth="0.8" 
-          />
-          <polygon 
-            points="30,100 50,83 50,89 30,100" 
-            fill="#a19f95" 
-          />
-          <polygon 
-            points="790,100 770,83 770,89 790,100" 
-            fill="#8a8880" 
-          />
-
-          {/* 第二层（中层台阶） */}
-          <polygon 
-            points="60,83 760,83 745,67 75,67" 
-            fill="#e5e3da" 
-            stroke="#bebcb2" 
-            strokeWidth="0.8" 
-          />
-          <polygon 
-            points="60,83 75,67 75,72 60,83" 
-            fill="#a8a69c" 
-          />
-          <polygon 
-            points="760,83 745,67 745,72 760,83" 
-            fill="#918f87" 
-          />
-
-          {/* 第三层（顶层台阶） */}
-          <polygon 
-            points="90,67 730,67 718,52 102,52" 
-            fill="#efede5" 
-            stroke="#cbcaa0" 
-            strokeWidth="0.8" 
-          />
-          <polygon 
-            points="90,67 102,52 102,57 90,67" 
-            fill="#b5b3a9" 
-          />
-          <polygon 
-            points="730,67 718,52 718,57 730,67" 
-            fill="#9b9991" 
-          />
-
-          {/* 渲染 5 根多立克石柱导航 */}
-          {[1, 2, 3, 4, 5].map((sNum) => {
-            const x = 150 + (sNum - 1) * 130; // 柱子中心点横坐标
-            const isActive = scene === sNum;
-            
-            // 柱子的罗马数字标签
-            const romanLabels = ["I", "II", "III", "IV", "V"];
-            const sceneTitlesZh = ["神庙门廊", "广场辩证", "民主路径", "部落矩阵", "立宪石碑"];
-            const sceneTitlesEn = ["Portico Cover", "Dialectic Dual", "Agora Process", "Ekklesia Grid", "Solon Stele"];
-
-            return (
-              <g 
-                key={`nav-pillar-${sNum}`} 
-                className="cursor-pointer group"
-                onClick={() => onNavigate && onNavigate(sNum, 0)}
-              >
-                {/* 锋利的旋转投影阴影 (Casts a sharp, rotating shadow) */}
-                {/* 激活时，阴影在 3D 地面上延伸并逆时针旋转一个小角度，增强动态视觉深度 */}
-                <polygon
-                  points={`${x - 12},52 ${x + 22},52 ${x + (isActive ? 115 : 75)},95 ${x + (isActive ? 70 : 40)},95`}
-                  fill="#000000"
-                  fillOpacity={isActive ? "0.22" : "0.08"}
-                  style={{
-                    transformOrigin: `${x}px 52px`,
-                    transform: isActive ? "rotate(-4deg) scaleY(1.05)" : "rotate(0deg)",
-                    transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), fill-opacity 0.8s"
-                  }}
-                />
-
-                {/* 活跃柱底下的高光亮影 */}
-                {isActive && (
-                  <ellipse 
-                    cx={x} 
-                    cy="52" 
-                    rx="32" 
-                    ry="6" 
-                    fill="#ffeed1" 
-                    fillOpacity="0.85" 
-                    filter="url(#glow-light)"
-                  />
-                )}
-
-                {/* 多立克柱础 (Column Base) */}
-                <rect 
-                  x={x - 22} 
-                  y="46" 
-                  width="44" 
-                  height="6" 
-                  fill={isActive ? "#d1b48c" : "#cbc9c0"} 
-                  stroke={isActive ? "#b3915c" : "#a19f96"} 
-                  strokeWidth="0.6"
-                  className="transition-colors duration-500"
-                />
-                <rect 
-                  x={x - 18} 
-                  y="41" 
-                  width="36" 
-                  height="5" 
-                  fill={isActive ? "#e5cfa3" : "#dad8ce"} 
-                  stroke={isActive ? "#c7a56c" : "#b0ae9f"} 
-                  strokeWidth="0.6"
-                  className="transition-colors duration-500"
-                />
-
-                {/* 多立克柱身 (Fluted Shaft) */}
-                {/* 激活时使用亮丽金色圆柱渐变，平常使用典雅石白圆柱渐变 */}
-                <rect 
-                  x={x - 13} 
-                  y="12" 
-                  width="26" 
-                  height="29" 
-                  fill={isActive ? "url(#nav-column-active)" : "url(#nav-column-grad)"} 
-                  stroke={isActive ? "#c5a472" : "#9e9c93"} 
-                  strokeWidth="0.6"
-                  className="transition-all duration-500"
-                  filter={isActive ? "drop-shadow(0 0 4px rgba(250,230,200,0.5))" : "none"}
-                />
-
-                {/* 柱身上的垂直多立克凹槽凹凸线条 (Doric flutings) */}
-                <line x1={x - 8} y1="12" x2={x - 8} y2="41" stroke={isActive ? "#b08e58" : "#918f87"} strokeWidth="0.4" />
-                <line x1={x - 3} y1="12" x2={x - 3} y2="41" stroke={isActive ? "#e5cfb0" : "#efede8"} strokeWidth="0.5" />
-                <line x1={x + 3} y1="12" x2={x + 3} y2="41" stroke={isActive ? "#b5945c" : "#9b9991"} strokeWidth="0.4" />
-                <line x1={x + 8} y1="12" x2={x + 8} y2="41" stroke={isActive ? "#957440" : "#7d7b73"} strokeWidth="0.4" />
-
-                {/* 多立克柱头 (Capital - Echinus & Abacus) */}
-                <polygon 
-                  points={`${x - 16},12 ${x + 16},12 ${x + 13},6 ${x - 13},6`} 
-                  fill={isActive ? "#dfc9a5" : "#dad8cf"} 
-                  stroke={isActive ? "#bc9a64" : "#adaba0"} 
-                  strokeWidth="0.6"
-                  className="transition-colors duration-500"
-                />
-                <rect 
-                  x={x - 18} 
-                  y="1" 
-                  width="36" 
-                  height="5" 
-                  fill={isActive ? "#cba570" : "#c1bfb5"} 
-                  stroke={isActive ? "#ab844d" : "#918f86"} 
-                  strokeWidth="0.6"
-                  className="transition-colors duration-500"
-                />
-
-                {/* 交互柱顶高光圈 */}
-                <circle 
-                  cx={x} 
-                  cy="-15" 
-                  r="12" 
-                  fill={isActive ? "#1a1b26" : "transparent"} 
-                  className="group-hover:fill-[#1a1b26] transition-colors duration-300"
-                />
-                
-                {/* 罗马数字标识 */}
-                <text 
-                  x={x} 
-                  y="-11" 
-                  textAnchor="middle" 
-                  fill={isActive ? "#ffffff" : "#1a1b26"} 
-                  className="font-serif text-[1.4cqw] font-extrabold tracking-widest transition-colors duration-300"
-                >
-                  {romanLabels[sNum - 1]}
-                </text>
-
-                {/* 场景简标：悬浮显示中/英文名称 */}
-                <text 
-                  x={x} 
-                  y="-25" 
-                  textAnchor="middle" 
-                  fill={isActive ? "#c5a26f" : "#6e7282"} 
-                  className="font-serif text-[0.8cqw] font-bold tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                >
-                  {isZh ? sceneTitlesZh[sNum - 1] : sceneTitlesEn[sNum - 1]}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
-      </div>
-    );
-  };
-
-  // 根据主 scene 渲染独立的、全页融合的功能性 DOM 结构（绝对不用 renderVisual）
+  // 根据主 scene 渲染独立的、全页融合的功能性 DOM 结构
   switch (scene) {
     case 1: {
       // 场景 1：希腊神庙门廊 (Ultralight Classical Cover)
       return (
-        <div className="w-full h-full bg-[#f4f3f0] text-[#1a1b26] p-[4cqw] relative overflow-hidden select-none font-serif flex flex-col justify-between">
+        <div className="w-full h-full bg-[#f4f3f0] text-[#1a1b26] p-[4cqw] pb-[4cqh] relative overflow-hidden select-none font-serif flex flex-col justify-between">
           <style>{`
             @keyframes floatIn {
               0% { transform: translateY(1.5cqh); opacity: 0; }
@@ -330,24 +265,11 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
             }
           `}</style>
 
-          {/* 顶栏学术元数据 */}
-          <div className="w-full flex justify-between items-start border-b border-[#1a1b26]/10 pb-[1.5cqh] z-10 shrink-0">
-            <div className="flex flex-col gap-0.5">
-              <span className="font-serif text-[1.1cqw] tracking-wider uppercase text-[#c5a26f] font-black">
-                {isZh ? "雅典民主与政治哲学" : "Classical Greek Philosophy"}
-              </span>
-              <span className="text-[0.9cqw] text-slate-500 font-mono tracking-tight uppercase">
-                {isZh ? "雅典民主制辩难 • 绪论" : "Athenian Agora Debates • Introduction"}
-              </span>
-            </div>
-            <div className="flex items-center gap-1.5 bg-white px-3 py-1 rounded border border-[#1a1b26]/10 shadow-sm">
-              <Landmark className="w-3.5 h-3.5 text-[#c5a26f]" />
-              <span className="font-mono text-[0.8cqw] text-[#1a1b26] font-bold uppercase">A-TIER CLASSICAL</span>
-            </div>
-          </div>
+          {/* Top Architrave Metope Tracker Header */}
+          <TopArchitraveHeader scene={1} language={language} onNavigate={onNavigate} />
 
-          {/* 左右两侧高达100%容器高度的巨型大理石多立克柱 (Doric columns flank edges) */}
-          <div className="absolute left-[2.5cqw] top-0 bottom-[14cqh] w-[7cqw] z-10 pointer-events-none flex flex-col justify-between">
+          {/* 左右两侧高达100%容器高度的巨型大理石多立克柱 */}
+          <div className="absolute left-[2.5cqw] top-[18cqh] bottom-[4cqh] w-[7cqw] z-10 pointer-events-none flex flex-col justify-between">
             {/* 顶梁装饰端 */}
             <div className="w-full h-[1.5cqh] bg-[#dedcd5] border border-b-[#9e9c93]" />
             {/* 柱子本体（具有垂直多立克凹槽） */}
@@ -361,7 +283,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
             <div className="w-full h-[2cqh] bg-[#bebcb3] border-t border-[#8e8c83] shadow-md" />
           </div>
 
-          <div className="absolute right-[2.5cqw] top-0 bottom-[14cqh] w-[7cqw] z-10 pointer-events-none flex flex-col justify-between">
+          <div className="absolute right-[2.5cqw] top-[18cqh] bottom-[4cqh] w-[7cqw] z-10 pointer-events-none flex flex-col justify-between">
             {/* 顶梁装饰端 */}
             <div className="w-full h-[1.5cqh] bg-[#dedcd5] border border-b-[#9e9c93]" />
             {/* 柱子本体 */}
@@ -375,10 +297,9 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
             <div className="w-full h-[2cqh] bg-[#bebcb3] border-t border-[#8e8c83] shadow-md" />
           </div>
 
-          {/* 中央大片纯古典比例的宏伟负空间 (Vast central negative space) */}
+          {/* 中央大片纯古典比例的宏伟负空间 */}
           <div className="flex-1 w-full flex flex-col items-center justify-center px-[12cqw] py-[2cqh] text-center z-20 relative">
-            
-            {/* 纪念碑式哲学问题 (One monumental philosophical question with ambient bronze glow) */}
+            {/* 纪念碑式哲学问题 */}
             <div className="animate-float-in">
               <h2 className="text-[5.5cqw] font-serif font-black tracking-wide text-[#1a1b26] animate-pulse-bronze">
                 {isZh ? "何为正义？" : "What is Justice?"}
@@ -388,7 +309,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
             {/* Beat 1: 希腊回纹线与副标题 */}
             {beat >= 1 && (
               <div className="mt-[2cqh] w-full flex flex-col items-center animate-float-in [animation-delay:200ms]">
-                {/* 精巧的 SVG 希腊回纹装饰线 (Greek Fret/Meander Trim Path) */}
+                {/* 精巧的 SVG 希腊回纹装饰线 */}
                 <svg className="w-[30cqw] h-[2.5cqh] text-[#c5a26f]" viewBox="0 0 300 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
                   <path d="M 0,10 L 15,10 L 15,3 L 5,3 L 5,17 L 25,17 L 25,10 L 40,10 L 40,3 L 30,3 L 30,17 L 50,17 L 50,10 L 65,10 L 65,3 L 55,3 L 55,17 L 75,17 L 75,10 L 90,10 L 90,3 L 80,3 L 80,17 L 100,17 L 100,10 L 115,10 L 115,3 L 105,3 L 105,17 L 125,17 L 125,10 L 140,10 L 140,3 L 130,3 L 130,17 L 150,17 L 150,10 L 165,10 L 165,3 L 155,3 L 155,17 L 175,17 L 175,10 L 190,10 L 190,3 L 180,3 L 180,17 L 200,17 L 200,10 L 215,10 L 215,3 L 205,3 L 205,17 L 225,17 L 225,10 L 240,10 L 240,3 L 230,3 L 230,17 L 250,17 L 250,10 L 265,10 L 265,3 L 255,3 L 255,17 L 275,17 L 275,10 L 290,10 L 290,3 L 280,3 L 280,17 L 300,17" />
                 </svg>
@@ -413,8 +334,8 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
             )}
           </div>
 
-          {/* 底部交互状态遥测与导航占位 */}
-          <div className="w-full flex justify-between items-center border-t border-[#1a1b26]/10 pt-[1cqh] z-10 shrink-0 pb-[12cqh]">
+          {/* 底部交互状态遥测 */}
+          <div className="w-full flex justify-between items-center border-t border-[#1a1b26]/10 pt-[1cqh] z-10 shrink-0 pb-[2cqh]">
             <div className="flex items-center gap-2">
               <span className="font-mono text-[0.85cqw] text-slate-500 uppercase tracking-wider">{isZh ? "实时遥测:" : "TELEMETRY:"}</span>
               <span className="font-mono text-[0.9cqw] bg-[#c5a26f]/10 text-[#c5a26f] border border-[#c5a26f]/30 px-3 py-0.5 rounded-full font-bold">
@@ -425,9 +346,6 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
               {isZh ? "第 I 步 / 共 V 步" : "STEP I / V"}
             </span>
           </div>
-
-          {/* 台阶导航 */}
-          <TempleStepsNavigation />
         </div>
       );
     }
@@ -437,7 +355,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
       const hasSynthesis = beat >= 2;
 
       return (
-        <div className="w-full h-full bg-[#f4f3f0] text-[#1a1b26] p-[4cqw] relative overflow-hidden select-none font-serif flex flex-col justify-between">
+        <div className="w-full h-full bg-[#f4f3f0] text-[#1a1b26] p-[4cqw] pb-[4cqh] relative overflow-hidden select-none font-serif flex flex-col justify-between">
           <style>{`
             .slide-in-left {
               animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -462,26 +380,12 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
             }
           `}</style>
 
-          {/* 顶栏学术元数据 */}
-          <div className="w-full flex justify-between items-start border-b border-[#1a1b26]/10 pb-[1.5cqh] z-10 shrink-0">
-            <div className="flex flex-col gap-0.5">
-              <span className="font-serif text-[1.1cqw] tracking-wider uppercase text-[#c5a26f] font-black">
-                {isZh ? "雅典民主与政治哲学" : "Classical Greek Philosophy"}
-              </span>
-              <span className="text-[0.9cqw] text-slate-500 font-mono tracking-tight uppercase">
-                {isZh ? "对决：苏格拉底辩证法" : "Dialectic Dual • Thesis & Antithesis"}
-              </span>
-            </div>
-            <div className="flex items-center gap-1.5 bg-white px-3 py-1 rounded border border-[#1a1b26]/10 shadow-sm">
-              <Scale className="w-3.5 h-3.5 text-[#c5a26f]" />
-              <span className="font-mono text-[0.8cqw] text-[#1a1b26] font-bold uppercase">DIALECTIC DISPUTE</span>
-            </div>
-          </div>
+          {/* Top Architrave Metope Tracker Header */}
+          <TopArchitraveHeader scene={2} language={language} onNavigate={onNavigate} />
 
-          {/* 左右不对称辩论核心区：完全摒弃50/50，采用3D重叠石牌 */}
+          {/* 左右不对称辩论核心区：3D重叠石牌 */}
           <div className="flex-1 w-full relative my-[2cqh] z-20">
-            
-            {/* 左侧大理石石板：苏格拉底 (Thesis - Socratic Questioning) - 较大且高 */}
+            {/* 左侧大理石石板：苏格拉底 */}
             <div className="absolute left-[3cqw] top-[2cqh] w-[41cqw] min-h-[44cqh] bg-white border-2 border-slate-300 shadow-xl rounded-lg p-[2cqw] flex flex-col justify-between slide-in-left z-10 transition-all duration-500">
               <div className="flex items-center gap-2 border-b border-slate-100 pb-2">
                 <div className="w-3.5 h-3.5 rounded-full bg-[#c5a26f]" />
@@ -504,7 +408,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
               </span>
             </div>
 
-            {/* 右侧粗粝红砂岩石板：色拉叙马霍斯 (Antithesis - Sophist claim) - 较小且低，Beat 1滑入 */}
+            {/* 右侧粗粝红砂岩石板：色拉叙马霍斯 */}
             <div className={`absolute right-[3cqw] bottom-[1cqh] w-[35cqw] min-h-[38cqh] bg-[#ece9df] border-2 border-[#cbc8b8] shadow-2xl rounded-lg p-[1.8cqw] flex flex-col justify-between z-20 transition-all duration-700 ${
               hasAntithesis ? "slide-in-right opacity-100" : "opacity-0 translate-x-[10cqw]"
             }`}>
@@ -529,7 +433,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
               </span>
             </div>
 
-            {/* Beat 2: 金色大理石石牌 (Synthesis) 横跨两者，居中浮动爆发 */}
+            {/* Beat 2: 金色大理石石牌 (Synthesis) */}
             {hasSynthesis && (
               <div className="absolute left-[50%] top-[50%] w-[36cqw] h-[34cqh] bg-gradient-to-br from-[#fffdf5] to-[#f4f0df] border-4 border-double border-[#c5a26f] shadow-[0_15px_40px_rgba(184,115,51,0.35)] rounded-xl p-[1.5cqw] flex flex-col justify-between scale-pop z-30">
                 <div className="flex items-center justify-between border-b border-[#c5a26f]/30 pb-1.5">
@@ -558,8 +462,8 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
             )}
           </div>
 
-          {/* 底部信息与导航 */}
-          <div className="w-full flex justify-between items-center border-t border-[#1a1b26]/10 pt-[1cqh] z-10 shrink-0 pb-[12cqh]">
+          {/* 底部信息 */}
+          <div className="w-full flex justify-between items-center border-t border-[#1a1b26]/10 pt-[1cqh] z-10 shrink-0 pb-[2cqh]">
             <div className="flex items-center gap-2">
               <span className="font-mono text-[0.85cqw] text-slate-500 uppercase tracking-wider">{isZh ? "实时遥测:" : "TELEMETRY:"}</span>
               <span className="font-mono text-[0.9cqw] bg-[#c5a26f]/10 text-[#c5a26f] border border-[#c5a26f]/30 px-3 py-0.5 rounded-full font-bold">
@@ -572,18 +476,15 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
               {isZh ? "第 II 步 / 共 V 步" : "STEP II / V"}
             </span>
           </div>
-
-          {/* 台阶导航 */}
-          <TempleStepsNavigation />
         </div>
       );
     }
     case 3: {
       // 场景 3：SVG圆形广场 (Process - Standard Winding Steps)
-      const stepIndex = beat; // 0, 1, 2 分别对应 3 个步骤
+      const stepIndex = beat;
 
       return (
-        <div className="w-full h-full bg-[#f4f3f0] text-[#1a1b26] p-[4cqw] relative overflow-hidden select-none font-serif flex flex-col justify-between">
+        <div className="w-full h-full bg-[#f4f3f0] text-[#1a1b26] p-[4cqw] pb-[4cqh] relative overflow-hidden select-none font-serif flex flex-col justify-between">
           <style>{`
             .stagger-card {
               animation: staggerCardIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -601,26 +502,12 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
             }
           `}</style>
 
-          {/* 顶栏元数据 */}
-          <div className="w-full flex justify-between items-start border-b border-[#1a1b26]/10 pb-[1.5cqh] z-10 shrink-0">
-            <div className="flex flex-col gap-0.5">
-              <span className="font-serif text-[1.1cqw] tracking-wider uppercase text-[#c5a26f] font-black">
-                {isZh ? "雅典民主与政治哲学" : "Classical Greek Philosophy"}
-              </span>
-              <span className="text-[0.9cqw] text-slate-500 font-mono tracking-tight uppercase">
-                {isZh ? "议事路径：阿果拉圆形广场" : "Agora Legislative Process • Circular Plaza"}
-              </span>
-            </div>
-            <div className="flex items-center gap-1.5 bg-white px-3 py-1 rounded border border-[#1a1b26]/10 shadow-sm">
-              <Flame className="w-3.5 h-3.5 text-[#c5a26f]" />
-              <span className="font-mono text-[0.8cqw] text-[#1a1b26] font-bold uppercase">ASSEMBLY TIMELINE</span>
-            </div>
-          </div>
+          {/* Top Architrave Metope Tracker Header */}
+          <TopArchitraveHeader scene={3} language={language} onNavigate={onNavigate} />
 
           {/* 三维圆形广场和不规则文本卡片混排布局 */}
           <div className="flex-1 w-full relative my-[2cqh] z-20 flex items-center justify-between">
-            
-            {/* 左侧：3D SVG 半圆形露天长椅广场 (sweeping, 3D SVG circular public square plaza layout) */}
+            {/* 左侧：3D SVG 半圆形露天长椅广场 */}
             <div className="w-[42cqw] h-[45cqh] relative">
               <svg className="w-full h-full" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
                 <defs>
@@ -643,7 +530,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                 <ellipse cx="200" cy="380" rx="140" ry="80" fill="none" stroke="#dcdbce" strokeWidth="1" />
                 <ellipse cx="200" cy="380" rx="90" ry="50" fill="none" stroke="#cbcaa0" strokeWidth="1.2" />
 
-                {/* Sweeping 三维半圆形长凳 (3D Semicircular benches) */}
+                {/* Sweeping 三维半圆形长凳 */}
                 {/* 顶层高 bench (最外圈) */}
                 <path 
                   d="M 20,380 A 180,105 0 0,1 380,380" 
@@ -727,7 +614,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                   />
                 )}
 
-                {/* 广场核心的 3D 逻各斯中央祭坛 (Core Altar) */}
+                {/* 广场核心的 3D 逻各斯中央祭坛 */}
                 <g transform="translate(180,340)">
                   {/* 基座 */}
                   <rect x="10" y="24" width="20" height="18" fill="#dad8cf" stroke="#9b9991" strokeWidth="0.8" />
@@ -757,10 +644,9 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
               </svg>
             </div>
 
-            {/* 右侧：不规则分布的长凳文本卡片 (Text cards are placed unevenly around, lighting up in sequence) */}
+            {/* 右侧：不规则分布的长凳文本卡片 */}
             <div className="w-[38cqw] flex flex-col gap-[1.5cqh] justify-center pr-[1cqw]">
-              
-              {/* 卡片 1 (Thesis): 五百人议事初审 (Boule Proposal) */}
+              {/* 卡片 1 (Thesis): 五百人议事初审 */}
               <div className={`border p-3 rounded-lg shadow-md transition-all duration-700 stagger-card ${
                 stepIndex >= 0 
                   ? "bg-white border-[#c5a26f]/60 translate-x-0 scale-100 opacity-100" 
@@ -782,7 +668,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                 </p>
               </div>
 
-              {/* 卡片 2 (Antithesis): 普尼克斯讲坛争鸣 (Rostrum Speech) */}
+              {/* 卡片 2 (Antithesis): 普尼克斯讲坛争鸣 */}
               <div className={`border p-3 rounded-lg shadow-md transition-all duration-700 stagger-card [animation-delay:200ms] ${
                 stepIndex >= 1 
                   ? "bg-white border-[#b87333]/60 translate-x-0 scale-100 opacity-100" 
@@ -804,7 +690,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                 </p>
               </div>
 
-              {/* 卡片 3 (Synthesis): 全体大会表决 (Assembly Decision) */}
+              {/* 卡片 3 (Synthesis): 全体大会表决 */}
               <div className={`border p-3 rounded-lg shadow-md transition-all duration-700 stagger-card [animation-delay:400ms] ${
                 stepIndex >= 2 
                   ? "bg-[#fffdf5] border-[#c5a26f] shadow-[0_4px_15px_rgba(184,115,51,0.15)] translate-x-0 scale-100 opacity-100" 
@@ -821,16 +707,15 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                 </h4>
                 <p className="text-[1.05cqw] text-slate-700 font-sans leading-tight">
                   {isZh 
-                    ? "真理在逻各斯的交融中结晶。在大会庄严举手或陶片投掷下，冲突转化为不朽的城邦成法，长久指引社群。" 
-                    : "The fiery debate converges. Under absolute majority vote, the diverse arguments are fused into a permanent state law."}
+                    ? "真理在逻各斯的交融中结晶。在大会庄严举手 or 陶片投掷下，冲突转化为不朽的城邦成法，长久指引社群。" 
+                    : "The fiery debate converges. Under absolute majority vote, the diverse arguments are firmed into permanent state law."}
                 </p>
               </div>
-
             </div>
           </div>
 
           {/* 底部导航和技术状态 */}
-          <div className="w-full flex justify-between items-center border-t border-[#1a1b26]/10 pt-[1cqh] z-10 shrink-0 pb-[12cqh]">
+          <div className="w-full flex justify-between items-center border-t border-[#1a1b26]/10 pt-[1cqh] z-10 shrink-0 pb-[2cqh]">
             <div className="flex items-center gap-2">
               <span className="font-mono text-[0.85cqw] text-slate-500 uppercase tracking-wider">{isZh ? "实时操作:" : "BEAT ACTION:"}</span>
               <span className="font-mono text-[0.9cqw] bg-[#c5a26f]/10 text-[#c5a26f] border border-[#c5a26f]/30 px-3 py-0.5 rounded-full font-bold">
@@ -843,9 +728,6 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
               {isZh ? "第 III 步 / 共 V 步" : "STEP III / V"}
             </span>
           </div>
-
-          {/* 台阶导航 */}
-          <TempleStepsNavigation />
         </div>
       );
     }
@@ -855,7 +737,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
       const isVerdictActive = beat >= 2;
 
       return (
-        <div className="w-full h-full bg-[#f4f3f0] text-[#1a1b26] p-[4cqw] relative overflow-hidden select-none font-serif flex flex-col justify-between">
+        <div className="w-full h-full bg-[#f4f3f0] text-[#1a1b26] p-[4cqw] pb-[4cqh] relative overflow-hidden select-none font-serif flex flex-col justify-between">
           <style>{`
             .deme-grid {
               display: grid;
@@ -871,25 +753,11 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
             }
           `}</style>
 
-          {/* 顶栏 */}
-          <div className="w-full flex justify-between items-start border-b border-[#1a1b26]/10 pb-[1.5cqh] z-10 shrink-0">
-            <div className="flex flex-col gap-0.5">
-              <span className="font-serif text-[1.1cqw] tracking-wider uppercase text-[#c5a26f] font-black">
-                {isZh ? "雅典民主与政治哲学" : "Classical Greek Philosophy"}
-              </span>
-              <span className="text-[0.9cqw] text-slate-500 font-mono tracking-tight uppercase">
-                {isZh ? "主权表决：十部落公民大会" : "Ekklesia Ballot Matrix • Ten Sovereign Demes"}
-              </span>
-            </div>
-            <div className="flex items-center gap-1.5 bg-white px-3 py-1 rounded border border-[#1a1b26]/10 shadow-sm">
-              <Users className="w-3.5 h-3.5 text-[#c5a26f]" />
-              <span className="font-mono text-[0.8cqw] text-[#1a1b26] font-bold uppercase">DEME BALLOT MATRIX</span>
-            </div>
-          </div>
+          {/* Top Architrave Metope Tracker Header */}
+          <TopArchitraveHeader scene={4} language={language} onNavigate={onNavigate} />
 
           {/* 公民大会部落表决密集矩阵布局：不规则混排一个判定石板 */}
           <div className="flex-1 w-full my-[1.5cqh] z-20 flex flex-col justify-between gap-[1.5cqh]">
-            
             {/* 顶层：十部落大理石网格表决状况 */}
             <div className="w-full">
               <div className="flex justify-between items-center mb-1">
@@ -900,10 +768,9 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                 <span className="text-[0.8cqw] font-mono text-slate-500">6,000+ Quorum Verification</span>
               </div>
 
-              {/* 2行5列密集大理石网格 (Ten voting demes) */}
+              {/* 2行5列密集大理石网格 */}
               <div className="deme-grid">
                 {DEMES.map((deme, idx) => {
-                  // Beat 0 时只有前 4 个部落亮起，Beat 1/2 时全部部落亮起
                   const isDemeActive = isFullGrid || idx < 4;
                   
                   return (
@@ -922,7 +789,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                         <span className="font-mono text-[0.7cqw] text-slate-400">#{deme.id}</span>
                       </div>
                       
-                      {/* 投票遥测详情：黏土陶片数、青铜投票币数 */}
+                      {/* 投票遥测详情 */}
                       <div className="mt-1 flex flex-col gap-1 font-mono text-[0.8cqw] text-slate-500">
                         <div className="flex justify-between items-center">
                           <span>Clay Ostraka:</span>
@@ -956,9 +823,8 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
               </div>
             </div>
 
-            {/* 底层：左右混排。左侧为文字阐释，右侧为陶片放逐判定板 */}
+            {/* 底层：左右混排 */}
             <div className="w-full flex justify-between items-stretch gap-[3cqw] flex-1">
-              
               {/* 左侧说明面板 */}
               <div className="w-[38cqw] flex flex-col justify-center">
                 <h4 className="text-[1.8cqw] font-black text-[#1a1b26] mb-1">
@@ -971,14 +837,13 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                 </p>
               </div>
 
-              {/* 右侧：3D大理石“陶片放逐判定版” (Ostracism determination board) */}
+              {/* 右侧：3D大理石“陶片放逐判定版” */}
               <div className="w-[36cqw] relative">
                 {isVerdictActive ? (
                   <div className="w-full h-full bg-[#fffdf6] border-2 border-[#b87333] shadow-lg rounded p-3 flex flex-col justify-between verdict-stamp relative">
-                    {/* 背景碎裂陶片 SVG (Broken Ostrakon Silhouette) */}
+                    {/* 背景碎裂陶片 SVG */}
                     <div className="absolute inset-0 opacity-10 flex items-center justify-center pointer-events-none p-3">
                       <svg viewBox="0 0 100 100" className="w-[12cqw] h-[12cqw] text-[#b87333]">
-                        {/* 模拟破碎边缘陶片 */}
                         <path d="M 20,10 L 80,15 L 95,50 L 70,90 L 30,85 L 10,50 Z" fill="currentColor" />
                         <line x1="10" y1="50" x2="95" y2="50" stroke="#f4f3f0" strokeWidth="4" />
                         <line x1="50" y1="15" x2="50" y2="85" stroke="#f4f3f0" strokeWidth="3" />
@@ -1020,12 +885,11 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                   </div>
                 )}
               </div>
-
             </div>
           </div>
 
           {/* 底部导航 */}
-          <div className="w-full flex justify-between items-center border-t border-[#1a1b26]/10 pt-[1cqh] z-10 shrink-0 pb-[12cqh]">
+          <div className="w-full flex justify-between items-center border-t border-[#1a1b26]/10 pt-[1cqh] z-10 shrink-0 pb-[2cqh]">
             <div className="flex items-center gap-2">
               <span className="font-mono text-[0.85cqw] text-slate-500 uppercase tracking-wider">{isZh ? "实时操作:" : "BEAT ACTION:"}</span>
               <span className="font-mono text-[0.9cqw] bg-[#c5a26f]/10 text-[#c5a26f] border border-[#c5a26f]/30 px-3 py-0.5 rounded-full font-bold">
@@ -1038,9 +902,6 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
               {isZh ? "第 IV 步 / 共 V 步" : "STEP IV / V"}
             </span>
           </div>
-
-          {/* 台阶导航 */}
-          <TempleStepsNavigation />
         </div>
       );
     }
@@ -1050,9 +911,8 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
       const isStamped = beat >= 2;
 
       return (
-        <div className="w-full h-full bg-[#f4f3f0] text-[#1a1b26] p-[4cqw] relative overflow-hidden select-none font-serif flex flex-col justify-between">
+        <div className="w-full h-full bg-[#f4f3f0] text-[#1a1b26] p-[4cqw] pb-[4cqh] relative overflow-hidden select-none font-serif flex flex-col justify-between">
           <style>{`
-            /* 大理石法典碑三栏排版 */
             .stele-container {
               display: grid;
               grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1068,31 +928,15 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
             }
           `}</style>
 
-          {/* 顶栏 */}
-          <div className="w-full flex justify-between items-start border-b border-[#1a1b26]/10 pb-[1.5cqh] z-10 shrink-0">
-            <div className="flex flex-col gap-0.5">
-              <span className="font-serif text-[1.1cqw] tracking-wider uppercase text-[#c5a26f] font-black">
-                {isZh ? "雅典民主与政治哲学" : "Classical Greek Philosophy"}
-              </span>
-              <span className="text-[0.9cqw] text-slate-500 font-mono tracking-tight uppercase">
-                {isZh ? "宪政丰碑：梭伦立法大宪章" : "Solon's Constitutional Stele • State Law"}
-              </span>
-            </div>
-            <div className="flex items-center gap-1.5 bg-white px-3 py-1 rounded border border-[#1a1b26]/10 shadow-sm">
-              <Coins className="w-3.5 h-3.5 text-[#c5a26f]" />
-              <span className="font-mono text-[0.8cqw] text-[#1a1b26] font-bold uppercase">SOVEREIGN STELE</span>
-            </div>
-          </div>
+          {/* Top Architrave Metope Tracker Header */}
+          <TopArchitraveHeader scene={5} language={language} onNavigate={onNavigate} />
 
-          {/* 立法大宪章碑体核心区：重型三栏石碑 (A heavy, three-column classical legislative tablet) */}
+          {/* 立法大宪章碑体核心区：重型三栏石碑 */}
           <div className="flex-1 w-full my-[1.5cqh] z-20 flex flex-col justify-between bg-[#eae8de] border-2 border-[#cbcaa0] rounded-lg shadow-inner p-[1.5cqw] relative">
-            
-            {/* 神庙山墙顶装饰浮雕 (Pediment & Tympanum) */}
+            {/* 神庙山墙顶装饰浮雕 */}
             <div className="w-full flex flex-col items-center border-b-2 border-double border-[#cbcaa0] pb-2 mb-2">
               <svg className="w-[18cqw] h-[4.5cqh]" viewBox="0 0 200 40" fill="none" stroke="#8c8a81" strokeWidth="1.2">
-                {/* 经典的三角山墙轮廓 */}
                 <polygon points="10,35 190,35 100,5" fill="#efede5" />
-                {/* 山墙内部的希腊圣鹰与橄榄枝微小浮雕雕刻 */}
                 <circle cx="100" cy="23" r="5" fill="none" />
                 <line x1="88" y1="23" x2="112" y2="23" />
                 <line x1="100" y1="12" x2="100" y2="30" />
@@ -1104,8 +948,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
 
             {/* 三栏具体法律条文 */}
             <div className="stele-container flex-1 items-stretch">
-              
-              {/* 第一栏：主权部落章程 (Sovereign Deme Charters) */}
+              {/* 第一栏：主权部落章程 */}
               <div className="border-r border-[#cbcaa0]/60 pr-4 flex flex-col justify-between">
                 <div>
                   <h4 className="text-[1.3cqw] font-black text-[#b87333] mb-1.5 pb-1 border-b border-[#cbcaa0]/30 flex items-center gap-1">
@@ -1121,7 +964,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                 <div className="text-[0.8cqw] font-mono text-slate-400">CHARTER.LAW.01</div>
               </div>
 
-              {/* 第二栏：宪法修正法案条款 (Constitutional Articles) */}
+              {/* 第二栏：宪法修正法案条款 */}
               <div className={`border-r border-[#cbcaa0]/60 px-2 flex flex-col justify-between transition-all duration-500 ${
                 isSteleFull ? "opacity-100" : "opacity-15"
               }`}>
@@ -1139,7 +982,7 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                 <div className="text-[0.8cqw] font-mono text-slate-400">CONST.LAW.08</div>
               </div>
 
-              {/* 第三栏：公民表决投票率 (Voting Turnout Ledger) */}
+              {/* 第三栏：公民表决投票率 */}
               <div className={`pl-4 flex flex-col justify-between transition-all duration-500 ${
                 isSteleFull ? "opacity-100" : "opacity-15"
               }`}>
@@ -1165,10 +1008,9 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                 </div>
                 <div className="text-[0.8cqw] font-mono text-slate-500">STELE: ATH.LAW.402</div>
               </div>
-
             </div>
 
-            {/* 底部 stamped 巨大的雅典主权猫头鹰青铜币章 (Athens sovereign Owl bronze coin emblem) */}
+            {/* 底部 stamped 巨大的雅典主权猫头鹰青铜币章 */}
             {isStamped && (
               <div className="absolute right-[3cqw] bottom-[1.5cqh] w-[14cqw] h-[14cqw] bg-gradient-to-br from-[#ffdca3] via-[#caa268] to-[#9c773e] border-4 border-[#fff1cd] rounded-full flex items-center justify-center shadow-2xl stamped-owl z-30">
                 <svg className="w-[85%] h-[85%] text-[#fff3bf]" viewBox="0 0 100 100">
@@ -1180,10 +1022,8 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                     </radialGradient>
                   </defs>
                   
-                  {/* 印章圆形大理石币面 */}
                   <circle cx="50" cy="50" r="48" fill="url(#owl-inner)" stroke="#eec584" strokeWidth="1.2" />
 
-                  {/* 雅典娜圣战猫头鹰 (Owl of Athena Emblem Outline) */}
                   {/* 双眼 */}
                   <circle cx="38" cy="38" r="8" fill="none" stroke="#fff5d1" strokeWidth="2.5" />
                   <circle cx="38" cy="38" r="2.5" fill="#1a1b26" />
@@ -1203,24 +1043,22 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
                   <line x1="42" y1="75" x2="42" y2="84" stroke="#fff5d1" strokeWidth="2" strokeLinecap="round" />
                   <line x1="58" y1="75" x2="58" y2="84" stroke="#fff5d1" strokeWidth="2" strokeLinecap="round" />
 
-                  {/* 橄榄枝与弯月 (Olive branch & Moon) */}
+                  {/* 橄榄枝与弯月 */}
                   <path d="M 12,22 Q 18,24 22,18" fill="none" stroke="#fff5d1" strokeWidth="1.5" />
                   <circle cx="14" cy="21" r="1.5" fill="#fff5d1" />
                   <circle cx="20" cy="19" r="1.5" fill="#fff5d1" />
-                  <path d="M 15,30 A 6,6 0 0,1 21,35 A 4,4 0 0,0 15,30" fill="#fff5d1" /> {/* 弯月 */}
+                  <path d="M 15,30 A 6,6 0 0,1 21,35 A 4,4 0 0,0 15,30" fill="#fff5d1" />
 
-                  {/* 希腊字符“ΑΘΕ” (Alpha-Theta-Epsilon) - 代表雅典的缩写 */}
                   <text x="82" y="32" fill="#fff5d1" className="font-serif text-[10px] font-black">A</text>
                   <text x="82" y="47" fill="#fff5d1" className="font-serif text-[10px] font-black">Θ</text>
                   <text x="82" y="62" fill="#fff5d1" className="font-serif text-[10px] font-black">E</text>
                 </svg>
               </div>
             )}
-
           </div>
 
           {/* 底部技术状态栏 */}
-          <div className="w-full flex justify-between items-center border-t border-[#1a1b26]/10 pt-[1cqh] z-10 shrink-0 pb-[12cqh]">
+          <div className="w-full flex justify-between items-center border-t border-[#1a1b26]/10 pt-[1cqh] z-10 shrink-0 pb-[2cqh]">
             <div className="flex items-center gap-2">
               <span className="font-mono text-[0.85cqw] text-slate-500 uppercase tracking-wider">{isZh ? "实时操作:" : "BEAT ACTION:"}</span>
               <span className="font-mono text-[0.9cqw] bg-[#c5a26f]/10 text-[#c5a26f] border border-[#c5a26f]/30 px-3 py-0.5 rounded-full font-bold">
@@ -1233,9 +1071,6 @@ export default function Style03({ scene = 1, beat = 0, language = "en", isThumbn
               {isZh ? "第 V 步 / 共 V 步" : "STEP V / V"}
             </span>
           </div>
-
-          {/* 台阶导航 */}
-          <TempleStepsNavigation />
         </div>
       );
     }

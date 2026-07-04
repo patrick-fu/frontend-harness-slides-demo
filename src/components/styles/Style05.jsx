@@ -76,7 +76,7 @@ export const getMetadata = (lang) => ({
           id: 2, 
           action: lang === "zh" ? "追踪驼队行进" : "Track Caravan March", 
           title: lang === "zh" ? "步履维艰：穿越戈壁" : "Treading the Gravel Gobi", 
-          body: lang === "zh" ? "商队每日行进约五十里。在碎石遍地的戈壁滩上，旅人们必须时刻注意水源消耗，依靠北极星和散落的白骨指引方向，艰难向敦煌进发。" : "The caravan marches fifty li daily. Across the gravel Gobi, travelers monitor water depletion, guided by the North Star and scattered bones towards Dunhuang." 
+          body: lang === "zh" ? "商队每日行进约五十里。在碎石遍地的戈壁滩上，旅人们必须时刻注意水源消耗，依靠北极星 and 散落的白骨指引方向，艰难向敦煌进发。" : "The caravan marches fifty li daily. Across the gravel Gobi, travelers monitor water depletion, guided by the North Star and scattered bones towards Dunhuang." 
         },
         { 
           id: 3, 
@@ -137,26 +137,26 @@ export const getMetadata = (lang) => ({
   ]
 });
 
-export default function Style05({ scene, beat, language, isThumbnail }) {
+export default function Style05({ scene, beat, language, isThumbnail, onNavigate }) {
   const meta = getMetadata(language);
   const currentScene = meta.scenes.find((s) => s.id === scene) || meta.scenes[0];
   const currentBeat = currentScene.beats[beat] || currentScene.beats[0];
+
+  const oases = [
+    { id: 1, nameZh: "长安", nameEn: "Chang'an", left: "15%", top: "65%" },
+    { id: 2, nameZh: "凉州", nameEn: "Liangzhou", left: "32.5%", top: "50%" },
+    { id: 3, nameZh: "龟兹", nameEn: "Kuqa", left: "50%", top: "70%" },
+    { id: 4, nameZh: "敦煌", nameEn: "Dunhuang", left: "67.5%", top: "55%" },
+    { id: 5, nameZh: "阳关", nameEn: "Yangguan", left: "85%", top: "65%" },
+  ];
+
+  const activePos = oases[scene - 1] || oases[0];
 
   // Render border coordinate ticks to make it look like an ancient scientific map
   const renderCoordinateTicks = () => {
     if (isThumbnail) return null;
     return (
       <div className="absolute inset-0 pointer-events-none border-[0.15cqw] border-[#8c7a6b]/20 m-[1.5cqw] z-20">
-        {/* Top Ticks */}
-        <div className="absolute top-0 left-0 right-0 h-[1.5cqh] flex justify-between px-[5cqw] text-[0.7cqw] font-mono text-[#8c7a6b]/60 border-b border-[#8c7a6b]/10 bg-[#fbf7f0]/40 backdrop-blur-[1px]">
-          <span>70° E</span>
-          <span>75° E</span>
-          <span>80° E</span>
-          <span>85° E</span>
-          <span>90° E</span>
-          <span>95° E</span>
-          <span>100° E</span>
-        </div>
         {/* Bottom Ticks */}
         <div className="absolute bottom-0 left-0 right-0 h-[1.5cqh] flex justify-between px-[5cqw] text-[0.7cqw] font-mono text-[#8c7a6b]/60 border-t border-[#8c7a6b]/10 bg-[#fbf7f0]/40 backdrop-blur-[1px] items-end pb-[0.2cqh]">
           <span>70° E</span>
@@ -168,16 +168,119 @@ export default function Style05({ scene, beat, language, isThumbnail }) {
           <span>100° E</span>
         </div>
         {/* Left Ticks */}
-        <div className="absolute left-0 top-[1.5cqh] bottom-[1.5cqh] w-[2cqw] flex flex-col justify-between py-[5cqh] text-[0.7cqw] font-mono text-[#8c7a6b]/60 border-r border-[#8c7a6b]/10 items-center">
+        <div className="absolute left-0 top-[10.5cqh] bottom-[1.5cqh] w-[2cqw] flex flex-col justify-between py-[5cqh] text-[0.7cqw] font-mono text-[#8c7a6b]/60 border-r border-[#8c7a6b]/10 items-center">
           <span className="rotate-90">45° N</span>
           <span className="rotate-90">40° N</span>
           <span className="rotate-90">35° N</span>
         </div>
         {/* Right Ticks */}
-        <div className="absolute right-0 top-[1.5cqh] bottom-[1.5cqh] w-[2cqw] flex flex-col justify-between py-[5cqh] text-[0.7cqw] font-mono text-[#8c7a6b]/60 border-l border-[#8c7a6b]/10 items-center">
+        <div className="absolute right-0 top-[10.5cqh] bottom-[1.5cqh] w-[2cqw] flex flex-col justify-between py-[5cqh] text-[0.7cqw] font-mono text-[#8c7a6b]/60 border-l border-[#8c7a6b]/10 items-center">
           <span className="rotate-90">45° N</span>
           <span className="rotate-90">40° N</span>
           <span className="rotate-90">35° N</span>
+        </div>
+      </div>
+    );
+  };
+
+  // Render the Top Map Horizon Trail navigation
+  const renderTopMapHorizonTrail = () => {
+    if (isThumbnail) return null;
+    return (
+      <div className="absolute top-[1.5cqw] left-[1.5cqw] right-[1.5cqw] h-[9cqh] z-30 bg-[#fbf7f0]/85 backdrop-blur-[2px] border-b border-[#8c7a6b]/20 flex flex-col justify-between overflow-hidden pointer-events-auto">
+        {/* Integrated Top Coordinate Ticks */}
+        <div className="absolute top-0 left-0 right-0 h-[1.5cqh] flex justify-between px-[5cqw] text-[0.7cqw] font-mono text-[#8c7a6b]/60 z-10 pointer-events-none">
+          <span>70° E</span>
+          <span>75° E</span>
+          <span>80° E</span>
+          <span>85° E</span>
+          <span>90° E</span>
+          <span>95° E</span>
+          <span>100° E</span>
+        </div>
+
+        {/* SVG Desert Sand Dune Skyline */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <svg className="w-full h-full" viewBox="0 0 1000 100" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Far Dunes */}
+            <path 
+              d="M 0,65 Q 250,40 500,60 T 1000,55 L 1000,100 L 0,100 Z" 
+              fill="#ebdcb9" 
+              opacity="0.4" 
+            />
+            {/* Near Dunes (The Horizon Trail) */}
+            <path 
+              d="M 0,75 Q 150,65 325,50 T 500,70 T 675,55 T 850,65 T 1000,60 L 1000,100 L 0,100 Z" 
+              fill="#dfd0a3" 
+              stroke="#8c7a6b" 
+              strokeWidth="1" 
+              strokeDasharray="3 3"
+              opacity="0.85"
+            />
+          </svg>
+        </div>
+
+        {/* Oasis Nodes & Labels */}
+        <div className="absolute inset-0 z-10">
+          {oases.map((o) => {
+            const isActive = scene === o.id;
+            return (
+              <button
+                key={o.id}
+                onClick={() => onNavigate && onNavigate(o.id, 0)}
+                className="absolute group flex flex-col items-center -translate-x-1/2 -translate-y-1/2 transition-all duration-300 focus:outline-none"
+                style={{ left: o.left, top: o.top }}
+              >
+                {/* Oasis Node Dot */}
+                <div className="relative flex items-center justify-center">
+                  {/* Pulsing glow for active oasis */}
+                  {isActive && (
+                    <div className="absolute w-[2cqw] h-[2cqw] rounded-full bg-[#0f766e]/30 animate-ping" />
+                  )}
+                  <div className={`w-[1cqw] h-[1cqw] rounded-full border-[0.15cqw] transition-all duration-300 flex items-center justify-center ${
+                    isActive 
+                      ? "bg-[#0f766e] border-[#0f766e] scale-125" 
+                      : "bg-[#fffdf6] border-[#8c7a6b] group-hover:border-[#8b5a2b] group-hover:scale-110"
+                  }`}>
+                    {/* Inner core */}
+                    <div className={`w-[0.4cqw] h-[0.4cqw] rounded-full ${isActive ? "bg-[#fffdf6]" : "bg-transparent"}`} />
+                  </div>
+                </div>
+
+                {/* Oasis Label */}
+                <span className={`text-[0.75cqw] font-serif mt-[0.5cqh] px-[0.6cqw] py-[0.1cqh] rounded-sm transition-all duration-300 ${
+                  isActive 
+                    ? "text-[#fffdf6] bg-[#8b5a2b] font-bold shadow-sm" 
+                    : "text-[#5c5043] bg-[#fffdf6]/60 group-hover:text-[#8b5a2b] group-hover:bg-[#fffdf6]/90"
+                }`}>
+                  {language === "zh" ? o.nameZh : o.nameEn}
+                </span>
+              </button>
+            );
+          })}
+
+          {/* Travelling Camel Caravan Icon */}
+          <div 
+            className="absolute transition-all duration-1000 ease-out pointer-events-none"
+            style={{ 
+              left: activePos.left, 
+              top: activePos.top,
+              transform: "translate(-50%, -100%) translateY(-0.8cqh)",
+              transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)"
+            }}
+          >
+            <div className="flex flex-col items-center animate-camel-walk">
+              {/* Camel SVG Icon */}
+              <svg className="w-[2cqw] h-[2cqw] drop-shadow-sm" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path 
+                  d="M 10,35 Q 15,20 20,35 Q 25,15 35,15 Q 42,15 45,25 Q 50,10 55,10 Q 60,10 60,18 L 57,25 L 53,25 L 53,16 L 45,16 Q 40,25 40,35 L 36,55 L 32,55 L 32,38 L 24,38 L 24,55 L 20,55 L 20,38 L 12,38 L 12,55 L 8,55 L 8,35 Z" 
+                  fill="#8b5a2b" 
+                />
+              </svg>
+              {/* Little label or dot */}
+              <div className="w-[0.3cqw] h-[0.3cqw] rounded-full bg-[#8b5a2b] mt-[-0.2cqh] animate-bounce" />
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -190,7 +293,7 @@ export default function Style05({ scene, beat, language, isThumbnail }) {
     const showNote = beat >= 2;
 
     return (
-      <div className="w-full h-full relative overflow-hidden bg-[#fbf7f0] p-[4cqw] flex flex-col justify-between">
+      <div className="w-full h-full relative overflow-hidden bg-[#fbf7f0] p-[4cqw] pt-[13cqh] flex flex-col justify-between">
         {/* Decorative Grid Lines */}
         <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
           backgroundImage: "radial-gradient(#8c7a6b 1px, transparent 1px)",
@@ -361,7 +464,7 @@ export default function Style05({ scene, beat, language, isThumbnail }) {
     const showStamp = beat === 2;
 
     return (
-      <div className="w-full h-full bg-[#fbf7f0] p-[4cqw] flex flex-col justify-between relative overflow-hidden">
+      <div className="w-full h-full bg-[#fbf7f0] p-[4cqw] pt-[13cqh] flex flex-col justify-between relative overflow-hidden">
         {/* Decorative Grid Lines */}
         <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
           backgroundImage: "radial-gradient(#8c7a6b 1px, transparent 1px)",
@@ -542,7 +645,7 @@ export default function Style05({ scene, beat, language, isThumbnail }) {
     }
 
     return (
-      <div className="w-full h-full bg-[#fbf7f0] p-[4cqw] flex flex-col justify-between relative overflow-hidden">
+      <div className="w-full h-full bg-[#fbf7f0] p-[4cqw] pt-[13cqh] flex flex-col justify-between relative overflow-hidden">
         {/* Decorative Grid Lines */}
         <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
           backgroundImage: "radial-gradient(#8c7a6b 1px, transparent 1px)",
@@ -729,7 +832,7 @@ export default function Style05({ scene, beat, language, isThumbnail }) {
     const highlightAll = beat === 2;
 
     return (
-      <div className="w-full h-full bg-[#fbf7f0] p-[4cqw] flex flex-col justify-between relative overflow-hidden">
+      <div className="w-full h-full bg-[#fbf7f0] p-[4cqw] pt-[13cqh] flex flex-col justify-between relative overflow-hidden">
         {/* Decorative Grid Lines */}
         <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
           backgroundImage: "radial-gradient(#8c7a6b 1px, transparent 1px)",
@@ -928,7 +1031,7 @@ export default function Style05({ scene, beat, language, isThumbnail }) {
     const showStamp = beat >= 2;
 
     return (
-      <div className="w-full h-full bg-[#fbf7f0] p-[3.5cqw] flex flex-col justify-between relative overflow-hidden">
+      <div className="w-full h-full bg-[#fbf7f0] p-[3.5cqw] pt-[13cqh] flex flex-col justify-between relative overflow-hidden">
         {/* Decorative Grid Lines */}
         <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
           backgroundImage: "radial-gradient(#8c7a6b 1px, transparent 1px)",
@@ -1152,8 +1255,16 @@ export default function Style05({ scene, beat, language, isThumbnail }) {
         .animate-spin-slow {
           animation: spin-slow-anim 20s linear infinite;
         }
+        @keyframes camel-walk-anim {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-0.2cqh); }
+        }
+        .animate-camel-walk {
+          animation: camel-walk-anim 1.5s ease-in-out infinite;
+        }
       `}} />
       {renderCoordinateTicks()}
+      {renderTopMapHorizonTrail()}
       {/* Main active scene view using Horizontal Spatial Viewport Track */}
       <div className="flex-1 w-full relative overflow-hidden h-full">
         <div 

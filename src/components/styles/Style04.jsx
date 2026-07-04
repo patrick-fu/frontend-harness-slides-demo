@@ -258,7 +258,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
         <div className="absolute left-[62cqw] bottom-[18cqh] bg-zinc-950 text-white px-[1.5cqw] py-[0.5cqh] text-[0.85cqw] font-mono rotate-[5deg] opacity-30">NO.ART.NO.SYNTAX</div>
 
         {/* Top Header */}
-        <div className="w-full flex justify-between items-start z-10 shrink-0 border-b-2 border-zinc-950 pb-[1.5cqh]">
+        <div className="w-full flex justify-between items-start z-10 shrink-0 border-b-2 border-zinc-950 pb-[1.5cqh] pr-[22cqw]">
           <div className="flex items-center gap-[1.5cqw]">
             <Terminal className="w-[3.5cqw] h-[3.5cqw] text-[#dc2626]" />
             <div>
@@ -315,7 +315,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
         </div>
 
         {/* Lower Info Line */}
-        <div className="w-full flex justify-between items-center border-t-2 border-zinc-950 pt-[1.5cqh] mb-[12cqh] z-10">
+        <div className="w-full flex justify-between items-center border-t-2 border-zinc-950 pt-[1.5cqh] mb-[2cqh] z-10">
           <div className="flex items-center gap-[1.5cqw]">
             <span className="font-dada-typewriter text-[0.9cqw] text-zinc-500 font-bold uppercase">{isZh ? "行动指示:" : "BEAT ACTION:"}</span>
             <span className="font-dada-stencil text-[1.1cqw] bg-[#dc2626] text-white border-2 border-zinc-950 px-[1.5cqw] py-[0.4cqh] rotate-[-1deg] font-black animate-pulse">
@@ -345,7 +345,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
         </div>
 
         {/* Top Header */}
-        <div className="w-full flex justify-between items-start z-10 shrink-0 border-b-2 border-zinc-950 pb-[1.5cqh]">
+        <div className="w-full flex justify-between items-start z-10 shrink-0 border-b-2 border-zinc-950 pb-[1.5cqh] pr-[22cqw]">
           <div className="flex items-center gap-[1.5cqw]">
             <Scissors className="w-[3.5cqw] h-[3.5cqw] text-zinc-950" />
             <div>
@@ -362,7 +362,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
         {/* Central Split Area */}
         <div className="flex-1 w-full relative my-[2cqh] z-10 flex items-center justify-center">
           {/* Left Block: Gaga Acoustic sound block */}
-          <div className="absolute left-[4cqw] top-[4cqh] w-[42cqw] min-h-[46cqh] bg-zinc-950 border-4 border-zinc-950 p-[3cqw] flex flex-col justify-between rotate-[-2.5deg] shadow-[15px_15px_0px_#dc2626] relative text-left">
+          <div className="absolute left-[4cqw] top-[13cqh] w-[42cqw] min-h-[46cqh] bg-zinc-950 border-4 border-zinc-950 p-[3cqw] flex flex-col justify-between rotate-[-2.5deg] shadow-[15px_15px_0px_#dc2626] relative text-left">
             <div className="absolute inset-0 bg-[#dc2626]/5 pointer-events-none" />
             
             <div className="flex justify-between items-center border-b border-zinc-800 pb-[1cqh]">
@@ -382,7 +382,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
           </div>
 
           {/* Right Block: Absurd Translator strip */}
-          <div className={`absolute right-[4cqw] top-[2cqh] w-[40cqw] min-h-[48cqh] bg-[#fcfaf2] border-4 border-zinc-950 p-[3cqw] flex flex-col justify-between rotate-[3deg] shadow-2xl transition-all duration-700 ${beat >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-[5cqh] pointer-events-none"}`}>
+          <div className={`absolute right-[4cqw] top-[13cqh] w-[40cqw] min-h-[48cqh] bg-[#fcfaf2] border-4 border-zinc-950 p-[3cqw] flex flex-col justify-between rotate-[3deg] shadow-2xl transition-all duration-700 ${beat >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-[5cqh] pointer-events-none"}`}>
             {/* Sticky tape on top */}
             <div className="absolute -top-[1.5cqh] left-[10cqw] w-[14cqw] h-[3cqh] bg-[#e6dfc8]/80 border border-zinc-400 rotate-[-1.5deg] shadow-sm flex items-center justify-center font-dada-typewriter text-[0.7cqw] text-zinc-500">GLUED ADHESIVE</div>
             
@@ -410,7 +410,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
         </div>
 
         {/* Lower Info Line */}
-        <div className="w-full flex justify-between items-center border-t-2 border-zinc-950 pt-[1.5cqh] mb-[12cqh] z-10">
+        <div className="w-full flex justify-between items-center border-t-2 border-zinc-950 pt-[1.5cqh] mb-[2cqh] z-10">
           <div className="flex items-center gap-[1.5cqw]">
             <span className="font-dada-typewriter text-[0.9cqw] text-zinc-500 font-bold uppercase">{isZh ? "行动指示:" : "BEAT ACTION:"}</span>
             <span className="font-dada-stencil text-[1.1cqw] bg-[#dc2626] text-white border-2 border-zinc-950 px-[1.5cqw] py-[0.4cqh] rotate-[1deg] font-black animate-pulse">
@@ -437,7 +437,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
         </div>
 
         {/* Top Header */}
-        <div className="w-full flex justify-between items-start z-10 shrink-0 border-b-2 border-zinc-950 pb-[1.5cqh]">
+        <div className="w-full flex justify-between items-start z-10 shrink-0 border-b-2 border-zinc-950 pb-[1.5cqh] pr-[22cqw]">
           <div className="flex items-center gap-[1.5cqw]">
             <HelpCircle className="w-[3.5cqw] h-[3.5cqw] text-zinc-950" />
             <div>
@@ -454,7 +454,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
         {/* Central Display */}
         <div className="flex-1 w-full relative my-[2cqh] z-10 flex items-center justify-center">
           {/* Left Panel: Collage Cardboard Pile */}
-          <div className="absolute left-[4cqw] top-[4cqh] w-[46cqw] min-h-[46cqh] bg-zinc-950 border-4 border-zinc-950 p-[3cqw] flex flex-col justify-between rotate-[-1.5deg] shadow-[15px_15px_0px_#000000] relative text-left">
+          <div className="absolute left-[4cqw] top-[13cqh] w-[46cqw] min-h-[46cqh] bg-zinc-950 border-4 border-zinc-950 p-[3cqw] flex flex-col justify-between rotate-[-1.5deg] shadow-[15px_15px_0px_#000000] relative text-left">
             <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] bg-[size:1.5cqw_1.5cqw] opacity-[0.04] pointer-events-none" />
             
             <div className="flex justify-between items-center border-b border-zinc-800 pb-[1cqh]">
@@ -506,13 +506,13 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
           {/* Floating cards sliding down when beat === 0 */}
           {beat === 0 && (
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute right-[22cqw] top-[8cqh] bg-[#faf6ee] text-zinc-950 px-[1.2cqw] py-[0.5cqh] border-2 border-zinc-950 font-dada-typewriter text-[0.9cqw] rotate-[15deg] shadow-lg animate-bounce select-none">
+              <div className="absolute right-[24cqw] top-[12cqh] bg-[#faf6ee] text-zinc-950 px-[1.2cqw] py-[0.5cqh] border-2 border-zinc-950 font-dada-typewriter text-[0.9cqw] rotate-[15deg] shadow-lg animate-bounce select-none">
                 laulocola
               </div>
-              <div className="absolute right-[15cqw] top-[18cqh] bg-[#dc2626] text-white px-[1.2cqw] py-[0.5cqh] border-2 border-zinc-950 font-dada-stencil text-[1cqw] rotate-[-12deg] shadow-lg animate-pulse select-none">
+              <div className="absolute right-[14cqw] top-[22cqh] bg-[#dc2626] text-white px-[1.2cqw] py-[0.5cqh] border-2 border-zinc-950 font-dada-stencil text-[1cqw] rotate-[-12deg] shadow-lg animate-pulse select-none">
                 glandridi
               </div>
-              <div className="absolute right-[26cqw] top-[26cqh] bg-zinc-900 text-white px-[1.2cqw] py-[0.5cqh] border-2 border-red-600 font-dada-typewriter text-[0.9cqw] rotate-[8deg] shadow-lg select-none">
+              <div className="absolute right-[28cqw] top-[28cqh] bg-zinc-900 text-white px-[1.2cqw] py-[0.5cqh] border-2 border-red-600 font-dada-typewriter text-[0.9cqw] rotate-[8deg] shadow-lg select-none">
                 shem traw
               </div>
             </div>
@@ -520,7 +520,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
         </div>
 
         {/* Lower Info Line */}
-        <div className="w-full flex justify-between items-center border-t-2 border-zinc-950 pt-[1.5cqh] mb-[12cqh] z-10">
+        <div className="w-full flex justify-between items-center border-t-2 border-zinc-950 pt-[1.5cqh] mb-[2cqh] z-10">
           <div className="flex items-center gap-[1.5cqw]">
             <span className="font-dada-typewriter text-[0.9cqw] text-zinc-500 font-bold uppercase">{isZh ? "行动指示:" : "BEAT ACTION:"}</span>
             <span className="font-dada-stencil text-[1.1cqw] bg-[#dc2626] text-white border-2 border-zinc-950 px-[1.5cqw] py-[0.4cqh] rotate-[-1deg] font-black animate-pulse">
@@ -538,7 +538,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
     return (
       <div className="w-full h-full bg-[#f2efe9] text-zinc-950 flex flex-col justify-between p-[5cqw] relative">
         {/* Top Header */}
-        <div className="w-full flex justify-between items-start z-10 shrink-0 border-b-2 border-zinc-950 pb-[1.5cqh]">
+        <div className="w-full flex justify-between items-start z-10 shrink-0 border-b-2 border-zinc-950 pb-[1.5cqh] pr-[22cqw]">
           <div className="flex items-center gap-[1.5cqw]">
             <Volume2 className="w-[3.5cqw] h-[3.5cqw] text-zinc-950" />
             <div>
@@ -555,7 +555,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
         {/* Central Display */}
         <div className="flex-1 w-full relative my-[2cqh] z-10 flex items-center justify-center">
           {/* Left Panel: Matrix Info Box */}
-          <div className="absolute left-[4cqw] top-[4cqh] w-[38cqw] min-h-[46cqh] bg-zinc-950 border-4 border-[#dc2626] p-[3cqw] flex flex-col justify-between rotate-[-1.5deg] shadow-[15px_15px_0px_#000000] relative text-left">
+          <div className="absolute left-[4cqw] top-[13cqh] w-[38cqw] min-h-[46cqh] bg-zinc-950 border-4 border-[#dc2626] p-[3cqw] flex flex-col justify-between rotate-[-1.5deg] shadow-[15px_15px_0px_#000000] relative text-left">
             <div className="flex justify-between items-center border-b border-zinc-800 pb-[1cqh]">
               <span className="font-dada-typewriter text-[0.8cqw] text-[#dc2626] font-bold">FONETISCHE MATRIX</span>
               <span className="font-mono text-[0.7cqw] text-zinc-500">VOLTAIRE v1.0</span>
@@ -573,7 +573,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
           </div>
 
           {/* Right Panel: 4x4 Collage Grid Matrix */}
-          <div className="absolute right-[4cqw] top-[4cqh] w-[44cqw] h-[46cqh] grid grid-cols-4 grid-rows-4 gap-[1cqw] relative">
+          <div className="absolute right-[4cqw] top-[13cqh] w-[44cqw] h-[46cqh] grid grid-cols-4 grid-rows-4 gap-[1cqw] relative">
             {Array.from({ length: 16 }).map((_, idx) => {
               const syllables = ["BIM", "BUM", "ZIM", "ZUM", "SABO", "KI", "PLAPLA", "BLAGO", "KARA", "WANE", "GA", "BU", "BU", "JOLI", "FANTO", "! "];
               const word = syllables[idx];
@@ -630,7 +630,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
         </div>
 
         {/* Lower Info Line */}
-        <div className="w-full flex justify-between items-center border-t-2 border-zinc-950 pt-[1.5cqh] mb-[12cqh] z-10">
+        <div className="w-full flex justify-between items-center border-t-2 border-zinc-950 pt-[1.5cqh] mb-[2cqh] z-10">
           <div className="flex items-center gap-[1.5cqw]">
             <span className="font-dada-typewriter text-[0.9cqw] text-zinc-500 font-bold uppercase">{isZh ? "行动指示:" : "BEAT ACTION:"}</span>
             <span className="font-dada-stencil text-[1.1cqw] bg-[#dc2626] text-white border-2 border-zinc-950 px-[1.5cqw] py-[0.4cqh] rotate-[1deg] font-black animate-pulse">
@@ -661,7 +661,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
         </div>
 
         {/* Top Header */}
-        <div className="w-full flex justify-between items-end border-b-2 border-zinc-950 pb-[1.5cqh] z-10 shrink-0">
+        <div className="w-full flex justify-between items-end border-b-2 border-zinc-950 pb-[1.5cqh] z-10 shrink-0 pr-[22cqw]">
           <div className="flex flex-col text-left">
             <span className="font-dada-stencil text-[2cqw] text-zinc-950 font-bold uppercase tracking-wide">
               {isZh ? "伏尔泰酒馆前卫宣言" : "VOLTAIRE GUILD MANIFESTO"}
@@ -679,7 +679,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
         {/* Central Complex Content */}
         <div className="flex-1 w-full my-[2cqh] z-10 relative flex items-center justify-center">
           {/* Left Block: Slogans & manifesto cards */}
-          <div className="absolute left-[4cqw] top-[4cqh] w-[50cqw] h-[44cqh] flex flex-col justify-between text-left">
+          <div className="absolute left-[4cqw] top-[13cqh] w-[50cqw] h-[44cqh] flex flex-col justify-between text-left">
             <div className="flex flex-col gap-[1.5cqh]">
               <div className={`bg-[#dc2626] text-white font-dada-stencil text-[2.8cqw] px-[2cqw] py-[0.6cqh] rotate-[-5deg] w-fit shadow-2xl border-2 border-zinc-950 transition-all duration-500 ${beat >= 1 ? "scale-100 opacity-100" : "scale-90 opacity-0 pointer-events-none"}`}>
                 L'ART EST MORT / {isZh ? "艺术已死" : "ART IS DEAD"}
@@ -701,7 +701,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
           </div>
 
           {/* Right Block: Double Guild Seal */}
-          <div className="absolute right-[4cqw] top-[2cqh] w-[32cqw] h-[46cqh] flex items-center justify-center select-none">
+          <div className="absolute right-[4cqw] top-[13cqh] w-[32cqw] h-[46cqh] flex items-center justify-center select-none">
             {beat >= 2 ? (
               <div 
                 key="manifesto-seal"
@@ -726,7 +726,7 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
         </div>
 
         {/* Lower Info Line */}
-        <div className="w-full flex justify-between items-center border-t-2 border-zinc-950 pt-[1.5cqh] mb-[12cqh] z-10">
+        <div className="w-full flex justify-between items-center border-t-2 border-zinc-950 pt-[1.5cqh] mb-[2cqh] z-10">
           <div className="flex items-center gap-[1.5cqw]">
             <span className="font-dada-typewriter text-[0.9cqw] text-zinc-500 font-bold uppercase">{isZh ? "行动指示:" : "BEAT ACTION:"}</span>
             <span className="font-dada-stencil text-[1.1cqw] bg-[#dc2626] text-white border-2 border-zinc-950 px-[1.5cqw] py-[0.4cqh] rotate-[-1deg] font-black animate-pulse">
@@ -812,70 +812,134 @@ export default function Style04({ scene, beat, language, onNavigate, isThumbnail
       {/* Render the Active Scene */}
       {renderScene()}
 
-      {/* Bespoke Theme Navigation (Scissor-cut Newspaper Strip) */}
+      {/* Top-Right Chaotic Pin-Up Notes Navigation */}
       {!isThumbnail && (
-        <div className="absolute bottom-[4cqh] left-[15cqw] w-[70cqw] h-[10cqh] bg-[#ffffff] border-2 border-zinc-950 shadow-[10px_10px_0px_#000000] rotate-[-1deg] px-[3cqw] flex items-center justify-between z-30 overflow-hidden select-none">
-          {/* Newspaper texture pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:100%_1.5cqh] opacity-20 pointer-events-none" />
-          
-          <div className="font-dada-typewriter text-[1.4cqw] text-zinc-500 font-bold hidden sm:block tracking-widest rotate-[1deg]">
-            {isZh ? "达达声学导航录：" : "DADA PHONETIC NAV:"}
-          </div>
+        <div className="absolute top-[1.5cqh] right-[2cqw] w-[18cqw] h-[10cqh] z-40 select-none pointer-events-auto">
+          {/* 5 mismatching cut-out scrap notes */}
+          {[1, 2, 3, 4, 5].map((sNum) => {
+            const letters = ["D", "A", "D", "A", "!"];
+            const letter = letters[sNum - 1];
+            const isActive = scene === sNum;
 
-          <div className="flex gap-[4cqw] items-center">
-            {[1, 2, 3, 4, 5].map((sNum) => {
-              const letters = ["D", "A", "D", "A", "!"];
-              const letter = letters[sNum - 1];
-              const isActive = scene === sNum;
-              
-              // Unique configurations for each scene selector item
-              const styles = [
-                { font: "font-dada-stencil text-[4.5cqw] text-zinc-950", rot: "rotate-[-10deg]" },
-                { font: "font-dada-typewriter text-[3.8cqw] text-zinc-900 underline", rot: "rotate-[12deg]" },
-                { font: "font-dada-serif text-[4.8cqw] text-[#dc2626] font-black", rot: "rotate-[-5deg]" },
-                { font: "font-dada-stencil text-[4.2cqw] text-zinc-950 bg-zinc-950 text-white px-2 py-0.5", rot: "rotate-[8deg]" },
-                { font: "font-dada-typewriter text-[5cqw] text-[#dc2626] font-extrabold", rot: "rotate-[-15deg]" }
-              ];
-              
-              const config = styles[sNum - 1];
+            // Unique configurations for each scrap note
+            const noteStyles = [
+              // Note 1: Typewriter paper (creamy white, typewriter font)
+              {
+                bg: "bg-[#faf8f5]",
+                border: "border border-zinc-400",
+                font: "font-dada-typewriter text-[3.2cqw] text-zinc-900",
+                rot: "rotate-[-12deg]",
+                left: "left-[0cqw]",
+                top: "top-[0.5cqh]",
+                width: "w-[4cqw]",
+                height: "h-[6.5cqh]",
+                shadow: "shadow-sm hover:shadow-md",
+                title: isZh ? "场景 1: 混沌标题拼贴" : "Scene 1: Chaos Typography"
+              },
+              // Note 2: Stenciled card (yellow/cardboard background, dashed border)
+              {
+                bg: "bg-[#e6dfc8]",
+                border: "border-2 border-zinc-900 border-dashed",
+                font: "font-dada-stencil text-[3.4cqw] text-zinc-950",
+                rot: "rotate-[15deg]",
+                left: "left-[3.2cqw]",
+                top: "top-[2cqh]",
+                width: "w-[4.2cqw]",
+                height: "h-[6.2cqh]",
+                shadow: "shadow-md hover:shadow-lg",
+                title: isZh ? "场景 2: 左右撕裂对撞" : "Scene 2: Light Scissor Rip"
+              },
+              // Note 3: Newsprint (grayish background, red serif font, simulated text lines)
+              {
+                bg: "bg-[#e5e5e0] bg-[linear-gradient(rgba(0,0,0,0.06)_1px,transparent_1px)] bg-[size:100%_0.8cqh]",
+                border: "border border-zinc-500",
+                font: "font-dada-serif text-[3.6cqw] text-[#dc2626] font-black",
+                rot: "rotate-[-5deg]",
+                left: "left-[6.8cqw]",
+                top: "top-[0cqh]",
+                width: "w-[3.8cqw]",
+                height: "h-[6.8cqh]",
+                shadow: "shadow-sm hover:shadow-md",
+                title: isZh ? "场景 3: 帽子坠落成诗" : "Scene 3: Falling Hat Canons"
+              },
+              // Note 4: Heavy black card (black background, white text)
+              {
+                bg: "bg-zinc-950",
+                border: "border-2 border-red-600",
+                font: "font-dada-stencil text-[3cqw] text-white",
+                rot: "rotate-[20deg]",
+                left: "left-[10.2cqw]",
+                top: "top-[2.5cqh]",
+                width: "w-[3.9cqw]",
+                height: "h-[5.8cqh]",
+                shadow: "shadow-md hover:shadow-lg",
+                title: isZh ? "场景 4: 伏尔泰声学矩阵" : "Scene 4: Phonetic Sound Matrix"
+              },
+              // Note 5: Torn scrap paper (beige background, heavy red exclamation mark)
+              {
+                bg: "bg-[#faf6ee]",
+                border: "border-2 border-zinc-950",
+                font: "font-dada-typewriter text-[3.8cqw] text-[#dc2626] font-extrabold",
+                rot: "rotate-[-15deg]",
+                left: "left-[13.6cqw]",
+                top: "top-[1cqh]",
+                width: "w-[4cqw]",
+                height: "h-[7cqh]",
+                shadow: "shadow-lg hover:shadow-xl",
+                title: isZh ? "场景 5: 达达宣誓海报" : "Scene 5: Extreme Dada Manifesto"
+              }
+            ];
 
-              return (
-                <button
-                  key={sNum}
-                  onClick={() => onNavigate && onNavigate(sNum, 0)}
-                  className={`relative focus:outline-none transition-transform hover:scale-115 ${config.rot} ${config.font} flex items-center justify-center`}
-                  title={isZh ? `跳转到场景 ${sNum}` : `Navigate to Scene ${sNum}`}
-                >
-                  <span>{letter}</span>
-                  
-                  {/* Active indicator: Red hand-drawn Marker "X" */}
-                  {isActive && (
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none scale-125 z-10">
-                      <svg viewBox="0 0 100 100" className="w-[110%] h-[110%] overflow-visible">
-                        <line 
-                          x1="10" y1="10" x2="90" y2="90" 
-                          stroke="#dc2626" 
-                          strokeWidth="14" 
-                          strokeLinecap="round" 
-                          strokeDasharray="150"
-                          strokeDashoffset="150"
-                          style={{ animation: "marker-x-draw 0.15s ease-out forwards" }}
-                        />
-                        <line 
-                          x1="90" y1="10" x2="10" y2="90" 
-                          stroke="#dc2626" 
-                          strokeWidth="14" 
-                          strokeLinecap="round" 
-                          strokeDasharray="150"
-                          strokeDashoffset="150"
-                          style={{ animation: "marker-x-draw 0.15s ease-out 0.08s forwards" }}
-                        />
-                      </svg>
-                    </div>
-                  )}
-                </button>
-              );
-            })}
+            const config = noteStyles[sNum - 1];
+
+            return (
+              <button
+                key={sNum}
+                onClick={() => onNavigate && onNavigate(sNum, 0)}
+                className={`absolute ${config.left} ${config.top} ${config.width} ${config.height} ${config.bg} ${config.border} ${config.shadow} ${config.rot} ${config.font} flex items-center justify-center transition-all duration-300 focus:outline-none cursor-pointer ${
+                  isActive ? "scale-115 z-30 ring-2 ring-red-600/20" : "hover:scale-105 z-10"
+                }`}
+                title={config.title}
+              >
+                <span className="select-none leading-none">{letter}</span>
+
+                {/* Brutal hand-drawn red marker "X" for active note */}
+                {isActive && (
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none scale-125 z-20">
+                    <svg viewBox="0 0 100 100" className="w-[110%] h-[110%] overflow-visible">
+                      <line 
+                        x1="10" y1="10" x2="90" y2="90" 
+                        stroke="#dc2626" 
+                        strokeWidth="14" 
+                        strokeLinecap="round" 
+                        strokeDasharray="150"
+                        strokeDashoffset="150"
+                        style={{ animation: "marker-x-draw 0.15s ease-out forwards" }}
+                      />
+                      <line 
+                        x1="90" y1="10" x2="10" y2="90" 
+                        stroke="#dc2626" 
+                        strokeWidth="14" 
+                        strokeLinecap="round" 
+                        strokeDasharray="150"
+                        strokeDashoffset="150"
+                        style={{ animation: "marker-x-draw 0.15s ease-out 0.08s forwards" }}
+                      />
+                    </svg>
+                  </div>
+                )}
+              </button>
+            );
+          })}
+
+          {/* Central Pin holding the pile together */}
+          <div 
+            className="absolute left-[8.4cqw] top-[2.8cqh] w-[1.8cqw] h-[1.8cqw] rounded-full bg-zinc-400 border-2 border-zinc-600 shadow-md z-40 flex items-center justify-center pointer-events-none"
+            title={isZh ? "达达别针" : "Dada Pin"}
+          >
+            {/* Pin shine/shadow */}
+            <div className="w-[0.5cqw] h-[0.5cqw] rounded-full bg-white opacity-75 absolute top-[0.2cqw] left-[0.2cqw]" />
+            <div className="w-[0.3cqw] h-[0.3cqw] rounded-full bg-zinc-800 absolute bottom-[0.2cqw] right-[0.2cqw]" />
           </div>
         </div>
       )}
