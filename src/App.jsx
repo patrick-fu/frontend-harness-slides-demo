@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect, useRef, useMemo } from "react";
-import { STYLES, findStyle, clampBeat } from "./data/stylesData";
+import { STYLES, findStyle, clampBeat, STYLES_REGISTRY } from "./components/styles";
 import { SlideRenderer } from "./components/SlideRenderer";
-import { getLocalizedStyles } from "./i18n/slides";
 import { formatMessage, UI_TRANSLATIONS } from "./i18n/ui";
 import { 
   Monitor, LayoutGrid, Kanban, Play, ChevronRight, ChevronLeft, 
@@ -84,7 +83,7 @@ export function App() {
   const resolvedTheme = themeMode === "auto" ? (systemPrefersDark ? "dark" : "light") : themeMode;
   const isDarkTheme = resolvedTheme === "dark";
   const language = languageMode === "auto" ? systemLanguage : languageMode;
-  const localizedStyles = useMemo(() => getLocalizedStyles(STYLES, language), [language]);
+  const localizedStyles = useMemo(() => STYLES_REGISTRY.map((item) => item.getMetadata(language)), [language]);
   const currentStyle = localizedStyles.find((style) => style.id === selectedStyleId) || localizedStyles[0];
   const t = UI_TRANSLATIONS[language];
   const chrome = isDarkTheme

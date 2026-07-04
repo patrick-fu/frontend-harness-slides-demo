@@ -1,7 +1,23 @@
 import { expect, test } from "@playwright/test";
-import { STYLES, STAGE } from "../src/data/stylesData";
+import { STYLES, STAGE } from "../src/components/styles";
 
 test.describe("Frontend Harness Slides Design System", () => {
+  test.beforeEach(async ({ page }) => {
+    // Set consistent large viewport size
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    // Force English language mode so text assertions match
+    await page.addInitScript(() => {
+      window.localStorage.setItem("harness-slides-language-mode", "en");
+    });
+    page.on("console", (message) => {
+      if (message.type() === "error") {
+        console.log("BROWSER ERROR:", message.text());
+      }
+    });
+    page.on("pageerror", (error) => {
+      console.log("BROWSER RUNTIME CRASH:", error.stack || error.message);
+    });
+  });
   test("every style and its beats can render correctly in Lab view", async ({ page }) => {
     const errors = [];
     page.on("console", (message) => {
@@ -46,7 +62,7 @@ test.describe("Frontend Harness Slides Design System", () => {
     const gridBtn = page.locator("button:has-text('Grid View')");
     await gridBtn.click();
     await page.waitForURL(/\?.*view=grid/);
-    await expect(page.locator("h2")).toContainText("Grid View");
+    await expect(page.locator("h2").first()).toContainText("Grid View");
 
     // Switch to Board view
     const boardBtn = page.locator("button:has-text('Board View')");
@@ -103,9 +119,9 @@ test.describe("Frontend Harness Slides Design System", () => {
 
     await page.locator('[data-testid="language-switcher"] button[title="中文"]').click();
 
-    await expect(page.locator("h2")).toContainText("网格视图矩阵");
-    await expect(page.locator("body")).toContainText("主动误差抑制");
-    await expect(page.locator("body")).toContainText("量子编译器架构");
+    await expect(page.locator("h2").first()).toContainText("网格视图矩阵");
+    await expect(page.locator("body")).toContainText("黑洞视界演化");
+    await expect(page.locator("body")).toContainText("天体物理与引力透镜");
   });
 
   test("theme switcher defaults to auto and supports light and dark modes", async ({ page }) => {
