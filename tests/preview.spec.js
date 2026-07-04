@@ -68,7 +68,7 @@ test.describe("Frontend Harness Slides Design System", () => {
     const boardBtn = page.locator("button:has-text('Board View')");
     await boardBtn.click();
     await page.waitForURL(/\?.*view=board/);
-    await expect(page.locator("h2")).toContainText("Board View");
+    await expect(page.locator("h2").first()).toContainText("Board View");
     
     // Board view should categorize low, med, high density columns
     await expect(page.getByText("Speaker-led", { exact: true })).toBeVisible();

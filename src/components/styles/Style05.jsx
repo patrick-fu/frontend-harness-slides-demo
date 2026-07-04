@@ -1,60 +1,137 @@
 import React from "react";
 import { 
-  Compass, Map, FileText, Camera, ShieldCheck, HelpCircle, User, Bot, Tag
+  Compass, Map, FileText, Scroll, Scale, Coins, BookOpen, Sparkles, 
+  Feather, History, Award, Check, Activity, TrendingUp, ShieldCheck,
+  ArrowRight, Landmark, Droplet, AlertTriangle
 } from "lucide-react";
 
 export const getMetadata = (lang) => ({
   id: "05",
   tier: "A",
   name: lang === "zh" ? "丝绸之路微观印记" : "Silk Road Chronicles",
-  theme: lang === "zh" ? "丝路商旅与地学考古" : "Ancient Silk Road Chronicles",
-  densityLabel: lang === "zh" ? "历史图志" : "Historical Travelogue",
-  colors: { bg: "bg-[#fffbeb]", ink: "text-[#451a03]", panel: "border-[#78350f]/15" },
+  theme: lang === "zh" ? "历史地理学研究" : "Historical Geography",
+  densityLabel: lang === "zh" ? "Bespoke Custom" : "Bespoke Custom",
+  colors: { bg: "bg-[#fbf7f0]", ink: "text-[#2b2520]", panel: "border-[#8c7a6b]/20" },
   typography: { header: "font-serif", body: "font-sans" },
   scenes: [
     {
       id: 1,
-      title: lang === "zh" ? "丝绸之路微观印记 绪论" : "Introduction to Silk Road Chronicles",
+      title: lang === "zh" ? "沙海纪行" : "Chronicles of the Sand",
       beats: [
-        { id: 1, action: lang === "zh" ? "规划丝路商线" : "Chart Route", title: lang === "zh" ? "大漠驼铃与河西走廊" : "Desert Caravans & Hexi Corridor", body: lang === "zh" ? "穿过无垠的流沙与连绵的戈壁，古代商队依靠点缀在荒漠边缘的绿洲水源，开辟了横跨亚欧大陆的伟大贸易动脉。" : "Spanning endless shifting sands and gravel deserts, ancient merchant caravans carved out the great Eurasian trade artery via oasis springs." },
-        { id: 2, action: lang === "zh" ? "记入商队日记" : "Log Caravan Journal", title: lang === "zh" ? "敦煌壁画与行纪残片" : "Dunhuang Murals & Travel Logs", body: lang === "zh" ? "敦煌莫高窟的斑驳壁画与藏经洞里的吐鲁番行纪，无声地记录着九世纪商贾们遭遇沙暴、合十祈福的微观行旅记忆。" : "Faded Dunhuang frescoes and Turpan parchment logs silently record the intimate memories of 9th-century merchants braving sandstorms." },
-        { id: 3, action: lang === "zh" ? "大宗物产交割" : "Trade Silk & Spices", title: lang === "zh" ? "极地偏光镜下的大宗贸易" : "Polaroid Lens on Trade Markets", body: lang === "zh" ? "利用现代相纸图像框架，重现商队越过帕米尔高原、在布哈拉市集用丝绸换取香料与琉璃器具的交易瞬间。" : "Leveraging polaroid frames to capture the trading moments of caravans exchanging silk bolts for Bukharan cobalt glassware and spices." }
+        { 
+          id: 1, 
+          action: lang === "zh" ? "绘制商旅驼影" : "Draw Caravan Silhouette", 
+          title: lang === "zh" ? "大漠驼铃" : "Desert Caravan Echoes", 
+          body: lang === "zh" ? "在无垠的塔克拉玛干沙漠中，一列骆驼商队正缓缓行进，清脆的驼铃声在风沙中回荡，开启了跨越千年的东西方文明交汇之旅。" : "Amidst the boundless sands of the Taklamakan, a camel caravan slowly advances, their bells echoing in the wind, commencing a millennial journey of East-West cultural convergence." 
+        },
+        { 
+          id: 2, 
+          action: lang === "zh" ? "勾勒沙丘轮廓" : "Trace Dune Outlines", 
+          title: lang === "zh" ? "流沙起伏" : "Whispering Sand Dunes", 
+          body: lang === "zh" ? "风是沙漠的雕刻师。连绵起伏的沙丘在烈日下呈现出完美的几何弧线，商队沿着沙脊艰难前行，在风沙中留下转瞬即逝的足迹。" : "Wind is the sculptor of the desert. Rolling dunes present perfect geometric arcs under the blazing sun, as the caravan treads along the ridges, leaving transient footprints." 
+        },
+        { 
+          id: 3, 
+          action: lang === "zh" ? "贴上旅人手记" : "Plaster Traveler's Note", 
+          title: lang === "zh" ? "旅人手记" : "Traveler's Notebook", 
+          body: lang === "zh" ? "“九月辛未，风沙大作，行十里，迷失方向。幸得老驼识途，引至泉水处。”——摘自敦煌藏经洞出土的无名旅人行纪残片。" : "'September, Xinwei: A fierce sandstorm arose. After ten miles, we lost our way. Fortunately, the old camels knew the path and led us to water.' — Anonymous travel log from Dunhuang." 
+        }
       ]
     },
     {
       id: 2,
-      title: lang === "zh" ? "丝绸之路微观印记 解析" : "Symmetric Oasis Trading",
+      title: lang === "zh" ? "绿洲地理与商贸考证" : "Oasis Geography & Barter Logistics",
       beats: [
-        { id: 1, action: lang === "zh" ? "比对中原绢帛" : "Examine Central Silk", title: lang === "zh" ? "中原绢丝的编织密构" : "Central Silk Weave Profile", body: lang === "zh" ? "中原产斜纹提花绢帛，其精细度与富有光泽的蚕丝密度令地中海世界叹为观止。手绘解剖图展示了斜纹编织横截面的维向走向。" : "Central silk weave patterns are analyzed. High-density diagonal wefts and lustrous raw silk strands awed Roman and Persian courts." },
-        { id: 2, action: lang === "zh" ? "解译西域琉璃" : "Inspect Cobalt Glass", title: lang === "zh" ? "萨珊王朝钴蓝琉璃" : "Sasanian Cobalt Glass Artifact", body: lang === "zh" ? "出土于古墓中的萨珊钴蓝刻花玻璃杯。这种带有强烈异域刻槽的器皿，在汉地被视作与和阗美玉同等珍贵的稀世奇珍。" : "Excavated Sasanian cobalt glass cups. Its dramatic facet-cut patterns were valued as highly as Hetian nephrite jade in Chinese palaces." },
-        { id: 3, action: lang === "zh" ? "盖上通关玺印" : "Seal Custom Stamp", title: lang === "zh" ? "西域通关玺印核签" : "Oasis Customs Clearance Stamp", body: lang === "zh" ? "在比对完绢帛与琉璃的贸易比价后，在羊皮通关文牒（Apostat）上加盖红色泥金封泥，准予商队进入绿洲水源补充补给。" : "After establishing barter values, a red wax customs seal is stamped on parchment, clearing the caravan's entry to the oasis wells." }
+        { 
+          id: 1, 
+          action: lang === "zh" ? "定位敦煌绿洲" : "Map Dunhuang Oasis", 
+          title: lang === "zh" ? "沙海孤岛：敦煌绿洲" : "Island in the Sand: Dunhuang Oasis", 
+          body: lang === "zh" ? "地处党河冲积扇，东峙三危山，南凭鸣沙山。作为丝绸之路南北两道的交汇枢纽，敦煌绿洲为疲惫的旅人提供了最宝贵的水源与庇护。" : "Located on the Dang River alluvial fan, Dunhuang serves as the critical junction of the northern and southern Silk Road routes, providing vital water and shelter." 
+        },
+        { 
+          id: 2, 
+          action: lang === "zh" ? "清点互市物产" : "Tally Barter Cargo", 
+          title: lang === "zh" ? "丝绸、美玉与汗血宝马" : "Silk, Nephrite & Heavenly Horses", 
+          body: lang === "zh" ? "中原的精美绢帛、和阗的温润美玉、大宛的汗血宝马在此交汇。商贾们用天平精细称量，在羊皮纸上记录下每一次物产交换的价值落差。" : "Exquisite Chinese silk, warm Hetian jade, and Ferghana's heavenly horses converge here. Merchants carefully weigh goods, recording value offsets on parchment." 
+        },
+        { 
+          id: 3, 
+          action: lang === "zh" ? "核签通关文牒" : "Seal Customs Passport", 
+          title: lang === "zh" ? "悬泉置通关文牒" : "Xuanquanzhi Customs Passport", 
+          body: lang === "zh" ? "“大唐都护府准予通行。”加盖红色泥金封泥的羊皮文书，是商队在西域百国安全通行的唯一凭证，记录着过往行商的姓名与货物明细。" : "'Approved by the Protectorate of Tang.' The parchment document, sealed with red clay, is the sole passport for safe passage through the Western Regions." 
+        }
       ]
     },
     {
       id: 3,
-      title: lang === "zh" ? "丝绸之路微观印记 演进" : "Caravan Route Execution",
+      title: lang === "zh" ? "河西走廊商路演进" : "Hexi Corridor Route Evolution",
       beats: [
-        { id: 1, action: lang === "zh" ? "测绘河西古道" : "Map Hexi Trail", title: lang === "zh" ? "测绘甘肃驿站路径" : "Hexi Oasis Path Survey", body: lang === "zh" ? "沿祁连山冰雪消融汇成的河流，勘测绿洲驿站（Post-station）的间距，精确制定每日骆驼商队的水源补给步长。" : "Tracing meltwater rivers flowing from Qilian mountains, surveying oasis post-station distances to schedule caravan water stops." },
-        { id: 2, action: lang === "zh" ? "登计商载底册" : "Tally Caravan Cargo", title: lang === "zh" ? "商载大宗货样清册" : "Field Cargo Weight Registration", body: lang === "zh" ? "清点货架上捆扎的生丝、蜀锦、和田玉料与西亚乳香，在发掘现场的皮纸折页中建立起原产地与重量等级账目。" : "Tallying raw silk bolts, Shu brocades, Hetian jade, and frankincense resins, documenting weights on parchment registers." },
-        { id: 3, action: lang === "zh" ? "盖上绿洲备案印" : "Apply Oasis Stamp", title: lang === "zh" ? "行商凭证加盖备案泥印" : "Oasis Official Verification Stamp", body: lang === "zh" ? "物产入库校验完毕，在商队折册（Stele Ledger）文书边缘加盖绿洲执政官的黑色煤焦防伪官印，以通行西域百国。" : "Cargo storage approved. Affixing the oasis governor's charcoal coal-seal on ledger edges to secure safe passage through the western kingdoms." }
+        { 
+          id: 1, 
+          action: lang === "zh" ? "测绘河西驿道" : "Map Hexi Trail", 
+          title: lang === "zh" ? "从长安到河西走廊" : "From Chang'an to Hexi Corridor", 
+          body: lang === "zh" ? "商路自古都长安出发，沿着狭长的河西走廊向西延伸。祁连山的冰雪融水滋养了武威、张掖、酒泉、敦煌四大郡，构成了商旅的生命线。" : "The route starts from the ancient capital Chang'an, stretching west along the Hexi Corridor. Meltwater from the Qilian mountains nourishes the four frontier commanderies." 
+        },
+        { 
+          id: 2, 
+          action: lang === "zh" ? "追踪驼队行进" : "Track Caravan March", 
+          title: lang === "zh" ? "步履维艰：穿越戈壁" : "Treading the Gravel Gobi", 
+          body: lang === "zh" ? "商队每日行进约五十里。在碎石遍地的戈壁滩上，旅人们必须时刻注意水源消耗，依靠北极星和散落的白骨指引方向，艰难向敦煌进发。" : "The caravan marches fifty li daily. Across the gravel Gobi, travelers monitor water depletion, guided by the North Star and scattered bones towards Dunhuang." 
+        },
+        { 
+          id: 3, 
+          action: lang === "zh" ? "点亮绿洲驿站" : "Reveal Oasis Stations", 
+          title: lang === "zh" ? "敦煌会师：商路终点" : "Junction at Dunhuang Oasis", 
+          body: lang === "zh" ? "当敦煌的烽燧在天际线隐现，商队终于抵达了进入塔克拉玛干沙漠前的最后一站。在此，他们将重整行装，补充水源，准备迎接更严酷的挑战。" : "As Dunhuang's beacon towers loom on the horizon, the caravan reaches the final oasis before the Taklamakan. Here they restock water and gear up for the deep sands." 
+        }
       ]
     },
     {
       id: 4,
-      title: lang === "zh" ? "丝绸之路微观印记 矩阵" : "Silk Road Sectors Matrix",
+      title: lang === "zh" ? "丝路大宗物产四象限" : "Silk Road Commodities Quadrant",
       beats: [
-        { id: 1, action: lang === "zh" ? "河西走廊大驿道" : "Hexi Corridor Sector", title: lang === "zh" ? "河西走廊绿洲咽喉" : "Hexi Oasis Corridor Sector", body: lang === "zh" ? "东起长安，西至玉门关。夹于祁连山与巴丹吉林沙漠之间，是商旅、僧侣和使节进入西域最狭长而安全的绿洲走廊。" : "From Chang'an to Yumen Pass. Nestled between the Qilian peaks and northern dunes, this serves as the safest oasis canal." },
-        { id: 2, action: lang === "zh" ? "葱岭雪山隘口" : "Pamir Passes Sector", title: lang === "zh" ? "葱岭高原冰雪隘口" : "Pamir Mountains Gorge Pass", body: lang === "zh" ? "海拔超越数千米。商队在此必须卸下部分辎重，冒着高山缺氧和暴风雪的威胁，手手相传翻越坚冰，前往波斯边界。" : "Elevations exceeding thousands of meters. Caravans shed heavy cargo to endure thin air and blizzards, scaling ice to reach Persia." },
-        { id: 3, action: lang === "zh" ? "地中海终点海港" : "Levant Terminuses", title: lang === "zh" ? "地中海东岸终点海港" : "Levantine Coast Port Terminus", body: lang === "zh" ? "安条克、提尔或亚历山大。丝绸在此被拆解、重新染色，登上罗马平底商船销往帝国的每个行省，换回黄金与叙利亚玻璃。" : "Antioch or Tyre. Silks were unraveled, re-dyed, and loaded onto Roman cogs to ship across provinces, traded for Syrian glassware." }
+        { 
+          id: 1, 
+          action: lang === "zh" ? "分析香料与纺织" : "Analyze Spices & Textiles", 
+          title: lang === "zh" ? "异域香料与中原绢帛" : "Exotic Spices & Central Silks", 
+          body: lang === "zh" ? "来自印度的乳香与胡椒，在西方被视作防腐与调味的奢侈品；而中原的提花绢帛，则以其轻盈与华丽，成为罗马贵族争相追捧的时尚象征。" : "Frankincense and pepper from India, prized as preserving luxuries; and Chinese jacquard silks, whose lightness and luster became the ultimate Roman fashion statement." 
+        },
+        { 
+          id: 2, 
+          action: lang === "zh" ? "评估宝石与手稿" : "Evaluate Stones & Manuscripts", 
+          title: lang === "zh" ? "和田美玉与敦煌手稿" : "Nephrite Jade & Dunhuang Scrolls", 
+          body: lang === "zh" ? "和田美玉代表着权贵与不朽，是中原帝王祭祀的圣物；而用粟特文、吐火罗文书写的宗教手稿，则在绿洲寺庙中流传，见证着思想的交融。" : "Hetian nephrite jade represents power and immortality, sacred to Chinese emperors; while religious manuscripts in Sogdian and Tocharian circulate in temples." 
+        },
+        { 
+          id: 3, 
+          action: lang === "zh" ? "核算关税与风险" : "Calculate Taxes & Risks", 
+          title: lang === "zh" ? "互市税率与商旅风险" : "Barter Tariffs & Caravan Risks", 
+          body: lang === "zh" ? "绿洲城邦对过往商队征收什一税（10%）。商队不仅要面对自然灾害，还要防范强盗袭扰。高额的利润伴随着极高的生命与财产风险。" : "Oasis city-states levy a tithe (10%) on passing caravans. Merchants face sandstorms and bandit raids, matching high profits with extreme survival risks." 
+        }
       ]
     },
     {
       id: 5,
-      title: lang === "zh" ? "丝绸之路微观印记 汇总" : "Oasis Commerce Ledger",
+      title: lang === "zh" ? "大唐西域通商总账册" : "Tang Dynasty Frontier Trade Ledger",
       beats: [
-        { id: 1, action: lang === "zh" ? "调取贸易总清册" : "Load Ledger Sheets", title: lang === "zh" ? "绿洲大宗货品交换清单" : "Oasis Cargo Exchange Registry", body: lang === "zh" ? "商货统筹！汇集包括生丝疋数、琉璃刻槽深度、香料重量以及西域诸国兑换辅币成色在内的跨国大宗物产账册。" : "Trade orchestration! Compiling raw silk bolt counts, glass carving depth grades, frankincense weights, and currency purity indexes." },
-        { id: 2, action: lang === "zh" ? "测算物产落差" : "Tally Value Diffs", title: lang === "zh" ? "中西物产进出互市差额" : "Symmetric Trade Value Offset", body: lang === "zh" ? "剔除途中损耗和土匪抢劫偏差噪声，精确测算出中原丝绸与西域金币在历次互市周期中的绝对价值红移偏振点。" : "Filtering camel loss and bandit raid variables, measuring value offsets of Eastern silks against Western gold and spices." },
-        { id: 3, action: lang === "zh" ? "加盖朱砂通商印" : "Stamp Customs Seal", title: lang === "zh" ? "通商总表加盖朱砂通关大章" : "Vermilion Imperial Customs Seal", body: lang === "zh" ? "通商闭环！各项互市物产和备案无误，在商队总契约文书末端加盖大唐都护府的红色朱砂御准通关大钢印。" : "Trade session complete! Barter properties verified, sealing the imperial ledger with the red vermilion customs stamp of approval." }
+        { 
+          id: 1, 
+          action: lang === "zh" ? "调取商货总清单" : "Load Manifest Tables", 
+          title: lang === "zh" ? "大宗商货起运登记表" : "Frontier Cargo Manifest Tally", 
+          body: lang === "zh" ? "汇总清点商队起运的所有大宗货物：生丝、蜀锦、和田玉料、西亚乳香。详细记录其疋数、重量、成色及原产地，确保账目分毫不差。" : "A comprehensive tally of all cargo logged: raw silk bolts, Shu brocades, Hetian jade, and frankincense resins. Origin, weight, and quality grades are recorded." 
+        },
+        { 
+          id: 2, 
+          action: lang === "zh" ? "校验历代税率" : "Verify Dynasty Taxes", 
+          title: lang === "zh" ? "绿洲城邦关税核验单" : "Oasis Customs Tariff Verification", 
+          body: lang === "zh" ? "核对沿途各绿洲城邦（高昌、龟兹、于阗）的关税征收记录。根据大唐与西域诸国的协议，对丝绸等大宗货物实行免税或优惠税率，并盖章确认。" : "Verifying customs records across oasis city-states (Gaochang, Kucha, Khotan). According to treaties, key goods receive tax exemptions or preferential rates." 
+        },
+        { 
+          id: 3, 
+          action: lang === "zh" ? "加盖都护府朱砂印" : "Affix Sovereign Oasis Stamp", 
+          title: lang === "zh" ? "安西都护府御准通关大章" : "Imperial Vermilion Stamp of Approval", 
+          body: lang === "zh" ? "通商闭环！各项物产、税率及水源消耗核验无误。在通商总账册末端，郑重加盖安西都护府的红色朱砂御准通关大钢印，准予商队出境。" : "Trade cycle complete! Cargo, tariffs, and water logs verified. The red vermilion seal of the Anxi Protectorate is stamped, granting final clearance." 
+        }
       ]
     }
   ]
@@ -65,296 +142,1032 @@ export default function Style05({ scene, beat, language, isThumbnail }) {
   const currentScene = meta.scenes.find((s) => s.id === scene) || meta.scenes[0];
   const currentBeat = currentScene.beats[beat] || currentScene.beats[0];
 
-  const renderVisual = () => {
-    switch (scene) {
-      case 1:
-        return (
-          <div className="relative w-[34cqw] h-[34cqw] flex items-center justify-center animate-paper-peel" key={`s1-${beat}`}>
-            {/* Polaroid Photo Frame Structure */}
-            <div className="absolute w-[90%] h-[95%] bg-[#fffdf5] border-2 border-[#78350f] rounded-lg shadow-2xl rotate-[-2deg] transition-all duration-700" />
-            <div className="absolute w-[88%] h-[92%] bg-white border border-[#78350f]/60 rounded-md shadow-lg rotate-[1deg] transition-all duration-700 flex flex-col justify-between p-[1.5cqw] pb-[4cqw] relative">
-              
-              {/* Photo Area with Lapis Blue overlay */}
-              <div className="relative flex-1 w-full bg-[#1e1b18] border border-[#78350f]/20 rounded overflow-hidden flex items-center justify-center">
-                <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  {/* Sunset gradient background */}
-                  <defs>
-                    <linearGradient id="sunset" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#ea580c" />
-                      <stop offset="60%" stopColor="#ca8a04" />
-                      <stop offset="100%" stopColor="#fffbeb" />
-                    </linearGradient>
-                  </defs>
-                  <rect width="100" height="100" fill="url(#sunset)" />
-                  
-                  {/* Dunes Silhouette */}
-                  <path d="M 0,80 Q 30,65 60,82 T 100,75 L 100,100 L 0,100 Z" fill="#78350f" opacity="0.9" />
-                  <path d="M 0,90 Q 40,75 80,95 T 100,85 L 100,100 L 0,100 Z" fill="#451a03" />
-                  
-                  {/* Camel Caravan Silhouette walking on dunes */}
-                  {beat >= 1 && (
-                    <g className="transition-all duration-1000 animate-pulse">
-                      {/* Camel 1 */}
-                      <path d="M 25,72 Q 27,62 30,72 L 32,74 L 28,74 Z M 30,72 L 33,70 L 31,68" fill="#451a03" stroke="#451a03" strokeWidth="1" />
-                      {/* Camel 2 */}
-                      <path d="M 40,77 Q 42,68 45,77 L 47,79 L 43,79 Z M 45,77 L 48,75 L 46,73" fill="#451a03" stroke="#451a03" strokeWidth="1" />
-                      {/* Camel 3 */}
-                      <path d="M 55,83 Q 57,75 60,83 L 62,85 L 58,85 Z M 60,83 L 63,81 L 61,79" fill="#451a03" stroke="#451a03" strokeWidth="1" />
-                      {/* Caravan connection rope */}
-                      <path d="M 30,74 Q 35,78 40,79" fill="none" stroke="#ca8a04" strokeWidth="0.5" />
-                      <path d="M 45,79 Q 50,84 55,85" fill="none" stroke="#ca8a04" strokeWidth="0.5" />
-                    </g>
-                  )}
+  // Render border coordinate ticks to make it look like an ancient scientific map
+  const renderCoordinateTicks = () => {
+    if (isThumbnail) return null;
+    return (
+      <div className="absolute inset-0 pointer-events-none border-[0.15cqw] border-[#8c7a6b]/20 m-[1.5cqw] z-20">
+        {/* Top Ticks */}
+        <div className="absolute top-0 left-0 right-0 h-[1.5cqh] flex justify-between px-[5cqw] text-[0.7cqw] font-mono text-[#8c7a6b]/60 border-b border-[#8c7a6b]/10 bg-[#fbf7f0]/40 backdrop-blur-[1px]">
+          <span>70° E</span>
+          <span>75° E</span>
+          <span>80° E</span>
+          <span>85° E</span>
+          <span>90° E</span>
+          <span>95° E</span>
+          <span>100° E</span>
+        </div>
+        {/* Bottom Ticks */}
+        <div className="absolute bottom-0 left-0 right-0 h-[1.5cqh] flex justify-between px-[5cqw] text-[0.7cqw] font-mono text-[#8c7a6b]/60 border-t border-[#8c7a6b]/10 bg-[#fbf7f0]/40 backdrop-blur-[1px] items-end pb-[0.2cqh]">
+          <span>70° E</span>
+          <span>75° E</span>
+          <span>80° E</span>
+          <span>85° E</span>
+          <span>90° E</span>
+          <span>95° E</span>
+          <span>100° E</span>
+        </div>
+        {/* Left Ticks */}
+        <div className="absolute left-0 top-[1.5cqh] bottom-[1.5cqh] w-[2cqw] flex flex-col justify-between py-[5cqh] text-[0.7cqw] font-mono text-[#8c7a6b]/60 border-r border-[#8c7a6b]/10 items-center">
+          <span className="rotate-90">45° N</span>
+          <span className="rotate-90">40° N</span>
+          <span className="rotate-90">35° N</span>
+        </div>
+        {/* Right Ticks */}
+        <div className="absolute right-0 top-[1.5cqh] bottom-[1.5cqh] w-[2cqw] flex flex-col justify-between py-[5cqh] text-[0.7cqw] font-mono text-[#8c7a6b]/60 border-l border-[#8c7a6b]/10 items-center">
+          <span className="rotate-90">45° N</span>
+          <span className="rotate-90">40° N</span>
+          <span className="rotate-90">35° N</span>
+        </div>
+      </div>
+    );
+  };
 
-                  {/* Solitary Sun */}
-                  <circle cx="80" cy="30" r="8" fill="#fef08a" className="animate-pulse" />
-                </svg>
-              </div>
+  // Scene 1: Premise - Ultralight (Cover Page)
+  const renderScene1 = () => {
+    const showCaravan = beat >= 0;
+    const showDunes = beat >= 1;
+    const showNote = beat >= 2;
 
-              {/* Caption area in polaroid frame */}
-              <div className="mt-3 text-center font-serif text-[1.3cqw] font-bold text-[#78350f]">
-                {language === "zh" ? "敦煌莫高窟 · 1907" : "DUNHUANG CAVES · 1907"}
-              </div>
+    return (
+      <div className="w-full h-full relative overflow-hidden bg-[#fbf7f0] p-[4cqw] flex flex-col justify-between">
+        {/* Decorative Grid Lines */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
+          backgroundImage: "radial-gradient(#8c7a6b 1px, transparent 1px)",
+          backgroundSize: "2cqw 2cqw"
+        }} />
 
-              {/* Hand-drawn red customs seal */}
-              <div className={`absolute bottom-3 right-4 bg-red-100/80 border-2 border-dashed border-red-700/60 text-red-800 font-serif text-[1.1cqw] px-2.5 py-0.5 rounded rotate-[-12deg] font-black tracking-widest transition-all duration-1000 ${
-                beat >= 2 ? "opacity-100 scale-105" : "opacity-0 scale-75"
-              }`}>
-                {language === "zh" ? "安西都护府" : "IMPERIAL.CUSTOMS"}
-              </div>
+        {/* Dune and Caravan SVG Canvas */}
+        <div className="absolute inset-0 z-0">
+          <svg className="w-full h-full" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Background Dunes */}
+            {showDunes && (
+              <g key="dunes" className="transition-all duration-1000 ease-out animate-fade-in">
+                {/* Far Dune */}
+                <path 
+                  d="M -100,750 Q 400,500 1000,700 T 2020,600 L 2020,1180 L -100,1180 Z" 
+                  fill="#f3ebd8" 
+                  opacity="0.6" 
+                />
+                {/* Mid Dune */}
+                <path 
+                  d="M -100,850 Q 550,600 1100,800 T 2020,700 L 2020,1180 L -100,1180 Z" 
+                  fill="#ebdcb9" 
+                  opacity="0.8" 
+                />
+                {/* Near Dune with stroke */}
+                <path 
+                  d="M -100,950 Q 450,700 1050,900 T 2020,800 L 2020,1180 L -100,1180 Z" 
+                  fill="#dfd0a3" 
+                  stroke="#8c7a6b" 
+                  strokeWidth="2" 
+                  strokeDasharray="4 4"
+                />
+              </g>
+            )}
+
+            {/* Camel Caravan Silhouette walking on the near dune ridge */}
+            {showCaravan && (
+              <g key="caravan" className="transition-all duration-1000 ease-out animate-fade-in">
+                {/* Connecting ropes */}
+                <path 
+                  d="M 850,780 Q 900,795 950,775 Q 1000,790 1050,770 Q 1100,785 1150,765" 
+                  stroke="#8c7a6b" 
+                  strokeWidth="2" 
+                  strokeDasharray="4 4" 
+                  fill="none" 
+                  opacity="0.7"
+                />
+
+                {/* Camel 1 (Leader) */}
+                <g transform="translate(800, 720) scale(1.2)">
+                  <path 
+                    d="M 10,35 Q 15,20 20,35 Q 25,15 35,15 Q 42,15 45,25 Q 50,10 55,10 Q 60,10 60,18 L 57,25 L 53,25 L 53,16 L 45,16 Q 40,25 40,35 L 36,55 L 32,55 L 32,38 L 24,38 L 24,55 L 20,55 L 20,38 L 12,38 L 12,55 L 8,55 L 8,35 Z" 
+                    fill="#4a3e3d" 
+                  />
+                  <circle cx="58" cy="12" r="1.5" fill="#fbf7f0" />
+                </g>
+
+                {/* Camel 2 */}
+                <g transform="translate(910, 730) scale(1.0)">
+                  <path 
+                    d="M 10,35 Q 15,20 20,35 Q 25,15 35,15 Q 42,15 45,25 Q 50,10 55,10 Q 60,10 60,18 L 57,25 L 53,25 L 53,16 L 45,16 Q 40,25 40,35 L 36,55 L 32,55 L 32,38 L 24,38 L 24,55 L 20,55 L 20,38 L 12,38 L 12,55 L 8,55 L 8,35 Z" 
+                    fill="#4a3e3d" 
+                    opacity="0.95"
+                  />
+                </g>
+
+                {/* Camel 3 */}
+                <g transform="translate(1010, 735) scale(0.85)">
+                  <path 
+                    d="M 10,35 Q 15,20 20,35 Q 25,15 35,15 Q 42,15 45,25 Q 50,10 55,10 Q 60,10 60,18 L 57,25 L 53,25 L 53,16 L 45,16 Q 40,25 40,35 L 36,55 L 32,55 L 32,38 L 24,38 L 24,55 L 20,55 L 20,38 L 12,38 L 12,55 L 8,55 L 8,35 Z" 
+                    fill="#4a3e3d" 
+                    opacity="0.9"
+                  />
+                </g>
+
+                {/* Camel 4 */}
+                <g transform="translate(1100, 740) scale(0.75)">
+                  <path 
+                    d="M 10,35 Q 15,20 20,35 Q 25,15 35,15 Q 42,15 45,25 Q 50,10 55,10 Q 60,10 60,18 L 57,25 L 53,25 L 53,16 L 45,16 Q 40,25 40,35 L 36,55 L 32,55 L 32,38 L 24,38 L 24,55 L 20,55 L 20,38 L 12,38 L 12,55 L 8,55 L 8,35 Z" 
+                    fill="#4a3e3d" 
+                    opacity="0.8"
+                  />
+                </g>
+              </g>
+            )}
+          </svg>
+        </div>
+
+        {/* Header Metadata */}
+        <div className="w-full flex justify-between items-start z-10">
+          <div className="flex flex-col">
+            <span className="font-serif text-[1.4cqw] tracking-wider uppercase text-[#8b5a2b] font-bold">
+              {meta.theme}
+            </span>
+            <span className="text-[1cqw] text-[#8c7a6b] font-mono tracking-tight uppercase mt-[0.5cqh]">
+              {meta.name} • {currentScene.title}
+            </span>
+          </div>
+          <div className="flex items-center gap-[0.8cqw] bg-[#fffdf6] px-[1.2cqw] py-[0.8cqh] rounded-lg border border-[#8c7a6b]/20 shadow-sm">
+            <div className="w-[0.6cqw] h-[0.6cqw] rounded-full bg-[#0f766e] animate-pulse" />
+            <span className="font-mono text-[0.9cqw] text-[#2b2520] font-bold uppercase">{meta.tier}-TIER FIELD RECORD</span>
+          </div>
+        </div>
+
+        {/* Plastered Traveler's Note (Scene 1 Beat 2) */}
+        {showNote ? (
+          <div 
+            key="traveler-note"
+            className="absolute top-[18cqh] left-[8cqw] w-[38cqw] bg-[#fffdf6] border-[0.15cqw] border-[#8c7a6b]/30 shadow-2xl rounded-sm p-[3.5cqw] rotate-[-1.5deg] z-10 animate-paper-peel flex flex-col gap-[2cqh]"
+          >
+            {/* Vintage tape top and bottom */}
+            <div className="absolute -top-[1.5cqh] left-1/2 -translate-x-1/2 w-[10cqw] h-[3cqh] bg-[#e6dfc8]/60 border border-[#8c7a6b]/10 rotate-[1deg] shadow-sm flex items-center justify-center text-[0.6cqw] font-mono text-[#8c7a6b]">
+              FIELD NOTE
+            </div>
+            <div className="flex justify-between items-center border-b border-[#8c7a6b]/20 pb-[1cqh]">
+              <span className="font-mono text-[0.9cqw] text-[#8b5a2b] font-bold">LOG #402 / 辛未九月</span>
+              <span className="font-mono text-[0.9cqw] text-[#8c7a6b]">DUNHUANG ARCHIVE</span>
+            </div>
+            <h1 className="text-[2.6cqw] leading-[1.2] font-serif text-[#2b2520] font-bold tracking-tight">
+              {currentBeat.title}
+            </h1>
+            <p className="text-[1.15cqw] leading-[1.6] text-[#5c5043] font-sans">
+              {currentBeat.body}
+            </p>
+            <div className="flex justify-between items-center border-t border-[#8c7a6b]/10 pt-[1.5cqh] mt-[1cqh]">
+              <span className="text-[0.8cqw] font-mono text-[#8c7a6b] italic">
+                {language === "zh" ? "塔克拉玛干东缘" : "Taklamakan East Boundary"}
+              </span>
+              <Compass className="w-[1.8cqw] h-[1.8cqw] text-[#8b5a2b] animate-spin-slow" />
             </div>
           </div>
-        );
-      case 2:
-        return (
-          <div className="relative w-full max-w-[42cqw] grid grid-cols-2 gap-[3cqw] items-center animate-rotate-in font-serif" key={`s2-${beat}`}>
-            {/* Left Box: Silk weave profile */}
-            <div className={`bg-white border-2 border-[#78350f]/20 p-[2cqw] rounded-xl shadow-lg flex flex-col gap-2 relative min-h-[28cqh] ${beat >= 0 ? "opacity-100 scale-100 border-[#78350f]/30" : "opacity-30 scale-95"}`}>
-              <div className="flex items-center gap-2 border-b border-[#78350f]/10 pb-1.5">
-                <Tag className="w-4 h-4 text-[#ca8a04]" />
-                <span className="font-serif text-[1.1cqw] text-[#78350f] font-bold">SILK WEAVE</span>
-              </div>
-              <svg className="w-[10cqw] h-[10cqw]" viewBox="0 0 100 100">
-                {/* Diagonal weaving lines */}
-                <line x1="10" y1="90" x2="90" y2="10" stroke="#78350f" strokeWidth="2.5" />
-                <line x1="25" y1="90" x2="90" y2="25" stroke="#78350f" strokeWidth="2.5" />
-                <line x1="10" y1="75" x2="75" y2="10" stroke="#78350f" strokeWidth="2.5" />
-                <line x1="10" y1="10" x2="90" y2="90" stroke="#ca8a04" strokeWidth="1.5" strokeDasharray="3 3" />
-                <text x="50" y="85" fill="#78350f" className="text-[7px] font-mono text-center">45-DEG SILK WEFT</text>
-              </svg>
-              <div className="text-center font-sans">
-                <span className="font-serif text-[1.1cqw] text-[#451a03] font-black block">{language === "zh" ? "斜纹绢丝横断面" : "DIAGONAL SILK PROFILE"}</span>
-                <span className="text-[0.9cqw] text-slate-500">{language === "zh" ? "一等提花生丝微观" : "Grade-A Jacquard Weft"}</span>
-              </div>
+        ) : (
+          /* Faint Cover Title when note is not yet plastered */
+          <div className="my-auto z-10 max-w-[50cqw] flex flex-col gap-[2cqh] animate-fade-in" key="faint-cover">
+            <h1 className="text-[4.2cqw] font-serif font-bold text-[#2b2520] leading-[1.1] tracking-tight">
+              {language === "zh" ? "沙海纪行：丝路微观印记" : "Chronicles of the Sand: Silk Road Micro-prints"}
+            </h1>
+            <p className="text-[1.4cqw] font-sans text-[#8c7a6b] leading-relaxed max-w-[40cqw]">
+              {language === "zh" ? "九世纪大漠商旅的地理测绘与商贸考证日记。" : "Geographical mapping and trade verification diaries of 9th-century desert caravans."}
+            </p>
+          </div>
+        )}
+
+        {/* Footer Ledger Bar */}
+        <div className="w-full flex justify-between items-center border-t border-[#8c7a6b]/15 pt-[2cqh] z-10">
+          <div className="flex items-center gap-[1.5cqw]">
+            <span className="font-mono text-[0.95cqw] text-[#8c7a6b] font-bold uppercase">
+              {language === "zh" ? "实时操作:" : "BEAT ACTION:"}
+            </span>
+            <span className="font-mono text-[1cqw] bg-[#fffdf6] text-[#8b5a2b] border border-[#8b5a2b]/20 px-[1.2cqw] py-[0.5cqh] rounded-full font-black animate-pulse">
+              {currentBeat.action}
+            </span>
+          </div>
+          <div className="flex items-center gap-[1cqw]">
+            <span className="font-mono text-[0.9cqw] text-[#8c7a6b] font-bold uppercase">
+              {language === "zh" ? `场景 ${scene} / 5` : `SCENE ${scene} / 5`}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Scene 2: Dual - Light (Explorer Notebook Pages)
+  const renderScene2 = () => {
+    const focusLeft = beat === 0;
+    const focusRight = beat === 1 || beat === 2;
+    const showStamp = beat === 2;
+
+    return (
+      <div className="w-full h-full bg-[#fbf7f0] p-[4cqw] flex flex-col justify-between relative overflow-hidden">
+        {/* Decorative Grid Lines */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
+          backgroundImage: "radial-gradient(#8c7a6b 1px, transparent 1px)",
+          backgroundSize: "2cqw 2cqw"
+        }} />
+
+        {/* Header */}
+        <div className="w-full flex justify-between items-start z-10 shrink-0">
+          <div className="flex flex-col">
+            <span className="font-serif text-[1.4cqw] tracking-wider uppercase text-[#8b5a2b] font-bold">
+              {meta.theme}
+            </span>
+            <span className="text-[1cqw] text-[#8c7a6b] font-mono tracking-tight uppercase mt-[0.5cqh]">
+              {meta.name} • {currentScene.title}
+            </span>
+          </div>
+          <div className="flex items-center gap-[0.8cqw] bg-[#fffdf6] px-[1.2cqw] py-[0.8cqh] rounded-lg border border-[#8c7a6b]/20 shadow-sm">
+            <BookOpen className="w-[1.2cqw] h-[1.2cqw] text-[#0f766e]" />
+            <span className="font-mono text-[0.9cqw] text-[#2b2520] font-bold uppercase">DUAL NOTEBOOKS</span>
+          </div>
+        </div>
+
+        {/* Overlapping Pages Container */}
+        <div className="flex-1 w-full relative my-[2cqh] flex items-center justify-center">
+          {/* Left Notebook Page: Dunhuang Oasis Coordinates */}
+          <div 
+            className={`absolute left-[4cqw] top-[4cqh] w-[42cqw] h-[64cqh] bg-[#fdfaf2] border-[0.15cqw] border-[#8c7a6b]/30 shadow-xl rounded-sm rotate-[-1.5deg] p-[3cqw] flex flex-col justify-between transition-all duration-500 ${
+              focusLeft ? "scale-105 z-20 shadow-2xl border-[#8b5a2b]/40" : "scale-95 opacity-50 z-10"
+            }`}
+          >
+            <div className="flex justify-between items-center border-b border-[#8c7a6b]/20 pb-[1cqh]">
+              <span className="font-serif text-[1cqw] text-[#8b5a2b] font-bold">SURVEY MAP / 测绘图志</span>
+              <span className="font-mono text-[0.9cqw] text-[#8c7a6b]">40°08' N, 94°41' E</span>
             </div>
 
-            {/* Right Box: Sasanian glass */}
-            <div className={`bg-white border-2 border-[#78350f]/20 p-[2cqw] rounded-xl shadow-lg flex flex-col gap-2 relative min-h-[28cqh] transition-all duration-1000 ${
-              beat >= 1 ? "opacity-100 scale-100 border-blue-800/30" : "opacity-10 scale-90"
-            }`}>
-              <div className="flex items-center gap-2 border-b border-blue-100 pb-1.5">
-                <Compass className="w-4 h-4 text-blue-700" />
-                <span className="font-serif text-[1.1cqw] text-blue-800 font-bold">GLASSWARE</span>
-              </div>
-              <svg className="w-[10cqw] h-[10cqw]" viewBox="0 0 100 100">
-                {/* Glass cup facets */}
-                <ellipse cx="50" cy="30" rx="20" ry="8" fill="none" stroke="blue" strokeWidth="1.5" />
-                <path d="M 30,30 C 30,60 38,80 50,80 C 62,80 70,60 70,30" fill="none" stroke="blue" strokeWidth="1.5" />
-                <circle cx="50" cy="55" r="4" fill="none" stroke="blue" strokeWidth="1" />
-                <circle cx="42" cy="45" r="3" fill="none" stroke="blue" strokeWidth="1" />
-                <circle cx="58" cy="45" r="3" fill="none" stroke="blue" strokeWidth="1" />
+            {/* Oasis Map SVG */}
+            <div className="flex-1 my-[2cqh] border border-[#8c7a6b]/15 bg-[#fbf7f0]/50 rounded relative overflow-hidden flex items-center justify-center">
+              <svg className="w-full h-full" viewBox="0 0 400 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Coordinate Grid */}
+                <path d="M 0,50 L 400,50 M 0,100 L 400,100 M 0,150 L 400,150 M 0,200 L 400,200" stroke="#8c7a6b" strokeWidth="0.5" strokeDasharray="2 2" opacity="0.3" />
+                <path d="M 80,0 L 80,250 M 160,0 L 160,250 M 240,0 L 240,250 M 320,0 L 320,250" stroke="#8c7a6b" strokeWidth="0.5" strokeDasharray="2 2" opacity="0.3" />
+
+                {/* Oasis Shape in Emerald Green */}
+                <path 
+                  d="M 120,120 Q 150,70 230,90 T 310,140 Q 280,200 190,180 T 120,120 Z" 
+                  fill="#0f766e" 
+                  fillOpacity="0.12" 
+                  stroke="#0f766e" 
+                  strokeWidth="2"
+                  className={focusLeft ? "animate-pulse" : ""}
+                />
+
+                {/* Dang River winding */}
+                <path 
+                  d="M 50,250 Q 120,180 180,140 T 350,80" 
+                  stroke="#0284c7" 
+                  strokeWidth="2" 
+                  strokeDasharray="4 2"
+                  fill="none" 
+                  opacity="0.8"
+                />
+
+                {/* Labels */}
+                <text x="180" y="135" fill="#0f766e" className="text-[10px] font-serif font-bold">DUNHUANG / 敦煌</text>
+                <text x="260" y="75" fill="#0284c7" className="text-[8px] font-mono rotate-[-15deg]">DANG RIVER / 党河</text>
+                <text x="110" y="210" fill="#8c7a6b" className="text-[8px] font-mono">MINGSHA DUNES / 鸣沙山</text>
+
+                {/* Compass Rose */}
+                <g transform="translate(340, 50) scale(0.6)">
+                  <circle cx="0" cy="0" r="25" stroke="#8c7a6b" strokeWidth="1" strokeDasharray="2 2" />
+                  <path d="M 0,-30 L 5,-5 L 0,0 L -5,-5 Z" fill="#8b5a2b" />
+                  <path d="M 0,30 L 5,5 L 0,0 L -5,5 Z" fill="#8c7a6b" />
+                  <path d="M 30,0 L 5,5 L 0,0 L 5,-5 Z" fill="#8c7a6b" />
+                  <path d="M -30,0 L -5,5 L 0,0 L -5,-5 Z" fill="#8c7a6b" />
+                  <text x="-4" y="-33" fill="#8b5a2b" className="text-[10px] font-mono font-bold">N</text>
+                </g>
               </svg>
-              <div className="text-center font-sans">
-                <span className="font-serif text-[1.1cqw] text-blue-900 font-black block">{language === "zh" ? "萨珊王朝蓝琉璃" : "COBALT GLASS FACETS"}</span>
-                <span className="text-[0.9cqw] text-slate-500">{language === "zh" ? "西亚刻槽蓝玻璃" : "Sasanian Blue Goblet"}</span>
+            </div>
+
+            <div className="flex flex-col gap-[0.5cqh]">
+              <span className="text-[1.1cqw] font-serif text-[#2b2520] font-bold">
+                {language === "zh" ? "沙海孤岛：敦煌绿洲" : "Island in the Sand: Dunhuang Oasis"}
+              </span>
+              <p className="text-[0.95cqw] leading-[1.5] text-[#5c5043] font-sans">
+                {language === "zh" ? "地处党河冲积扇，作为丝路交汇枢纽，为旅人提供水源与庇护。" : "Located on the Dang River alluvial fan, providing vital water and shelter for weary travelers."}
+              </p>
+            </div>
+          </div>
+
+          {/* Right Notebook Page: Trade Goods Ledger */}
+          <div 
+            className={`absolute right-[4cqw] top-[2cqh] w-[44cqw] h-[68cqh] bg-[#fffdf6] border-[0.15cqw] border-[#8c7a6b]/40 shadow-2xl rounded-sm rotate-[1deg] p-[3.5cqw] flex flex-col justify-between transition-all duration-500 ${
+              focusRight ? "scale-105 z-20 shadow-2xl border-[#8b5a2b]/50" : "scale-95 opacity-50 z-10"
+            }`}
+          >
+            <div className="flex justify-between items-center border-b border-[#8c7a6b]/20 pb-[1cqh]">
+              <span className="font-serif text-[1cqw] text-[#8b5a2b] font-bold">BARTER LOG / 互市账目</span>
+              <span className="font-mono text-[0.9cqw] text-[#8c7a6b]">9TH CENTURY / 九世纪</span>
+            </div>
+
+            {/* Trade Goods List */}
+            <div className="flex-1 my-[2.5cqh] flex flex-col justify-center gap-[1.5cqh] font-serif relative">
+              {/* Highlight Circle for Beat 1 */}
+              {beat === 1 && (
+                <div className="absolute inset-0 border-[0.2cqw] border-dashed border-[#8b5a2b]/30 rounded-lg pointer-events-none animate-pulse p-[1cqw]" />
+              )}
+
+              <div className="flex justify-between items-center text-[1.15cqw] text-[#2b2520] border-b border-[#8c7a6b]/10 pb-[0.5cqh]">
+                <span className="font-bold">{language === "zh" ? "中原绢丝 (Central Silk)" : "Central Silk Weave"}</span>
+                <span className="font-mono font-bold text-[#8b5a2b]">120 Bolts (疋)</span>
+              </div>
+              <div className="flex justify-between items-center text-[1.15cqw] text-[#2b2520] border-b border-[#8c7a6b]/10 pb-[0.5cqh]">
+                <span className="font-bold">{language === "zh" ? "和阗美玉 (Khotan Jade)" : "Khotan Nephrite Jade"}</span>
+                <span className="font-mono font-bold text-[#8b5a2b]">45 Pieces (件)</span>
+              </div>
+              <div className="flex justify-between items-center text-[1.15cqw] text-[#2b2520] border-b border-[#8c7a6b]/10 pb-[0.5cqh]">
+                <span className="font-bold">{language === "zh" ? "大宛宝马 (Ferghana Horse)" : "Ferghana Heavenly Horses"}</span>
+                <span className="font-mono font-bold text-[#8b5a2b]">15 Heads (匹)</span>
               </div>
 
-              {beat >= 2 && (
-                <div className="absolute inset-0 bg-red-700/10 flex items-center justify-center rounded-xl backdrop-blur-[0.5px]">
-                  <div className="bg-red-800 text-white font-serif text-[1.2cqw] px-3 py-1 border-2 border-white rounded rotate-[-8deg] font-black tracking-widest shadow-xl animate-elastic-pop">
-                    {language === "zh" ? "准予通关" : "PASSPORT CLEARED"}
+              {/* Sovereign Stamp for Beat 2 */}
+              {showStamp && (
+                <div className="absolute right-[2cqw] bottom-[1cqh] w-[10cqw] h-[10cqw] border-[0.3cqw] border-double border-red-700 rounded-full flex items-center justify-center rotate-[-12deg] bg-red-50/20 shadow-sm animate-stamp-affix">
+                  <div className="text-center font-serif text-[1cqw] text-red-700 font-bold leading-none flex flex-col items-center justify-center p-[0.5cqw]">
+                    <span className="text-[0.8cqw] tracking-widest">APPROVED</span>
+                    <span className="border-t border-red-700/50 mt-[0.3cqh] pt-[0.3cqh] text-[0.75cqw]">悬泉置印</span>
                   </div>
                 </div>
               )}
             </div>
-          </div>
-        );
-      case 3:
-        return (
-          <div className="flex items-center justify-between w-full max-w-[44cqw] relative animate-slide-up" key={`s3-${beat}`}>
-            {/* Stage 1 */}
-            <div className={`border-2 border-[#78350f] bg-white p-[1.8cqw] rounded-xl flex flex-col items-center gap-2 w-[12cqw] text-center shadow-md relative overflow-hidden transition-all duration-700 ${beat >= 0 ? "opacity-100 scale-100" : "opacity-20 scale-95"}`}>
-              <div className="absolute top-1 right-2 font-mono text-[0.8cqw] opacity-30">01</div>
-              <div className="w-[3cqw] h-[3cqw] rounded-full bg-slate-50 border border-[#78350f] flex items-center justify-center font-mono text-[#78350f] text-[1.1cqw] font-bold">ROUTE</div>
-              <span className="font-serif text-[1cqw] font-black text-[#78350f]">{language === "zh" ? "测绘商路" : "ROUTE MAP"}</span>
-            </div>
 
-            {/* Line 1 */}
-            <div className={`flex-1 h-0.5 border-t border-dashed transition-all duration-1000 mx-2 ${
-              beat >= 1 ? "border-[#78350f]/50 opacity-100" : "border-[#78350f]/10 opacity-20"
-            }`} />
-
-            {/* Stage 2 */}
-            <div className={`border-2 border-[#78350f] bg-white p-[1.8cqw] rounded-xl flex flex-col items-center gap-2 w-[12cqw] text-center shadow-md relative overflow-hidden transition-all duration-700 ${
-              beat >= 1 ? "opacity-100 scale-100" : "opacity-20 scale-95"
-            }`}>
-              <div className="absolute top-1 right-2 font-mono text-[0.8cqw] opacity-30">02</div>
-              <div className="w-[3cqw] h-[3cqw] rounded-full bg-slate-50 border border-[#78350f] flex items-center justify-center font-mono text-[#78350f] text-[1.1cqw] font-bold">LOG</div>
-              <span className="font-serif text-[1cqw] font-black text-[#78350f]">{language === "zh" ? "登录货底" : "CARGO LOG"}</span>
-            </div>
-
-            {/* Line 2 */}
-            <div className={`flex-1 h-0.5 border-t border-dashed transition-all duration-1000 mx-2 ${
-              beat >= 2 ? "border-[#78350f]/50 opacity-100" : "border-[#78350f]/10 opacity-20"
-            }`} />
-
-            {/* Stage 3 */}
-            <div className={`border-2 border-red-700/30 bg-red-50 p-[1.8cqw] rounded-xl flex flex-col items-center gap-2 w-[12cqw] text-center shadow-md relative overflow-hidden transition-all duration-700 ${
-              beat >= 2 ? "opacity-100 scale-100 border-red-700/40" : "opacity-20 scale-95"
-            }`}>
-              <div className="absolute top-1 right-2 font-mono text-[0.8cqw] opacity-30">03</div>
-              <div className="w-[3cqw] h-[3cqw] rounded-full bg-red-100 border border-red-700 flex items-center justify-center font-mono text-red-700 text-[1.1cqw] font-bold">SEAL</div>
-              <span className="font-serif text-[1cqw] font-black text-[#78350f]">{language === "zh" ? "加印通关" : "OFFICIAL SEAL"}</span>
-            </div>
-          </div>
-        );
-      case 4:
-        return (
-          <div className="grid grid-cols-2 gap-[1.5cqw] w-full max-w-[42cqw] animate-scale-up font-serif" key={`s4-${beat}`}>
-            {/* Sector 1 */}
-            <div className={`border border-[#78350f]/20 bg-white/70 p-[1.5cqw] rounded-xl relative transition-all duration-500 ${beat >= 0 ? "opacity-100 scale-100 border-[#78350f]/30" : "opacity-20 scale-95"}`}>
-              <div className="absolute top-2 right-3 font-mono text-[1cqw] text-[#78350f] font-bold">SEC 1</div>
-              <span className="font-serif text-[1.1cqw] text-[#451a03] font-black block mb-1">{language === "zh" ? "河西走廊大咽喉" : "HEXI OASIS SECTOR"}</span>
-              <p className="text-[0.9cqw] opacity-85 text-[#78350f] font-sans leading-tight">
-                {language === "zh" ? "东起长安，西接玉门。夹于祁连冰雪与北漠流沙间，最狭长安全的绿洲走廊。" : "From Chang'an to Yumen. Safest oasis corridor cradled between snow peaks and dunes."}
-              </p>
-            </div>
-
-            {/* Sector 2 */}
-            <div className={`border border-[#78350f]/20 bg-white/70 p-[1.5cqw] rounded-xl relative transition-all duration-500 ${beat >= 1 ? "opacity-100 scale-100 border-[#78350f]/30" : "opacity-20 scale-95"}`}>
-              <div className="absolute top-2 right-3 font-mono text-[1cqw] text-[#78350f] font-bold">SEC 2</div>
-              <span className="font-serif text-[1.1cqw] text-[#451a03] font-black block mb-1">{language === "zh" ? "葱岭雪原冰隘" : "PAMIR ICE gorge"}</span>
-              <p className="text-[0.9cqw] opacity-85 text-[#78350f] font-sans leading-tight">
-                {language === "zh" ? "海拔超越数千米。极寒缺氧，商队必须在此卸载部分重载，冒雪攀越。" : "Altitudes exceeding 4000m. Blizzards and thin air forced caravans to drop cargo weights."}
-              </p>
-            </div>
-
-            {/* Sector 3 */}
-            <div className={`border border-[#78350f]/20 bg-white/70 p-[1.5cqw] rounded-xl relative transition-all duration-500 ${beat >= 2 ? "opacity-100 scale-100 border-[#78350f]/30" : "opacity-20 scale-95"}`}>
-              <div className="absolute top-2 right-3 font-mono text-[1cqw] text-[#78350f] font-bold">SEC 3</div>
-              <span className="font-serif text-[1.1cqw] text-[#451a03] font-black block mb-1">{language === "zh" ? "地中海东岸终港" : "LEVANT TRADE HUB"}</span>
-              <p className="text-[0.9cqw] opacity-85 text-[#78350f] font-sans leading-tight">
-                {language === "zh" ? "提尔与亚历山大。丝帛在此重新拆线、二次染色，销往罗马元老豪门。" : "Tyre or Antioch. Raw silks were unraveled and dyed purple for Roman patricians."}
-              </p>
-            </div>
-
-            {/* Sector 4 */}
-            <div className={`border border-[#78350f]/20 bg-amber-50 p-[1.5cqw] rounded-xl relative transition-all duration-500 ${beat >= 2 ? "opacity-100 scale-100 border-[#78350f]/40 bg-[#fffdf5]" : "opacity-20 scale-95"}`}>
-              <div className="absolute top-2 right-3 font-mono text-[1cqw] text-[#78350f] font-bold">SEC 4</div>
-              <span className="font-serif text-[1.1cqw] text-[#451a03] font-black block mb-1">{language === "zh" ? "互市货样清册" : "BARTER COMMODITIES"}</span>
-              <p className="text-[0.9cqw] opacity-85 text-[#78350f] font-sans leading-tight">
-                {language === "zh" ? "生丝、蜀锦、和田美玉、乳香、胡椒、罗马金币与叙利亚吹制玻璃器具。" : "Raw silk bolts, Shu brocades, Hetian jade, frankincense, pepper, and gold denari."}
+            <div className="flex flex-col gap-[0.5cqh]">
+              <span className="text-[1.1cqw] font-serif text-[#2b2520] font-bold">
+                {currentBeat.title}
+              </span>
+              <p className="text-[0.95cqw] leading-[1.5] text-[#5c5043] font-sans">
+                {currentBeat.body}
               </p>
             </div>
           </div>
-        );
-      case 5:
-        return (
-          <div className="grid grid-cols-3 gap-[1cqw] w-full max-w-[45cqw] animate-bento-stagger" key={`s5-${beat}`}>
-            {/* Bento Block 1: Oasis Section */}
-            <div className={`col-span-2 border border-[#78350f]/20 bg-white p-[1.2cqw] rounded-xl min-h-[16cqh] flex flex-col justify-between transition-all duration-500 ${beat >= 0 ? "opacity-100" : "opacity-25"}`}>
-              <div className="flex justify-between items-center border-b border-[#78350f]/10 pb-1.5 font-serif">
-                <span className="text-[0.95cqw] text-[#78350f] font-black flex items-center gap-1.5">
-                  <Map className="w-3.5 h-3.5 text-[#ca8a04]" />
-                  {language === "zh" ? "丝路沿途驿站间距测绘" : "OASIS POST-STATION MEASURE"}
-                </span>
-                <span className="text-[0.8cqw] font-mono text-slate-500">Gansu Path IV</span>
-              </div>
-              
-              <div className="flex flex-col gap-1.5 mt-2">
-                <div className="h-[2cqh] bg-amber-50/50 rounded border border-[#78350f]/10 flex items-center justify-between px-2 font-mono text-[0.75cqw] text-slate-600">
-                  <span>DUNHUANG → HAMU</span><span>320 Li (Desert)</span>
-                </div>
-                <div className="h-[2cqh] bg-amber-50/50 rounded border border-[#78350f]/10 flex items-center justify-between px-2 font-mono text-[0.75cqw] text-slate-600">
-                  <span>HAMU → TURPAN</span><span>450 Li (Gobi)</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Bento Block 2: Commodities Stats */}
-            <div className={`border border-[#78350f]/20 bg-white p-[1.2cqw] rounded-xl min-h-[16cqh] flex flex-col justify-between transition-all duration-500 ${beat >= 1 ? "opacity-100" : "opacity-25"}`}>
-              <span className="font-serif text-[0.85cqw] text-[#78350f] font-black block">{language === "zh" ? "通商生丝起运数" : "SILK BOLTS LOGGED"}</span>
-              <div className="text-[2.2cqw] font-black text-amber-800 font-mono leading-none my-1">
-                420<span className="text-[1cqw] font-normal font-sans opacity-70">b</span>
-              </div>
-              <span className="text-[0.8cqw] text-slate-500 font-mono block">Grade-A Jacquard Checked</span>
-            </div>
-
-            {/* Bento Block 3: Verification Certificate */}
-            <div className={`col-span-3 border border-red-700/20 bg-red-50 p-[1cqw] rounded-xl flex items-center justify-between transition-all duration-500 ${beat >= 2 ? "opacity-100 bg-red-100/10" : "opacity-25"}`}>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-red-700 animate-pulse" />
-                <span className="font-serif text-[0.9cqw] text-red-800 font-black">
-                  {language === "zh" ? "✓ 丝绸之路大通关清册加盖护府朱砂备案印" : "✓ IMPERIAL FRONTIER CUSTOMS CLEARANCE ARCHIVE SEALED"}
-                </span>
-              </div>
-              <span className="font-mono text-[0.8cqw] text-slate-500">SEAL: CUSTOM.WEST.402</span>
-            </div>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-
-  return (
-    <div className={`w-full h-full flex flex-col justify-between p-[5cqw] relative ${meta.colors.bg} ${meta.colors.ink} overflow-hidden select-none`}>
-      {/* Top Slide Meta Header */}
-      <div className="w-full flex justify-between items-start border-b border-[#78350f]/15 pb-[2cqh] z-10 shrink-0">
-        <div className="flex flex-col gap-0.5">
-          <span className="font-serif text-[1.1cqw] tracking-wider uppercase text-amber-800 font-black">
-            {meta.theme}
-          </span>
-          <span className="text-[1cqw] text-slate-500 font-mono tracking-tight uppercase">
-            {meta.name} • {currentScene.title}
-          </span>
         </div>
-        <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-[#78350f]/15 shadow-sm">
-          <div className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
-          <span className="font-mono text-[0.9cqw] text-amber-900 font-bold uppercase">{meta.tier}-TIER HISTORICAL</span>
+
+        {/* Footer Ledger Bar */}
+        <div className="w-full flex justify-between items-center border-t border-[#8c7a6b]/15 pt-[2cqh] z-10 shrink-0">
+          <div className="flex items-center gap-[1.5cqw]">
+            <span className="font-mono text-[0.95cqw] text-[#8c7a6b] font-bold uppercase">
+              {language === "zh" ? "实时操作:" : "BEAT ACTION:"}
+            </span>
+            <span className="font-mono text-[1cqw] bg-[#fffdf6] text-[#8b5a2b] border border-[#8b5a2b]/20 px-[1.2cqw] py-[0.5cqh] rounded-full font-black animate-pulse" key={`action-${scene}-${beat}`}>
+              {currentBeat.action}
+            </span>
+          </div>
+          <div className="flex items-center gap-[1cqw]">
+            <span className="font-mono text-[0.9cqw] text-[#8c7a6b] font-bold uppercase">
+              {language === "zh" ? `场景 ${scene} / 5` : `SCENE ${scene} / 5`}
+            </span>
+          </div>
         </div>
       </div>
+    );
+  };
 
-      {/* Central Split Layout Panel */}
-      <div className="flex-1 w-full grid grid-cols-12 gap-[4cqw] items-center my-[3cqh] z-10 overflow-hidden">
-        {/* Left Column: Semantic Copy Content Block */}
-        <div className="col-span-6 flex flex-col gap-[2cqh] text-left pr-[2cqw] justify-center min-h-[35cqh]">
-          <h1 className="text-[3.8cqw] leading-[1.1] font-black tracking-tight font-serif text-[#451a03] animate-slide-right" key={`title-${scene}-${beat}`}>
+  // Scene 3: Process - Standard (Winding Desert Route Progress)
+  const renderScene3 = () => {
+    // Camel position coordinates based on beat
+    let camelX = 180;
+    let camelY = 240;
+    let activeStation = "xian";
+
+    if (beat === 1) {
+      camelX = 850;
+      camelY = 160;
+      activeStation = "hexi";
+    } else if (beat === 2) {
+      camelX = 1550;
+      camelY = 220;
+      activeStation = "dunhuang";
+    }
+
+    return (
+      <div className="w-full h-full bg-[#fbf7f0] p-[4cqw] flex flex-col justify-between relative overflow-hidden">
+        {/* Decorative Grid Lines */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
+          backgroundImage: "radial-gradient(#8c7a6b 1px, transparent 1px)",
+          backgroundSize: "2cqw 2cqw"
+        }} />
+
+        {/* Header */}
+        <div className="w-full flex justify-between items-start z-10 shrink-0">
+          <div className="flex flex-col">
+            <span className="font-serif text-[1.4cqw] tracking-wider uppercase text-[#8b5a2b] font-bold">
+              {meta.theme}
+            </span>
+            <span className="text-[1cqw] text-[#8c7a6b] font-mono tracking-tight uppercase mt-[0.5cqh]">
+              {meta.name} • {currentScene.title}
+            </span>
+          </div>
+          <div className="flex items-center gap-[0.8cqw] bg-[#fffdf6] px-[1.2cqw] py-[0.8cqh] rounded-lg border border-[#8c7a6b]/20 shadow-sm">
+            <TrendingUp className="w-[1.2cqw] h-[1.2cqw] text-[#0f766e]" />
+            <span className="font-mono text-[0.9cqw] text-[#2b2520] font-bold uppercase">ROUTE PROGRESS</span>
+          </div>
+        </div>
+
+        {/* Route Map SVG Canvas */}
+        <div className="flex-1 w-full relative my-[2cqh] border border-[#8c7a6b]/15 bg-[#fffdf6]/60 rounded-md shadow-inner overflow-hidden">
+          <svg className="w-full h-full" viewBox="0 0 1720 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Latitude / Longitude background lines */}
+            <line x1="0" y1="100" x2="1720" y2="100" stroke="#8c7a6b" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.2" />
+            <line x1="0" y1="200" x2="1720" y2="200" stroke="#8c7a6b" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.2" />
+            <line x1="0" y1="300" x2="1720" y2="300" stroke="#8c7a6b" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.2" />
+            
+            <line x1="300" y1="0" x2="300" y2="400" stroke="#8c7a6b" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.2" />
+            <line x1="600" y1="0" x2="600" y2="400" stroke="#8c7a6b" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.2" />
+            <line x1="900" y1="0" x2="900" y2="400" stroke="#8c7a6b" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.2" />
+            <line x1="1200" y1="0" x2="1200" y2="400" stroke="#8c7a6b" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.2" />
+            <line x1="1500" y1="0" x2="1500" y2="400" stroke="#8c7a6b" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.2" />
+
+            {/* Mountain ranges (Qilian Mountains) drawn as hand-drawn triangles */}
+            <g opacity="0.15" fill="#8b5a2b">
+              <polygon points="500,280 550,200 600,280" />
+              <polygon points="580,290 640,190 700,290" />
+              <polygon points="680,280 730,210 780,280" />
+              <polygon points="760,300 820,180 880,300" />
+              <polygon points="860,290 920,200 980,290" />
+              <polygon points="960,310 1030,170 1100,310" />
+              <polygon points="1080,290 1140,210 1200,290" />
+              <polygon points="1180,300 1250,190 1320,300" />
+            </g>
+
+            {/* Winding route path */}
+            <path 
+              d="M 180,240 Q 350,120 520,180 T 850,160 T 1200,260 T 1550,220" 
+              stroke="#8b5a2b" 
+              strokeWidth="4" 
+              strokeDasharray="12 8" 
+              fill="none" 
+              opacity="0.8"
+            />
+
+            {/* Station 1: Xi'an */}
+            <g transform="translate(180, 240)">
+              <circle 
+                r="12" 
+                fill={activeStation === "xian" ? "#0f766e" : "#fbf7f0"} 
+                stroke="#8b5a2b" 
+                strokeWidth="3" 
+                className={activeStation === "xian" ? "animate-ping opacity-75" : ""}
+              />
+              <circle 
+                r="8" 
+                fill={activeStation === "xian" ? "#0f766e" : "#8b5a2b"} 
+                stroke="#fbf7f0" 
+                strokeWidth="2" 
+              />
+              <text y="30" textAnchor="middle" fill="#2b2520" className="text-[12px] font-serif font-bold">XI'AN / 长安</text>
+            </g>
+
+            {/* Station 2: Hexi Corridor */}
+            <g transform="translate(850, 160)">
+              <circle 
+                r="12" 
+                fill={activeStation === "hexi" ? "#0f766e" : "#fbf7f0"} 
+                stroke="#8b5a2b" 
+                strokeWidth="3" 
+                className={activeStation === "hexi" ? "animate-ping opacity-75" : ""}
+              />
+              <circle 
+                r="8" 
+                fill={activeStation === "hexi" ? "#0f766e" : "#8b5a2b"} 
+                stroke="#fbf7f0" 
+                strokeWidth="2" 
+              />
+              <text y="-25" textAnchor="middle" fill="#2b2520" className="text-[12px] font-serif font-bold">HEXI CORRIDOR / 河西走廊</text>
+            </g>
+
+            {/* Station 3: Dunhuang */}
+            <g transform="translate(1550, 220)">
+              <circle 
+                r="16" 
+                fill={activeStation === "dunhuang" ? "#0f766e" : "#fbf7f0"} 
+                stroke="#8b5a2b" 
+                strokeWidth="3" 
+                className={activeStation === "dunhuang" ? "animate-ping opacity-75" : ""}
+              />
+              <circle 
+                r="10" 
+                fill={activeStation === "dunhuang" ? "#0f766e" : "#8b5a2b"} 
+                stroke="#fbf7f0" 
+                strokeWidth="2" 
+              />
+              <text y="35" textAnchor="middle" fill="#2b2520" className="text-[12px] font-serif font-bold">DUNHUANG / 敦煌</text>
+            </g>
+
+            {/* Walking Camel Marker */}
+            <g 
+              transform={`translate(${camelX - 25}, ${camelY - 45}) scale(0.8)`} 
+              className="transition-all duration-1000 ease-in-out"
+            >
+              {/* Camel Silhouette */}
+              <path 
+                d="M 10,35 Q 15,20 20,35 Q 25,15 35,15 Q 42,15 45,25 Q 50,10 55,10 Q 60,10 60,18 L 57,25 L 53,25 L 53,16 L 45,16 Q 40,25 40,35 L 36,55 L 32,55 L 32,38 L 24,38 L 24,55 L 20,55 L 20,38 L 12,38 L 12,55 L 8,55 L 8,35 Z" 
+                fill="#8b5a2b" 
+                stroke="#fbf7f0"
+                strokeWidth="1.5"
+              />
+            </g>
+          </svg>
+
+          {/* Floating real-time distance metrics */}
+          <div className="absolute top-[2cqh] right-[2cqw] bg-[#fffdf6]/90 border border-[#8c7a6b]/20 p-[1.5cqw] rounded shadow-sm font-mono text-[0.85cqw] text-[#5c5043] flex flex-col gap-[0.5cqh] backdrop-blur-[1px]">
+            <div className="flex justify-between gap-[2cqw]">
+              <span>TOTAL DISTANCE:</span>
+              <span className="font-bold text-[#2b2520]">3,600 Li (里)</span>
+            </div>
+            <div className="flex justify-between gap-[2cqw]">
+              <span>WATER DEPLETION:</span>
+              <span className="font-bold text-[#0f766e]">{beat === 0 ? "95%" : beat === 1 ? "65%" : "35%"}</span>
+            </div>
+            <div className="flex justify-between gap-[2cqw]">
+              <span>CARAVAN STATUS:</span>
+              <span className="font-bold text-[#8b5a2b]">{beat === 2 ? "ARRIVED" : "MARCHING"}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Text Panel */}
+        <div className="mx-[4cqw] mb-[1cqh] p-[2.5cqw] bg-[#fffdf6] border-[0.15cqw] border-[#8c7a6b]/20 shadow-md rounded-md flex gap-[3cqw] items-center shrink-0">
+          <div className="p-[1.2cqw] bg-[#fbf7f0] rounded-full border border-[#8c7a6b]/10 shrink-0">
+            <Compass className="w-[2.5cqw] h-[2.5cqw] text-[#8b5a2b] animate-spin-slow" />
+          </div>
+          <div className="flex flex-col gap-[0.5cqh] text-left">
+            <h2 className="text-[1.5cqw] font-serif text-[#2b2520] font-bold leading-tight">
+              {currentBeat.title}
+            </h2>
+            <p className="text-[1.1cqw] leading-[1.5] text-[#5c5043] font-sans">
+              {currentBeat.body}
+            </p>
+          </div>
+        </div>
+
+        {/* Footer Ledger Bar */}
+        <div className="w-full flex justify-between items-center border-t border-[#8c7a6b]/15 pt-[2cqh] z-10 shrink-0">
+          <div className="flex items-center gap-[1.5cqw]">
+            <span className="font-mono text-[0.95cqw] text-[#8c7a6b] font-bold uppercase">
+              {language === "zh" ? "实时操作:" : "BEAT ACTION:"}
+            </span>
+            <span className="font-mono text-[1cqw] bg-[#fffdf6] text-[#8b5a2b] border border-[#8b5a2b]/20 px-[1.2cqw] py-[0.5cqh] rounded-full font-black animate-pulse" key={`action-${scene}-${beat}`}>
+              {currentBeat.action}
+            </span>
+          </div>
+          <div className="flex items-center gap-[1cqw]">
+            <span className="font-mono text-[0.9cqw] text-[#8c7a6b] font-bold uppercase">
+              {language === "zh" ? `场景 ${scene} / 5` : `SCENE ${scene} / 5`}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Scene 4: Matrix - Dense (Oasis Trade Goods Quadrant)
+  const renderScene4 = () => {
+    const highlightQ1Q2 = beat === 0;
+    const highlightQ3Q4 = beat === 1;
+    const highlightAll = beat === 2;
+
+    return (
+      <div className="w-full h-full bg-[#fbf7f0] p-[4cqw] flex flex-col justify-between relative overflow-hidden">
+        {/* Decorative Grid Lines */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
+          backgroundImage: "radial-gradient(#8c7a6b 1px, transparent 1px)",
+          backgroundSize: "2cqw 2cqw"
+        }} />
+
+        {/* Header */}
+        <div className="w-full flex justify-between items-start z-10 shrink-0">
+          <div className="flex flex-col">
+            <span className="font-serif text-[1.4cqw] tracking-wider uppercase text-[#8b5a2b] font-bold">
+              {meta.theme}
+            </span>
+            <span className="text-[1cqw] text-[#8c7a6b] font-mono tracking-tight uppercase mt-[0.5cqh]">
+              {meta.name} • {currentScene.title}
+            </span>
+          </div>
+          <div className="flex items-center gap-[0.8cqw] bg-[#fffdf6] px-[1.2cqw] py-[0.8cqh] rounded-lg border border-[#8c7a6b]/20 shadow-sm">
+            <Scale className="w-[1.2cqw] h-[1.2cqw] text-[#0f766e]" />
+            <span className="font-mono text-[0.9cqw] text-[#2b2520] font-bold uppercase">COMMODITY MATRIX</span>
+          </div>
+        </div>
+
+        {/* Matrix Grid */}
+        <div className="flex-1 w-full grid grid-cols-2 gap-[2.5cqw] my-[2cqh] items-stretch">
+          {/* Quadrant 1: Textiles (Silk) */}
+          <div 
+            className={`bg-[#fffdf6] border-[0.15cqw] border-[#8c7a6b]/30 p-[2.5cqw] rounded shadow-md flex flex-col justify-between transition-all duration-500 ${
+              highlightQ1Q2 || highlightAll ? "scale-100 opacity-100 border-[#8b5a2b]/50 shadow-lg" : "scale-95 opacity-30"
+            }`}
+          >
+            <div className="flex justify-between items-start border-b border-[#8c7a6b]/10 pb-[1cqh]">
+              <div className="flex items-center gap-[1cqw]">
+                <Scroll className="w-[2cqw] h-[2cqw] text-[#8b5a2b]" />
+                <span className="font-serif text-[1.3cqw] text-[#2b2520] font-bold">
+                  {language === "zh" ? "纺织：中原绢帛" : "Textiles: Central Silks"}
+                </span>
+              </div>
+              <span className="font-mono text-[0.85cqw] text-[#8c7a6b] bg-[#fbf7f0] px-[0.8cqw] py-[0.3cqh] border border-[#8c7a6b]/10 rounded">Q1</span>
+            </div>
+            <div className="flex-1 my-[1.5cqh] flex flex-col justify-center gap-[0.8cqh] font-mono text-[0.95cqw] text-[#5c5043]">
+              <div className="flex justify-between">
+                <span>ORIGIN DEME / 原产地:</span>
+                <span className="font-bold text-[#2b2520]">Chang'an (长安)</span>
+              </div>
+              <div className="flex justify-between">
+                <span>TAX RATE / 互市税率:</span>
+                <span className="font-bold text-[#0f766e]">Exempt / 免税 (Treaty)</span>
+              </div>
+              <div className="flex justify-between">
+                <span>TRAVEL RISK / 运输风险:</span>
+                <span className="font-bold text-emerald-700">Low / 低风险</span>
+              </div>
+            </div>
+            <p className="text-[0.95cqw] text-[#8c7a6b] leading-tight font-sans italic border-t border-[#8c7a6b]/5 pt-[1cqh]">
+              {language === "zh" ? "中原绢丝轻盈华丽，为罗马贵族追捧。" : "Lustrous jacquard silks, highly prized across Roman courts."}
+            </p>
+          </div>
+
+          {/* Quadrant 2: Spices (Pepper & Frankincense) */}
+          <div 
+            className={`bg-[#fffdf6] border-[0.15cqw] border-[#8c7a6b]/30 p-[2.5cqw] rounded shadow-md flex flex-col justify-between transition-all duration-500 ${
+              highlightQ1Q2 || highlightAll ? "scale-100 opacity-100 border-[#8b5a2b]/50 shadow-lg" : "scale-95 opacity-30"
+            }`}
+          >
+            <div className="flex justify-between items-start border-b border-[#8c7a6b]/10 pb-[1cqh]">
+              <div className="flex items-center gap-[1cqw]">
+                <Feather className="w-[2cqw] h-[2cqw] text-[#0f766e]" />
+                <span className="font-serif text-[1.3cqw] text-[#2b2520] font-bold">
+                  {language === "zh" ? "香料：异域香料" : "Spices: Exotic Resins"}
+                </span>
+              </div>
+              <span className="font-mono text-[0.85cqw] text-[#8c7a6b] bg-[#fbf7f0] px-[0.8cqw] py-[0.3cqh] border border-[#8c7a6b]/10 rounded">Q2</span>
+            </div>
+            <div className="flex-1 my-[1.5cqh] flex flex-col justify-center gap-[0.8cqh] font-mono text-[0.95cqw] text-[#5c5043]">
+              <div className="flex justify-between">
+                <span>ORIGIN DEME / 原产地:</span>
+                <span className="font-bold text-[#2b2520]">India & Persia (天竺/波斯)</span>
+              </div>
+              <div className="flex justify-between">
+                <span>TAX RATE / 互市税率:</span>
+                <span className="font-bold text-[#8b5a2b]">10% (什一税)</span>
+              </div>
+              <div className="flex justify-between">
+                <span>TRAVEL RISK / 运输风险:</span>
+                <span className="font-bold text-amber-700">Medium / 中风险</span>
+              </div>
+            </div>
+            <p className="text-[0.95cqw] text-[#8c7a6b] leading-tight font-sans italic border-t border-[#8c7a6b]/5 pt-[1cqh]">
+              {language === "zh" ? "乳香与胡椒，防腐与调味的绝对奢侈品。" : "Frankincense and pepper, essential luxury preservatives."}
+            </p>
+          </div>
+
+          {/* Quadrant 3: Precious Stones (Jade) */}
+          <div 
+            className={`bg-[#fffdf6] border-[0.15cqw] border-[#8c7a6b]/30 p-[2.5cqw] rounded shadow-md flex flex-col justify-between transition-all duration-500 ${
+              highlightQ3Q4 || highlightAll ? "scale-100 opacity-100 border-[#8b5a2b]/50 shadow-lg" : "scale-95 opacity-30"
+            }`}
+          >
+            <div className="flex justify-between items-start border-b border-[#8c7a6b]/10 pb-[1cqh]">
+              <div className="flex items-center gap-[1cqw]">
+                <Coins className="w-[2cqw] h-[2cqw] text-[#8b5a2b]" />
+                <span className="font-serif text-[1.3cqw] text-[#2b2520] font-bold">
+                  {language === "zh" ? "宝石：和田美玉" : "Stones: Khotan Jade"}
+                </span>
+              </div>
+              <span className="font-mono text-[0.85cqw] text-[#8c7a6b] bg-[#fbf7f0] px-[0.8cqw] py-[0.3cqh] border border-[#8c7a6b]/10 rounded">Q3</span>
+            </div>
+            <div className="flex-1 my-[1.5cqh] flex flex-col justify-center gap-[0.8cqh] font-mono text-[0.95cqw] text-[#5c5043]">
+              <div className="flex justify-between">
+                <span>ORIGIN DEME / 原产地:</span>
+                <span className="font-bold text-[#2b2520]">Khotan (于阗)</span>
+              </div>
+              <div className="flex justify-between">
+                <span>TAX RATE / 互市税率:</span>
+                <span className="font-bold text-[#8b5a2b]">12% (十二税)</span>
+              </div>
+              <div className="flex justify-between">
+                <span>TRAVEL RISK / 运输风险:</span>
+                <span className="font-bold text-red-700">High / 高风险</span>
+              </div>
+            </div>
+            <p className="text-[0.95cqw] text-[#8c7a6b] leading-tight font-sans italic border-t border-[#8c7a6b]/5 pt-[1cqh]">
+              {language === "zh" ? "温润美玉代表权贵，中原帝王祭祀圣物。" : "Warm nephrite jade, sacred representation of imperial power."}
+            </p>
+          </div>
+
+          {/* Quadrant 4: Manuscripts (Scrolls) */}
+          <div 
+            className={`bg-[#fffdf6] border-[0.15cqw] border-[#8c7a6b]/30 p-[2.5cqw] rounded shadow-md flex flex-col justify-between transition-all duration-500 ${
+              highlightQ3Q4 || highlightAll ? "scale-100 opacity-100 border-[#8b5a2b]/50 shadow-lg" : "scale-95 opacity-30"
+            }`}
+          >
+            <div className="flex justify-between items-start border-b border-[#8c7a6b]/10 pb-[1cqh]">
+              <div className="flex items-center gap-[1cqw]">
+                <BookOpen className="w-[2cqw] h-[2cqw] text-[#0f766e]" />
+                <span className="font-serif text-[1.3cqw] text-[#2b2520] font-bold">
+                  {language === "zh" ? "手稿：敦煌遗书" : "Scrolls: Dunhuang Texts"}
+                </span>
+              </div>
+              <span className="font-mono text-[0.85cqw] text-[#8c7a6b] bg-[#fbf7f0] px-[0.8cqw] py-[0.3cqh] border border-[#8c7a6b]/10 rounded">Q4</span>
+            </div>
+            <div className="flex-1 my-[1.5cqh] flex flex-col justify-center gap-[0.8cqh] font-mono text-[0.95cqw] text-[#5c5043]">
+              <div className="flex justify-between">
+                <span>ORIGIN DEME / 原产地:</span>
+                <span className="font-bold text-[#2b2520]">Dunhuang (敦煌)</span>
+              </div>
+              <div className="flex justify-between">
+                <span>TAX RATE / 互市税率:</span>
+                <span className="font-bold text-[#0f766e]">Exempt / 免税 (Religious)</span>
+              </div>
+              <div className="flex justify-between">
+                <span>TRAVEL RISK / 运输风险:</span>
+                <span className="font-bold text-emerald-700">Low / 低风险</span>
+              </div>
+            </div>
+            <p className="text-[0.95cqw] text-[#8c7a6b] leading-tight font-sans italic border-t border-[#8c7a6b]/5 pt-[1cqh]">
+              {language === "zh" ? "多语种宗教手稿，见证思想与信仰交融。" : "Multi-lingual texts witnessing the exchange of ideas."}
+            </p>
+          </div>
+        </div>
+
+        {/* Detailed Copywriting block at the bottom */}
+        <div className="mx-[4cqw] p-[2cqw] bg-[#fffdf6] border border-[#8c7a6b]/15 rounded shadow-sm text-left shrink-0">
+          <h3 className="text-[1.2cqw] font-serif text-[#2b2520] font-bold mb-[0.5cqh]">
             {currentBeat.title}
-          </h1>
-          <p className="text-[1.5cqw] leading-[1.5] text-slate-700 font-sans mt-[1cqh] animate-crossfade" key={`body-${scene}-${beat}`}>
+          </h3>
+          <p className="text-[1cqw] leading-[1.5] text-[#5c5043] font-sans">
             {currentBeat.body}
           </p>
         </div>
 
-        {/* Right Column: Creative Visual Vector Canvas */}
-        <div className="col-span-6 flex items-center justify-center min-h-[40cqh]">
-          {renderVisual()}
+        {/* Footer Ledger Bar */}
+        <div className="w-full flex justify-between items-center border-t border-[#8c7a6b]/15 pt-[2cqh] z-10 shrink-0">
+          <div className="flex items-center gap-[1.5cqw]">
+            <span className="font-mono text-[0.95cqw] text-[#8c7a6b] font-bold uppercase">
+              {language === "zh" ? "实时操作:" : "BEAT ACTION:"}
+            </span>
+            <span className="font-mono text-[1cqw] bg-[#fffdf6] text-[#8b5a2b] border border-[#8b5a2b]/20 px-[1.2cqw] py-[0.5cqh] rounded-full font-black animate-pulse" key={`action-${scene}-${beat}`}>
+              {currentBeat.action}
+            </span>
+          </div>
+          <div className="flex items-center gap-[1cqw]">
+            <span className="font-mono text-[0.9cqw] text-[#8c7a6b] font-bold uppercase">
+              {language === "zh" ? `场景 ${scene} / 5` : `SCENE ${scene} / 5`}
+            </span>
+          </div>
         </div>
       </div>
+    );
+  };
 
-      {/* Bottom Technical Progress Ledger Bar */}
-      <div className="w-full flex justify-between items-center border-t border-[#78350f]/15 pt-[2cqh] z-10 shrink-0">
-        <div className="flex items-center gap-3">
-          <span className="font-mono text-[0.95cqw] text-slate-500 font-bold uppercase">{language === "zh" ? "实时操作:" : "BEAT ACTION:"}</span>
-          <span className="font-mono text-[1cqw] bg-amber-50 text-amber-800 border border-amber-900/20 px-3 py-1 rounded-full font-black animate-pulse" key={`action-${scene}-${beat}`}>
-            {currentBeat.action}
-          </span>
+  // Scene 5: Ledger - Extreme (Full-page Trade Manifest Ledger)
+  const renderScene5 = () => {
+    const showTable = beat >= 0;
+    const showTaxes = beat >= 1;
+    const showStamp = beat >= 2;
+
+    return (
+      <div className="w-full h-full bg-[#fbf7f0] p-[3.5cqw] flex flex-col justify-between relative overflow-hidden">
+        {/* Decorative Grid Lines */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
+          backgroundImage: "radial-gradient(#8c7a6b 1px, transparent 1px)",
+          backgroundSize: "2cqw 2cqw"
+        }} />
+
+        {/* Header */}
+        <div className="w-full flex justify-between items-end border-b-[0.2cqw] border-double border-[#8c7a6b]/40 pb-[1.5cqh] z-10 shrink-0">
+          <div className="flex flex-col text-left">
+            <span className="font-serif text-[1.6cqw] text-[#2b2520] font-bold tracking-wide">
+              {language === "zh" ? "安西都护府通商总账册" : "ANXI PROTECTORATE FRONTIER LEDGER"}
+            </span>
+            <span className="text-[0.95cqw] text-[#8c7a6b] font-mono tracking-tight uppercase mt-[0.5cqh]">
+              {meta.name} • {currentScene.title}
+            </span>
+          </div>
+          <div className="flex flex-col items-end font-mono text-[0.85cqw] text-[#8c7a6b]">
+            <span>No. Tang-West-742</span>
+            <span>DATE: 辛未九月 / SEP 9TH</span>
+          </div>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="font-mono text-[0.9cqw] text-slate-500 font-bold uppercase">
-            {language === "zh" ? `场景 ${scene} / 5` : `SCENE ${scene} / 5`}
-          </span>
+
+        {/* Ledger Content: Split into Cargo Table (Left) and Metrics/Stamps (Right) */}
+        <div className="flex-1 w-full grid grid-cols-12 gap-[3cqw] my-[2cqh] items-stretch overflow-hidden">
+          {/* Left Column: Cargo Table (7 cols) */}
+          <div className="col-span-7 flex flex-col justify-between border-r border-[#8c7a6b]/15 pr-[1.5cqw]">
+            <div className="w-full">
+              <span className="font-serif text-[1.1cqw] text-[#8b5a2b] font-bold block mb-[1.5cqh] text-left">
+                {language === "zh" ? "I. 大宗商货起运登记表" : "I. FRONTIER CARGO MANIFEST TALLY"}
+              </span>
+              
+              {showTable && (
+                <table className="w-full text-left font-mono text-[0.95cqw] border-collapse animate-fade-in" key="manifest-table">
+                  <thead>
+                    <tr className="border-b border-[#8c7a6b]/30 text-[#8c7a6b] text-[0.85cqw]">
+                      <th className="pb-[1cqh] font-bold">{language === "zh" ? "货物名称" : "CARGO ITEM"}</th>
+                      <th className="pb-[1cqh] font-bold">{language === "zh" ? "数量" : "QUANTITY"}</th>
+                      <th className="pb-[1cqh] font-bold">{language === "zh" ? "申报货值" : "DECLARED VALUE"}</th>
+                      <th className="pb-[1cqh] font-bold">{language === "zh" ? "课税状态" : "TAX STATUS"}</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-[#2b2520]">
+                    <tr className="border-b border-[#8c7a6b]/10">
+                      <td className="py-[1cqh] font-serif font-bold">{language === "zh" ? "生丝 (Raw Silk)" : "Raw Silk Bolts"}</td>
+                      <td className="py-[1cqh]">420 Bolts (疋)</td>
+                      <td className="py-[1cqh]">12,600 Cash</td>
+                      <td className="py-[1cqh] text-[#0f766e] font-bold">Exempt (免税)</td>
+                    </tr>
+                    <tr className="border-b border-[#8c7a6b]/10">
+                      <td className="py-[1cqh] font-serif font-bold">{language === "zh" ? "蜀锦 (Shu Brocade)" : "Shu Brocades"}</td>
+                      <td className="py-[1cqh]">80 Bolts (疋)</td>
+                      <td className="py-[1cqh]">4,800 Cash</td>
+                      <td className="py-[1cqh] text-[#0f766e] font-bold">Exempt (免税)</td>
+                    </tr>
+                    <tr className="border-b border-[#8c7a6b]/10">
+                      <td className="py-[1cqh] font-serif font-bold">{language === "zh" ? "和田玉 (Khotan Jade)" : "Khotan Jade"}</td>
+                      <td className="py-[1cqh]">45 Pieces (件)</td>
+                      <td className="py-[1cqh]">9,000 Cash</td>
+                      <td className="py-[1cqh] text-[#8b5a2b]">10% (900 Cash)</td>
+                    </tr>
+                    <tr className="border-b border-[#8c7a6b]/10">
+                      <td className="py-[1cqh] font-serif font-bold">{language === "zh" ? "乳香 (Frankincense)" : "Frankincense"}</td>
+                      <td className="py-[1cqh]">150 Liang (两)</td>
+                      <td className="py-[1cqh]">3,000 Cash</td>
+                      <td className="py-[1cqh] text-[#8b5a2b]">10% (300 Cash)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              )}
+            </div>
+
+            {/* Dynamic Beat Copywriting inside the Ledger */}
+            <div className="bg-[#fffdf6] border border-[#8c7a6b]/15 p-[2cqw] rounded shadow-sm text-left mt-[1cqh]">
+              <h3 className="text-[1.15cqw] font-serif text-[#2b2520] font-bold mb-[0.5cqh] flex items-center gap-[0.5cqw]">
+                <FileText className="w-[1.2cqw] h-[1.2cqw] text-[#8b5a2b]" />
+                {currentBeat.title}
+              </h3>
+              <p className="text-[0.95cqw] leading-[1.5] text-[#5c5043] font-sans">
+                {currentBeat.body}
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column: Water Chart & Dynasty Stamps (5 cols) */}
+          <div className="col-span-5 flex flex-col justify-between pl-[1cqw] relative">
+            {/* Water Depletion Chart */}
+            <div className="w-full">
+              <span className="font-serif text-[1.1cqw] text-[#8b5a2b] font-bold block mb-[1cqh] text-left">
+                {language === "zh" ? "II. 商队水源消耗遥测" : "II. WATER DEPLETION TELEMETRY"}
+              </span>
+              <div className="h-[12cqh] border border-[#8c7a6b]/15 bg-[#fffdf6]/80 rounded p-[1cqw] relative overflow-hidden flex items-end">
+                {/* SVG Line Graph */}
+                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 300 100" preserveAspectRatio="none">
+                  {/* Warning line */}
+                  <line x1="0" y1="65" x2="300" y2="65" stroke="#ef4444" strokeWidth="1" strokeDasharray="2 2" opacity="0.5" />
+                  {/* Water curve */}
+                  <path 
+                    d="M 0,10 Q 50,20 100,35 T 200,65 T 300,80" 
+                    fill="none" 
+                    stroke="#0284c7" 
+                    strokeWidth="2.5" 
+                    className="animate-pulse"
+                  />
+                  {/* Grid lines */}
+                  <line x1="100" y1="0" x2="100" y2="100" stroke="#8c7a6b" strokeWidth="0.5" strokeDasharray="2 2" opacity="0.2" />
+                  <line x1="200" y1="0" x2="200" y2="100" stroke="#8c7a6b" strokeWidth="0.5" strokeDasharray="2 2" opacity="0.2" />
+                </svg>
+                <div className="absolute top-[0.5cqh] left-[1cqw] text-[0.75cqw] font-mono text-[#8c7a6b] flex flex-col">
+                  <span>100% CAP</span>
+                  <span className="text-red-600 mt-[4cqh]">35% WARN</span>
+                </div>
+                <div className="absolute bottom-[0.5cqh] right-[1cqw] text-[0.8cqw] font-mono text-[#0284c7] font-bold">
+                  {language === "zh" ? "临界余量: 35%" : "CRITICAL WATER: 35%"}
+                </div>
+              </div>
+            </div>
+
+            {/* Dynasty Tax Stamps */}
+            <div className="my-[1.5cqh]">
+              <span className="font-serif text-[1.1cqw] text-[#8b5a2b] font-bold block mb-[1cqh] text-left">
+                {language === "zh" ? "III. 历代都护府关税核验" : "III. DYNASTY TARIFF VERIFICATION"}
+              </span>
+              <div className="flex gap-[1.5cqw] justify-start">
+                {/* Han Dynasty Stamp */}
+                <div className="w-[8cqw] h-[8cqw] border-[0.15cqw] border-[#8c7a6b]/20 rounded p-[0.5cqw] flex flex-col justify-between items-center opacity-30 bg-[#fbf7f0]">
+                  <span className="text-[0.7cqw] font-mono">HAN DYNASTY</span>
+                  <Landmark className="w-[2.5cqw] h-[2.5cqw] text-[#8c7a6b]" />
+                  <span className="text-[0.65cqw] font-mono">ARCHIVED</span>
+                </div>
+
+                {/* Tang Dynasty Stamp */}
+                <div className={`w-[8cqw] h-[8cqw] border-[0.15cqw] rounded p-[0.5cqw] flex flex-col justify-between items-center transition-all duration-500 ${
+                  showTaxes ? "border-[#0f766e] bg-[#0f766e]/5 opacity-100 scale-100" : "border-[#8c7a6b]/20 opacity-30 scale-95"
+                }`}>
+                  <span className="text-[0.7cqw] font-mono text-[#0f766e] font-bold">TANG DYNASTY</span>
+                  <ShieldCheck className="w-[2.5cqw] h-[2.5cqw] text-[#0f766e]" />
+                  <span className="text-[0.65cqw] font-mono text-[#0f766e] font-bold">VERIFIED</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Sovereign Oasis Red Clay Stamp */}
+            {showStamp && (
+              <div 
+                key="vermilion-stamp"
+                className="absolute right-[2cqw] bottom-[1cqh] w-[13cqw] h-[13cqw] border-[0.4cqw] border-double border-red-700 rounded-full flex items-center justify-center rotate-[-8deg] bg-red-50/30 shadow-lg animate-stamp-affix z-20"
+              >
+                <div className="text-center font-serif text-[1.1cqw] text-red-700 font-bold leading-tight flex flex-col items-center justify-center p-[0.5cqw]">
+                  <span className="text-[0.8cqw] tracking-widest uppercase">SOVEREIGN</span>
+                  <span className="border-y border-red-700/50 my-[0.3cqh] py-[0.3cqh] text-[1.2cqw] tracking-wider">安西都护</span>
+                  <span className="text-[0.75cqw] tracking-widest">CUSTOMS SEAL</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Footer Ledger Bar */}
+        <div className="w-full flex justify-between items-center border-t border-[#8c7a6b]/15 pt-[2cqh] z-10 shrink-0">
+          <div className="flex items-center gap-[1.5cqw]">
+            <span className="font-mono text-[0.95cqw] text-[#8c7a6b] font-bold uppercase">
+              {language === "zh" ? "实时操作:" : "BEAT ACTION:"}
+            </span>
+            <span className="font-mono text-[1cqw] bg-[#fffdf6] text-[#8b5a2b] border border-[#8b5a2b]/20 px-[1.2cqw] py-[0.5cqh] rounded-full font-black animate-pulse" key={`action-${scene}-${beat}`}>
+              {currentBeat.action}
+            </span>
+          </div>
+          <div className="flex items-center gap-[1cqw]">
+            <span className="font-mono text-[0.9cqw] text-[#8c7a6b] font-bold uppercase">
+              {language === "zh" ? `场景 ${scene} / 5` : `SCENE ${scene} / 5`}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Render the appropriate scene based on the scene prop
+  const renderScene = () => {
+    switch (scene) {
+      case 1:
+        return renderScene1();
+      case 2:
+        return renderScene2();
+      case 3:
+        return renderScene3();
+      case 4:
+        return renderScene4();
+      case 5:
+        return renderScene5();
+      default:
+        return renderScene1();
+    }
+  };
+
+  return (
+    <div 
+      className="w-full h-full relative overflow-hidden select-none bg-[#fbf7f0]"
+      style={{ containerType: "size" }}
+    >
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes stamp-affix-anim {
+          0% { transform: scale(3) rotate(-30deg); opacity: 0; filter: blur(4px); }
+          70% { transform: scale(0.9) rotate(-10deg); opacity: 0.9; }
+          100% { transform: scale(1) rotate(-8deg); opacity: 1; }
+        }
+        .animate-stamp-affix {
+          animation: stamp-affix-anim 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        @keyframes fade-in-anim {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        .animate-fade-in {
+          animation: fade-in-anim 0.8s ease-out forwards;
+        }
+        @keyframes spin-slow-anim {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow-anim 20s linear infinite;
+        }
+      `}} />
+      {renderCoordinateTicks()}
+      {/* Main active scene view using Horizontal Spatial Viewport Track */}
+      <div className="flex-1 w-full relative overflow-hidden h-full">
+        <div 
+          className="flex w-[500%] h-full transition-transform duration-1000 ease-out"
+          style={{
+            transform: `translateX(-${(scene - 1) * 20}%)`,
+            transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)"
+          }}
+        >
+          <div className="w-[20%] h-full shrink-0 relative">{renderScene1()}</div>
+          <div className="w-[20%] h-full shrink-0 relative">{renderScene2()}</div>
+          <div className="w-[20%] h-full shrink-0 relative">{renderScene3()}</div>
+          <div className="w-[20%] h-full shrink-0 relative">{renderScene4()}</div>
+          <div className="w-[20%] h-full shrink-0 relative">{renderScene5()}</div>
         </div>
       </div>
     </div>

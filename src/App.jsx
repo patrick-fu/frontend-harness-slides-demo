@@ -520,7 +520,7 @@ export function App() {
                 <div className={`border px-3 py-1.5 rounded-lg flex items-center gap-2 max-w-xs truncate shrink-0 ${chrome.panelSoft}`}>
                   <Sparkles className="w-3.5 h-3.5 text-yellow-400 animate-pulse" />
                   <span className={`text-xs font-mono ${chrome.muted} truncate`}>
-                    {t.controlLabel} <strong className={chrome.text}>{currentStyle.scenes[scene-1].beats[beat].action}</strong>
+                    {t.controlLabel} <strong className={chrome.text}>{currentStyle.scenes[scene-1]?.beats?.[beat]?.action || "None"}</strong>
                   </span>
                 </div>
               </div>

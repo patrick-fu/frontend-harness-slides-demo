@@ -291,16 +291,16 @@ export default function Style07({ scene, beat, language, isThumbnail }) {
     }
   };
 
-  return (
-    <div className={`w-full h-full flex flex-col justify-between p-[5cqw] relative ${meta.colors.bg} ${meta.colors.ink} overflow-hidden select-none`}>
+  const renderScene1 = () => (
+    <div className="w-full h-full flex flex-col justify-between p-[5cqw] relative bg-black text-white overflow-hidden select-none">
       {/* Top Slide Meta Header */}
-      <div className="w-full flex justify-between items-start border-b border-zinc-800 pb-[2cqh] z-10 shrink-0">
-        <div className="flex flex-col gap-0.5 font-mono">
+      <div className="w-full flex justify-between items-start border-b border-zinc-800 pb-[2cqh] z-10 shrink-0 font-mono">
+        <div className="flex flex-col gap-0.5">
           <span className="text-[1.1cqw] tracking-widest uppercase text-[#22c55e] font-black">
             {meta.theme}
           </span>
           <span className="text-[1cqw] text-zinc-500 tracking-tight uppercase">
-            {meta.name} • {currentScene.title}
+            {meta.name} • {meta.scenes[0].title}
           </span>
         </div>
         <div className="flex items-center gap-2 bg-zinc-950 px-3 py-1.5 rounded-sm border border-zinc-800 shadow-2xl">
@@ -309,36 +309,423 @@ export default function Style07({ scene, beat, language, isThumbnail }) {
         </div>
       </div>
 
-      {/* Central Split Layout Panel */}
-      <div className="flex-1 w-full grid grid-cols-12 gap-[4cqw] items-center my-[3cqh] z-10 overflow-hidden">
-        {/* Left Column: Semantic Copy Content Block */}
-        <div className="col-span-6 flex flex-col gap-[2cqh] text-left pr-[2cqw] justify-center min-h-[35cqh] font-mono">
-          <h1 className="text-[3.8cqw] leading-[1.1] font-black tracking-tight text-white uppercase animate-slide-right" key={`title-${scene}-${beat}`}>
-            {currentBeat.title}
+      <div className="flex-1 w-full grid grid-cols-12 gap-[4cqw] items-center my-[3cqh] z-10 overflow-hidden font-mono">
+        <div className="col-span-6 flex flex-col gap-[2cqh] text-left pr-[2cqw] justify-center min-h-[35cqh]">
+          <h1 className="text-[3.8cqw] leading-[1.1] font-black tracking-tight text-white uppercase animate-slide-right" key={`title-1-${beat}`}>
+            {meta.scenes[0].beats[beat].title}
           </h1>
-          <p className="text-[1.5cqw] leading-[1.5] text-zinc-300 mt-[1cqh] animate-crossfade" key={`body-${scene}-${beat}`}>
-            {currentBeat.body}
+          <p className="text-[1.5cqw] leading-[1.5] text-zinc-300 mt-[1cqh] animate-crossfade" key={`body-1-${beat}`}>
+            {meta.scenes[0].beats[beat].body}
           </p>
         </div>
-
-        {/* Right Column: Creative Visual Vector Canvas */}
         <div className="col-span-6 flex items-center justify-center min-h-[40cqh]">
-          {renderVisual()}
+          <div className="relative w-[34cqw] h-[34cqw] flex items-center justify-center" key={`s1-${beat}`}>
+            <div className="absolute w-[95%] h-[95%] bg-[#080c10] border-4 border-[#22c55e] rounded-sm shadow-[0_0_30px_rgba(34,197,94,0.3)] flex flex-col justify-between p-[1.5cqw] relative">
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:100%_0.5cqh] pointer-events-none rounded" />
+              <div className="relative flex-1 flex items-center justify-center py-2 z-10 animate-bounce">
+                <svg className="w-[18cqw] h-[18cqw]" viewBox="0 0 100 100">
+                  <line x1="5" y1="80" x2="95" y2="80" stroke="#00ffff" strokeWidth="2" strokeDasharray="4 4" />
+                  <line x1="5" y1="85" x2="95" y2="85" stroke="#00ffff" strokeWidth="2" strokeDasharray="2 2" className="opacity-50" />
+                  <rect x="25" y="55" width="50" height="15" fill="#ca8a04" stroke="white" strokeWidth="2" />
+                  <rect x="20" y="50" width="10" height="10" fill="#ca8a04" stroke="white" strokeWidth="2" />
+                  <rect x="70" y="50" width="10" height="10" fill="#ca8a04" stroke="white" strokeWidth="2" />
+                  <rect x="48" y="20" width="4" height="35" fill="white" />
+                  <rect x="35" y="25" width="30" height="20" fill="white" stroke="black" strokeWidth="2" />
+                  <rect x="47" y="25" width="6" height="20" fill="#ef4444" />
+                  <rect x="35" y="32" width="30" height="6" fill="#ef4444" />
+                  <rect x="52" y="15" width="12" height="6" fill="#ef4444" />
+                  {beat >= 1 && (
+                    <circle cx="85" cy="50" r="4" fill="#eab308" className="animate-ping" />
+                  )}
+                </svg>
+              </div>
+              <div className={`absolute bottom-3 right-4 bg-zinc-950 border-2 border-dashed border-[#eab308] px-3 py-1 font-mono text-[1.1cqw] text-[#eab308] rounded transition-all duration-1000 ${
+                beat >= 2 ? "opacity-100 scale-105 animate-pulse" : "opacity-0 scale-75"
+              }`}>
+                GOLD: 99,420 GP
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Bottom Technical Progress Ledger Bar */}
-      <div className="w-full flex justify-between items-center border-t border-zinc-800 pt-[2cqh] z-10 shrink-0">
+      <div className="w-full flex justify-between items-center border-t border-zinc-800 pt-[2cqh] z-10 shrink-0 font-mono">
         <div className="flex items-center gap-3">
-          <span className="font-mono text-[0.95cqw] text-zinc-500 font-bold uppercase">{language === "zh" ? "实时操作:" : "BEAT ACTION:"}</span>
-          <span className="font-mono text-[1cqw] bg-[#22c55e]/20 text-[#22c55e] border border-[#22c55e]/30 px-3 py-1 rounded-sm font-black animate-pulse" key={`action-${scene}-${beat}`}>
-            {currentBeat.action}
+          <span className="text-zinc-500 font-bold uppercase">{language === "zh" ? "实时操作:" : "BEAT ACTION:"}</span>
+          <span className="bg-[#22c55e]/20 text-[#22c55e] border border-[#22c55e]/30 px-3 py-1 rounded-sm font-black animate-pulse" key={`action-1-${beat}`}>
+            {meta.scenes[0].beats[beat].action}
           </span>
         </div>
-        <div className="flex items-center gap-4 font-mono">
-          <span className="text-[0.9cqw] text-zinc-500 font-bold uppercase">
-            {language === "zh" ? `场景 ${scene} / 5` : `SCENE ${scene} / 5`}
+        <div className="flex items-center gap-4">
+          <span className="text-zinc-500 font-bold uppercase">
+            {language === "zh" ? "场景 1 / 5" : "SCENE 1 / 5"}
           </span>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderScene2 = () => (
+    <div className="w-full h-full flex flex-col justify-between p-[5cqw] relative bg-black text-white overflow-hidden select-none">
+      {/* Top Slide Meta Header */}
+      <div className="w-full flex justify-between items-start border-b border-zinc-800 pb-[2cqh] z-10 shrink-0 font-mono">
+        <div className="flex flex-col gap-0.5">
+          <span className="text-[1.1cqw] tracking-widest uppercase text-[#22c55e] font-black">
+            {meta.theme}
+          </span>
+          <span className="text-[1cqw] text-zinc-500 tracking-tight uppercase">
+            {meta.name} • {meta.scenes[1].title}
+          </span>
+        </div>
+        <div className="flex items-center gap-2 bg-zinc-950 px-3 py-1.5 rounded-sm border border-zinc-800 shadow-2xl">
+          <div className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
+          <span className="font-mono text-[0.9cqw] text-[#22c55e] font-bold uppercase">{meta.tier}-TIER RETRO ARCADE</span>
+        </div>
+      </div>
+
+      <div className="flex-1 w-full grid grid-cols-12 gap-[4cqw] items-center my-[3cqh] z-10 overflow-hidden font-mono">
+        <div className="col-span-6 flex flex-col gap-[2cqh] text-left pr-[2cqw] justify-center min-h-[35cqh]">
+          <h1 className="text-[3.8cqw] leading-[1.1] font-black tracking-tight text-white uppercase animate-slide-right" key={`title-2-${beat}`}>
+            {meta.scenes[1].beats[beat].title}
+          </h1>
+          <p className="text-[1.5cqw] leading-[1.5] text-zinc-300 mt-[1cqh] animate-crossfade" key={`body-2-${beat}`}>
+            {meta.scenes[1].beats[beat].body}
+          </p>
+        </div>
+        <div className="col-span-6 flex items-center justify-center min-h-[40cqh]">
+          <div className="relative w-full max-w-[42cqw] grid grid-cols-2 gap-[3cqw] items-center animate-rotate-in font-mono" key={`s2-${beat}`}>
+            <div className={`bg-black border-4 border-[#22c55e] p-[2cqw] rounded-sm shadow-[0_0_20px_rgba(34,197,94,0.15)] flex flex-col justify-between min-h-[28cqh] relative ${beat >= 0 ? "opacity-100 scale-100" : "opacity-30 scale-95"}`}>
+              <div className="flex items-center gap-2 border-b border-[#22c55e]/20 pb-1.5 font-mono">
+                <span className="text-[#22c55e] font-black text-[1.1cqw]">LÜBECK.KONTOR</span>
+              </div>
+              <svg className="w-[10cqw] h-[6cqw]" viewBox="0 0 100 60">
+                <rect x="40" y="15" width="20" height="30" fill="none" stroke="white" strokeWidth="2" />
+                <line x1="40" y1="25" x2="60" y2="25" stroke="white" strokeWidth="1.5" />
+                <line x1="40" y1="35" x2="60" y2="35" stroke="white" strokeWidth="1.5" />
+                <rect x="45" y="27" width="10" height="6" fill="#22c55e" />
+                <text x="50" y="52" fill="#22c55e" className="text-[7px] font-mono text-center font-bold">SALT_DEPOT</text>
+              </svg>
+              <div className="text-center">
+                <span className="font-mono text-[1.1cqw] text-white font-black block">{language === "zh" ? "吕贝克白盐出口" : "LÜBECK SALT EXPORT"}</span>
+                <span className="text-[0.9cqw] text-slate-400">{language === "zh" ? "同盟核心食盐储备" : "Base purity check: OK"}</span>
+              </div>
+            </div>
+
+            <div className={`bg-black border-4 border-[#eab308] p-[2cqw] rounded-sm shadow-[0_0_20px_rgba(234,179,8,0.15)] flex flex-col justify-between min-h-[28cqh] relative transition-all duration-1000 ${
+              beat >= 1 ? "opacity-100 scale-100" : "opacity-10 scale-90"
+            }`}>
+              <div className="flex items-center gap-2 border-b border-[#eab308]/20 pb-1.5 font-mono">
+                <span className="text-[#eab308] font-black text-[1.1cqw]">BERGEN.KONTOR</span>
+              </div>
+              <svg className="w-[10cqw] h-[6cqw]" viewBox="0 0 100 60">
+                <rect x="40" y="15" width="20" height="30" fill="none" stroke="white" strokeWidth="2" />
+                <path d="M 45,30 C 50,25 50,35 55,30" fill="none" stroke="#eab308" strokeWidth="1.5" />
+                <rect x="48" y="22" width="4" height="15" fill="none" stroke="white" strokeWidth="1" />
+                <text x="50" y="52" fill="#eab308" className="text-[7px] font-mono text-center font-bold">STOCK_FISH</text>
+              </svg>
+              <div className="text-center">
+                <span className="font-mono text-[1.1cqw] text-white font-black block">{language === "zh" ? "贝尔根大宗鳕鱼" : "BERGEN COD IMPORT"}</span>
+                <span className="text-[0.9cqw] text-slate-400">{language === "zh" ? "极地冻鳕鱼储存库" : "Stockfish inventory: OK"}</span>
+              </div>
+
+              {beat >= 2 && (
+                <div className="absolute inset-0 bg-[#ef4444]/10 flex items-center justify-center rounded-sm">
+                  <div className="bg-[#ef4444] text-white font-mono text-[1.2cqw] px-3 py-1 border-2 border-white rounded rotate-[-8deg] font-black tracking-widest shadow-xl animate-elastic-pop">
+                    {language === "zh" ? "通关核准" : "BARTER_OK"}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full flex justify-between items-center border-t border-zinc-800 pt-[2cqh] z-10 shrink-0 font-mono">
+        <div className="flex items-center gap-3">
+          <span className="text-zinc-500 font-bold uppercase">{language === "zh" ? "实时操作:" : "BEAT ACTION:"}</span>
+          <span className="bg-[#22c55e]/20 text-[#22c55e] border border-[#22c55e]/30 px-3 py-1 rounded-sm font-black animate-pulse" key={`action-2-${beat}`}>
+            {meta.scenes[1].beats[beat].action}
+          </span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="text-zinc-500 font-bold uppercase">
+            {language === "zh" ? "场景 2 / 5" : "SCENE 2 / 5"}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderScene3 = () => (
+    <div className="w-full h-full flex flex-col justify-between p-[5cqw] relative bg-black text-white overflow-hidden select-none">
+      {/* Top Slide Meta Header */}
+      <div className="w-full flex justify-between items-start border-b border-zinc-800 pb-[2cqh] z-10 shrink-0 font-mono">
+        <div className="flex flex-col gap-0.5">
+          <span className="text-[1.1cqw] tracking-widest uppercase text-[#22c55e] font-black">
+            {meta.theme}
+          </span>
+          <span className="text-[1cqw] text-zinc-500 tracking-tight uppercase">
+            {meta.name} • {meta.scenes[2].title}
+          </span>
+        </div>
+        <div className="flex items-center gap-2 bg-zinc-950 px-3 py-1.5 rounded-sm border border-zinc-800 shadow-2xl">
+          <div className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
+          <span className="font-mono text-[0.9cqw] text-[#22c55e] font-bold uppercase">{meta.tier}-TIER RETRO ARCADE</span>
+        </div>
+      </div>
+
+      <div className="flex-1 w-full grid grid-cols-12 gap-[4cqw] items-center my-[3cqh] z-10 overflow-hidden font-mono">
+        <div className="col-span-6 flex flex-col gap-[2cqh] text-left pr-[2cqw] justify-center min-h-[35cqh]">
+          <h1 className="text-[3.8cqw] leading-[1.1] font-black tracking-tight text-white uppercase animate-slide-right" key={`title-3-${beat}`}>
+            {meta.scenes[2].beats[beat].title}
+          </h1>
+          <p className="text-[1.5cqw] leading-[1.5] text-zinc-300 mt-[1cqh] animate-crossfade" key={`body-3-${beat}`}>
+            {meta.scenes[2].beats[beat].body}
+          </p>
+        </div>
+        <div className="col-span-6 flex items-center justify-center min-h-[40cqh]">
+          <div className="flex items-center justify-between w-full max-w-[44cqw] relative animate-slide-up" key={`s3-${beat}`}>
+            <div className={`border-4 border-[#22c55e] bg-black p-[1.8cqw] rounded-sm flex flex-col items-center gap-2 w-[12cqw] text-center shadow-md relative overflow-hidden transition-all duration-700 ${beat >= 0 ? "opacity-100 scale-100" : "opacity-20 scale-95"}`}>
+              <div className="absolute top-1 right-2 font-mono text-[0.8cqw] opacity-30">01</div>
+              <div className="w-[3cqw] h-[3cqw] rounded bg-zinc-900 border border-[#22c55e] flex items-center justify-center font-mono text-[#22c55e] text-[1.1cqw] font-bold">SHIP</div>
+              <span className="font-mono text-[1cqw] font-black text-white">{language === "zh" ? "商船出航" : "DEPLOY"}</span>
+            </div>
+
+            <div className={`flex-1 h-1 bg-[#22c55e]/30 transition-all duration-1000 mx-2 ${
+              beat >= 1 ? "bg-[#22c55e] opacity-100 animate-pulse" : "opacity-20"
+            }`} />
+
+            <div className={`border-4 border-[#eab308] bg-black p-[1.8cqw] rounded-sm flex flex-col items-center gap-2 w-[12cqw] text-center shadow-md relative overflow-hidden transition-all duration-700 ${
+              beat >= 1 ? "opacity-100 scale-100" : "opacity-20 scale-95"
+            }`}>
+              <div className="absolute top-1 right-2 font-mono text-[0.8cqw] opacity-30">02</div>
+              <div className="w-[3cqw] h-[3cqw] rounded bg-zinc-900 border border-[#eab308] flex items-center justify-center font-mono text-[#eab308] text-[1.1cqw] font-bold">ROUTE</div>
+              <span className="font-mono text-[1cqw] font-black text-white">{language === "zh" ? "海图规划" : "CHART"}</span>
+            </div>
+
+            <div className={`flex-1 h-1 bg-[#22c55e]/30 transition-all duration-1000 mx-2 ${
+              beat >= 2 ? "bg-white opacity-100 animate-pulse" : "opacity-20"
+            }`} />
+
+            <div className={`border-4 border-[#ef4444] bg-black p-[1.8cqw] rounded-sm flex flex-col items-center gap-2 w-[12cqw] text-center shadow-md relative overflow-hidden transition-all duration-700 ${
+              beat >= 2 ? "opacity-100 scale-100 border-[#ef4444]/60" : "opacity-20 scale-95"
+            }`}>
+              <div className="absolute top-1 right-2 font-mono text-[0.8cqw] opacity-30">03</div>
+              <div className="w-[3cqw] h-[3cqw] rounded bg-zinc-900 border border-[#ef4444] flex items-center justify-center font-mono text-[#ef4444] text-[1.1cqw] font-bold">LOAD</div>
+              <span className="font-mono text-[1cqw] font-black text-white">{language === "zh" ? "货品记账" : "TALLY"}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full flex justify-between items-center border-t border-zinc-800 pt-[2cqh] z-10 shrink-0 font-mono">
+        <div className="flex items-center gap-3">
+          <span className="text-zinc-500 font-bold uppercase">{language === "zh" ? "实时操作:" : "BEAT ACTION:"}</span>
+          <span className="bg-[#22c55e]/20 text-[#22c55e] border border-[#22c55e]/30 px-3 py-1 rounded-sm font-black animate-pulse" key={`action-3-${beat}`}>
+            {meta.scenes[2].beats[beat].action}
+          </span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="text-zinc-500 font-bold uppercase">
+            {language === "zh" ? "场景 3 / 5" : "SCENE 3 / 5"}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderScene4 = () => (
+    <div className="w-full h-full flex flex-col justify-between p-[5cqw] relative bg-black text-white overflow-hidden select-none font-mono">
+      {/* Top Slide Meta Header */}
+      <div className="w-full flex justify-between items-start border-b border-zinc-800 pb-[2cqh] z-10 shrink-0">
+        <div className="flex flex-col gap-0.5">
+          <span className="text-[1.1cqw] tracking-widest uppercase text-[#22c55e] font-black">
+            {meta.theme}
+          </span>
+          <span className="text-[1cqw] text-zinc-500 tracking-tight uppercase">
+            {meta.name} • {meta.scenes[3].title}
+          </span>
+        </div>
+        <div className="flex items-center gap-2 bg-zinc-950 px-3 py-1.5 rounded-sm border border-zinc-800 shadow-2xl">
+          <div className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
+          <span className="font-mono text-[0.9cqw] text-[#22c55e] font-bold uppercase">{meta.tier}-TIER RETRO ARCADE</span>
+        </div>
+      </div>
+
+      <div className="flex-1 w-full grid grid-cols-12 gap-[4cqw] items-center my-[3cqh] z-10 overflow-hidden">
+        <div className="col-span-6 flex flex-col gap-[2cqh] text-left pr-[2cqw] justify-center min-h-[35cqh]">
+          <h1 className="text-[3.8cqw] leading-[1.1] font-black tracking-tight text-white uppercase animate-slide-right" key={`title-4-${beat}`}>
+            {meta.scenes[3].beats[beat].title}
+          </h1>
+          <p className="text-[1.5cqw] leading-[1.5] text-zinc-300 mt-[1cqh] animate-crossfade" key={`body-4-${beat}`}>
+            {meta.scenes[3].beats[beat].body}
+          </p>
+        </div>
+        <div className="col-span-6 flex items-center justify-center min-h-[40cqh]">
+          <div className="grid grid-cols-2 gap-[1.5cqw] w-full max-w-[42cqw] animate-scale-up" key={`s4-${beat}`}>
+            <div className={`border-2 border-zinc-800 bg-zinc-950 p-[1.5cqw] rounded-sm relative transition-all duration-500 ${beat >= 0 ? "opacity-100 scale-100 border-[#22c55e]/50 bg-[#22c55e]/5" : "opacity-20 scale-95"}`}>
+              <div className="absolute top-2 right-3 font-mono text-[1cqw] text-[#22c55e] font-bold">KONTOR</div>
+              <span className="font-mono font-black text-[1.1cqw] text-white block mb-1 uppercase">{language === "zh" ? "境外特权商栈" : "KONTOR PRIVILEGES"}</span>
+              <p className="text-[0.9cqw] opacity-85 text-zinc-300 leading-tight">
+                {language === "zh" ? "在伦敦和 Bergen 建立独立豁免权商栈。完全豁免当地法律及课税。" : "Autonomous self-governing warehouses exempt from local tariffs."}
+              </p>
+            </div>
+
+            <div className={`border-2 border-zinc-800 bg-zinc-950 p-[1.5cqw] rounded-sm relative transition-all duration-500 ${beat >= 1 ? "opacity-100 scale-100 border-[#eab308]/50 bg-[#eab308]/5" : "opacity-20 scale-95"}`}>
+              <div className="absolute top-2 right-3 font-mono text-[1cqw] text-[#eab308] font-bold">STATUTE</div>
+              <span className="font-mono font-black text-[1.1cqw] text-white block mb-1 uppercase">{language === "zh" ? "同盟海洋商法" : "MARITIME STATUTES"}</span>
+              <p className="text-[0.9cqw] opacity-85 text-zinc-300 leading-tight">
+                {language === "zh" ? "制定统一的海损公摊、水手和雇佣守则。依靠禁商惩罚压制异国政权。" : "Standardized maritime statutes. Leveraging blockades against local kings."}
+              </p>
+            </div>
+
+            <div className={`border-2 border-zinc-800 bg-zinc-950 p-[1.5cqw] rounded-sm relative transition-all duration-500 ${beat >= 2 ? "opacity-100 scale-100 border-[#ef4444]/50 bg-[#ef4444]/5" : "opacity-20 scale-95"}`}>
+              <div className="absolute top-2 right-3 font-mono text-[1cqw] text-[#ef4444] font-bold">ESCORT</div>
+              <span className="font-mono font-black text-[1.1cqw] text-white block mb-1 uppercase">{language === "zh" ? "武装护航编队" : "CONVOY ESCORTS"}</span>
+              <p className="text-[0.9cqw] opacity-85 text-zinc-300 leading-tight">
+                {language === "zh" ? "配备十字弩弩手的小型武装护航柯格船。巡回清扫并剿灭一切沿途海盗。" : "Armed escort ships deploying elite archers to sweep Baltic pirates."}
+              </p>
+            </div>
+
+            <div className={`border-2 border-zinc-800 bg-zinc-950 p-[1.5cqw] rounded-sm relative transition-all duration-500 ${beat >= 2 ? "opacity-100 scale-100 border-white/20 bg-white/5" : "opacity-20 scale-95"}`}>
+              <div className="absolute top-2 right-3 font-mono text-[1cqw] text-zinc-400 font-bold">LEDGER</div>
+              <span className="font-mono font-black text-[1.1cqw] text-white block mb-1 uppercase">{language === "zh" ? "物产起运底账" : "LEDGER TALLY"}</span>
+              <p className="text-[0.9cqw] opacity-85 text-zinc-300 leading-tight">
+                {language === "zh" ? "大宗食盐、干鳕鱼、羊毛、木材以及德意志马克硬币的精密对账底账。" : "Raw salt, dried cod, wool bales, and Lübeck silver marks register."}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full flex justify-between items-center border-t border-zinc-800 pt-[2cqh] z-10 shrink-0 font-mono">
+        <div className="flex items-center gap-3">
+          <span className="text-zinc-500 font-bold uppercase">{language === "zh" ? "实时操作:" : "BEAT ACTION:"}</span>
+          <span className="bg-[#22c55e]/20 text-[#22c55e] border border-[#22c55e]/30 px-3 py-1 rounded-sm font-black animate-pulse" key={`action-4-${beat}`}>
+            {meta.scenes[3].beats[beat].action}
+          </span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="text-zinc-500 font-bold uppercase">
+            {language === "zh" ? "场景 4 / 5" : "SCENE 4 / 5"}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderScene5 = () => (
+    <div className="w-full h-full flex flex-col justify-between p-[5cqw] relative bg-black text-white overflow-hidden select-none font-mono">
+      {/* Top Slide Meta Header */}
+      <div className="w-full flex justify-between items-start border-b border-zinc-800 pb-[2cqh] z-10 shrink-0 font-mono">
+        <div className="flex flex-col gap-0.5">
+          <span className="text-[1.1cqw] tracking-widest uppercase text-[#22c55e] font-black">
+            {meta.theme}
+          </span>
+          <span className="text-[1cqw] text-zinc-500 tracking-tight uppercase">
+            {meta.name} • {meta.scenes[4].title}
+          </span>
+        </div>
+        <div className="flex items-center gap-2 bg-zinc-950 px-3 py-1.5 rounded-sm border border-zinc-800 shadow-2xl">
+          <div className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
+          <span className="font-mono text-[0.9cqw] text-[#22c55e] font-bold uppercase">{meta.tier}-TIER RETRO ARCADE</span>
+        </div>
+      </div>
+
+      <div className="flex-1 w-full grid grid-cols-12 gap-[4cqw] items-center my-[3cqh] z-10 overflow-hidden font-mono">
+        <div className="col-span-6 flex flex-col gap-[2cqh] text-left pr-[2cqw] justify-center min-h-[35cqh]">
+          <h1 className="text-[3.8cqw] leading-[1.1] font-black tracking-tight text-white uppercase animate-slide-right" key={`title-5-${beat}`}>
+            {meta.scenes[4].beats[beat].title}
+          </h1>
+          <p className="text-[1.5cqw] leading-[1.5] text-zinc-300 mt-[1cqh] animate-crossfade" key={`body-5-${beat}`}>
+            {meta.scenes[4].beats[beat].body}
+          </p>
+        </div>
+        <div className="col-span-6 flex items-center justify-center min-h-[40cqh]">
+          <div className="grid grid-cols-3 gap-[1cqw] w-full max-w-[45cqw] animate-bento-stagger" key={`s5-${beat}`}>
+            <div className={`col-span-2 border-4 border-[#22c55e] bg-black p-[1.2cqw] rounded-sm min-h-[16cqh] flex flex-col justify-between transition-all duration-500 ${beat >= 0 ? "opacity-100" : "opacity-25"}`}>
+              <div className="flex justify-between items-center border-b border-[#22c55e]/20 pb-1.5 font-mono">
+                <span className="text-[0.95cqw] text-[#22c55e] font-black flex items-center gap-1.5 uppercase">
+                  <Anchor className="w-3.5 h-3.5 text-[#22c55e] animate-pulse" />
+                  {language === "zh" ? "汉萨海运安全水道遥测" : "NORTH SEA CONVOY TELEMETRY"}
+                </span>
+                <span className="text-[0.8cqw] font-mono text-zinc-500">CONVOY_94</span>
+              </div>
+              <div className="flex flex-col gap-1 mt-2 font-mono text-[0.85cqw] text-zinc-400">
+                <div className="flex justify-between"><span>Lübeck-Bergen Route:</span><span className="text-[#22c55e] font-bold">SAFE (Convoys Active)</span></div>
+                <div className="flex justify-between"><span>Pirate Threat Index:</span><span className="text-red-500 font-bold">LOW (0.02%)</span></div>
+              </div>
+            </div>
+
+            <div className={`border-4 border-[#eab308] bg-black p-[1.2cqw] rounded-sm min-h-[16cqh] flex flex-col justify-between transition-all duration-500 ${beat >= 1 ? "opacity-100" : "opacity-25"}`}>
+              <span className="font-mono text-[0.85cqw] text-white font-black block uppercase">{language === "zh" ? "总贸易货值估算" : "CARGO VALUE GP"}</span>
+              <div className="text-[2.2cqw] font-black text-[#eab308] font-mono leading-none my-1">
+                42,420<span className="text-[1cqw] font-normal font-sans opacity-70">g</span>
+              </div>
+              <span className="text-[0.8cqw] text-zinc-500 font-mono block">Silver Mark Standard</span>
+            </div>
+
+            <div className={`col-span-3 border-4 border-red-600/40 bg-black p-[1cqw] rounded-sm flex items-center justify-between transition-all duration-500 ${beat >= 2 ? "opacity-100 bg-[#ef4444]/5" : "opacity-25"}`}>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-red-600 animate-ping" />
+                <span className="font-mono text-[0.9cqw] text-red-500 font-black uppercase">
+                  {language === "zh" ? "✓ 汉萨海洋通关文牒加印总议长红泥印信" : "✓ HANSEATIC GUILD GENERAL MARITIME CHARTER SEALED"}
+                </span>
+              </div>
+              <span className="font-mono text-[0.8cqw] text-zinc-500">SEAL: HANSA.LAW.402</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full flex justify-between items-center border-t border-zinc-800 pt-[2cqh] z-10 shrink-0 font-mono">
+        <div className="flex items-center gap-3">
+          <span className="text-zinc-500 font-bold uppercase">{language === "zh" ? "实时操作:" : "BEAT ACTION:"}</span>
+          <span className="bg-[#22c55e]/20 text-[#22c55e] border border-[#22c55e]/30 px-3 py-1 rounded-sm font-black animate-pulse" key={`action-5-${beat}`}>
+            {meta.scenes[4].beats[beat].action}
+          </span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="text-zinc-500 font-bold uppercase">
+            {language === "zh" ? "场景 5 / 5" : "SCENE 5 / 5"}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Switch scene renderer with Horizontal Spatial Viewport Track
+  const renderScene = () => {
+    // Left empty since we will平铺 rather than conditionally mount!
+  };
+
+  return (
+    <div className={`w-full h-full flex flex-col justify-between relative ${meta.colors.bg} ${meta.colors.ink} overflow-hidden select-none`}>
+      <style>{`
+        .pixel-grid-bg {
+          background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+          background-size: 4cqw 4cqw;
+        }
+      `}</style>
+
+      {/* Background Grid */}
+      <div className="absolute inset-0 pixel-grid-bg pointer-events-none" />
+
+      {/* MAIN SCENE AREA using Horizontal Spatial Viewport Track */}
+      <div className="flex-1 w-full relative overflow-hidden h-full">
+        <div 
+          className="flex w-[500%] h-full transition-transform duration-1000 ease-out"
+          style={{
+            transform: `translateX(-${(scene - 1) * 20}%)`,
+            transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)"
+          }}
+        >
+          <div className="w-[20%] h-full shrink-0 relative">{renderScene1()}</div>
+          <div className="w-[20%] h-full shrink-0 relative">{renderScene2()}</div>
+          <div className="w-[20%] h-full shrink-0 relative">{renderScene3()}</div>
+          <div className="w-[20%] h-full shrink-0 relative">{renderScene4()}</div>
+          <div className="w-[20%] h-full shrink-0 relative">{renderScene5()}</div>
         </div>
       </div>
     </div>
